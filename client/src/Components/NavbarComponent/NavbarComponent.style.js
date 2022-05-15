@@ -4,6 +4,15 @@ export const div = styled.div`
     width: 100%;
     display: flex;
     position: fixed;
+    .user-login-div {
+        display: flex;
+        align-items: center;
+    }
+    .user-login-div p {
+        color: var(--main-cl);
+        font-size: 14px;
+        margin-left: 1rem;
+    }
 `;
 
 export const innerDiv = styled.div`

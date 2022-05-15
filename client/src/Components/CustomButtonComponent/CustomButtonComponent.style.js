@@ -5,6 +5,16 @@ export const div = styled.div`
         margin-top: 1rem;
         padding: 0.8rem 2rem;
     }
+    .login__sign-in {
+        width: 100%;
+        padding: 16px;
+        color: #fff;
+        background: var(--button-cl);
+        font-size: 0.9rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 `;
 
 export const button = styled.button`

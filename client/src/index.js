@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-
 import App from "./App";
-
+import { CookiesProvider } from "react-cookie";
 import store from "./Redux/Store/store";
 import { Provider } from "react-redux";
 
@@ -14,10 +13,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
     <Provider store={store}>
-        <BrowserRouter>
-            <React.StrictMode>
-                <App />
-            </React.StrictMode>
-        </BrowserRouter>
+        <CookiesProvider>
+            <BrowserRouter>
+                <React.StrictMode>
+                    <App />
+                </React.StrictMode>
+            </BrowserRouter>
+        </CookiesProvider>
     </Provider>
 );

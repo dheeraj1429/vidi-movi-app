@@ -36,4 +36,7 @@ export const contentFlex = styled.div`
         margin: 0;
         margin-right: 1rem;
     }
+    .activeBr {
+        color: var(--button-cl);
+    }
 `;

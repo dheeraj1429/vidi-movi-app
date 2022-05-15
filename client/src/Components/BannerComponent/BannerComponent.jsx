@@ -17,6 +17,7 @@ function BannerComponent() {
                 <Banner.contentFlex>
                     <p>2015</p>
                     <p>2 Seasons</p>
+                    <p className="activeBr">Action</p>
                 </Banner.contentFlex>
 
                 <p>

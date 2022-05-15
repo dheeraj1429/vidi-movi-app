@@ -1,0 +1,6 @@
+const ACTION_TYPE = {
+    USER_SIGN_IN: "USER_SIGN_IN",
+    LOADING_SPNNER: "LOADING_SPNNER",
+};
+
+export default ACTION_TYPE;

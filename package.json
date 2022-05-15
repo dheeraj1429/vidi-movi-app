@@ -6,7 +6,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "client-dep": "npm install --prefix client",
-        "server-dev": "npm install --prefix server",
+        "server-dep": "npm install --prefix server",
         "client-remove-dep": "npm uninstall --prefix client",
         "server-remove-dep": "npm uninstall --prefix server",
         "client": "npm start --prefix client",
