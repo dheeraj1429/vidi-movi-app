@@ -14,7 +14,7 @@ export const input = styled.input`
     padding: 0 1rem;
     outline: none;
     margin-top: 0.6rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 `;
 
 export const lable = styled.label`

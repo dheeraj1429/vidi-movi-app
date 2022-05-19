@@ -79,6 +79,7 @@ function SignInComponent() {
                 {EmailVarify !== null ? !EmailVarify ? <p>please enter valid email adress</p> : null : null}
                 {userData !== null && userData.status ? <p>{userData.data.messages}</p> : null}
                 <CustomButtonComponent buttonCl={"login__sign-in"} innteText={"Sign In"} isLoading={loading} type={"submit"} onClick={SendData} />
+                <CustomButtonComponent buttonCl={"google__sign-in"} innteText={"Google Login"} isLoading={loading} type={"submit"} />
             </SignIn.loginDiv>
         </SignIn.div>
     );

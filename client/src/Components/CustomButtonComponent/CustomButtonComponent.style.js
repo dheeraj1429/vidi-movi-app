@@ -14,6 +14,13 @@ export const div = styled.div`
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        margin-top: 1rem;
+    }
+    .google__sign-in {
+        margin-top: 2rem;
+        width: 100%;
+        padding: 1rem;
+        background-color: var(--google-button-cl);
     }
 `;
 
