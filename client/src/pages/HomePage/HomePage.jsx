@@ -1,13 +1,14 @@
 import React from "react";
 import * as Home from "./HomePage.style";
-import BannerComponent from "../../Components/BannerComponent/BannerComponent";
 import NavbarComponent from "../../Components/NavbarComponent/NavbarComponent";
+import HomeComponent from "../../Components/HomeComponent/HomeComponent";
 
 function HomePage() {
     return (
         <Home.div>
             <NavbarComponent />
-            <BannerComponent />
+            {/* <BannerComponent /> */}
+            <HomeComponent />
         </Home.div>
     );
 }

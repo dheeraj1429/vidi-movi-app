@@ -12,6 +12,10 @@ export const SignInWithGoogleDiv = styled.div`
     justify-content: center;
     align-items: center;
     padding-top: 1rem;
+    button {
+        width: 100%;
+        justify-content: center;
+    }
 `;
 
 export const loginDiv = styled.div`

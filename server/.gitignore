@@ -1,3 +1,6 @@
 /node_modules
-.env
 cart.js
+.env
+.env.example
+.env.local
+.env.staging

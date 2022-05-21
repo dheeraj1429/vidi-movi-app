@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const div = styled.div`
     width: 100%;
     display: flex;
-    position: fixed;
+    background-color: var(--dark-cl);
+    padding: 0.5rem 1rem;
     .user-login-div {
         display: flex;
         align-items: center;
@@ -29,6 +30,11 @@ export const imageDiv = styled.div`
         width: auto;
         height: 60px;
         margin-left: 1rem;
+    }
+    svg {
+        color: var(--main-cl);
+        cursor: pointer;
+        font-size: 20px;
     }
 `;
 

@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
-const JWT_TOKEN = process.env.TOKEN;
+const cart = require("../../cart");
+const JWT_TOKEN = cart.TOKEN;
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: [true, "please enter the user name"] },

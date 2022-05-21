@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const JWT_TOKEN = process.env.TOKEN;
+const cart = require("../../cart");
+const JWT_TOKEN = cart.TOKEN;
 
 const Schema = mongoose.Schema;
 

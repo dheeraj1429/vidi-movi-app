@@ -8,7 +8,7 @@ const ejs = require("ejs");
 const jwt = require("jsonwebtoken");
 const googleAuthUser = require("../model/Schema/googleAuthSchema");
 
-const JWT_TOKEN = process.env.TOKEN;
+const JWT_TOKEN = cart.TOKEN;
 
 const signInUser = async function (req, res, next) {
     try {
@@ -106,7 +106,7 @@ const forgetPassword = async function (req, res, next) {
         let userID = findUserInDb._id;
         let userName = findUserInDb.name;
         let userEmail = findUserInDb.email;
-        let KEY = process.env.TOKEN;
+        let KEY = cart.TOKEN;
 
         const token = await jwt.sign({ _id: userID, name: userName, email: userEmail }, KEY);
 
@@ -125,8 +125,8 @@ const forgetPassword = async function (req, res, next) {
                     let transporter = nodemailer.createTransport({
                         service: "gmail",
                         auth: {
-                            user: "dheerajsingh1429@gmail.com",
-                            pass: "ffkadxwktfkpiwcm",
+                            user: cart.USER,
+                            pass: cart.APP_PASSWORD,
                         },
                     });
 

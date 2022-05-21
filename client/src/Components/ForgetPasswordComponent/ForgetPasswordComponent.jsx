@@ -54,7 +54,7 @@ function ForgetPassportComponent() {
                 />
 
                 {EmailVarify !== null ? !EmailVarify ? <p className="error-message">please enter valid email adress</p> : null : null}
-                {userData !== null ? <forget.p>{userData.messages}</forget.p> : null}
+                {userData !== null && userData !== undefined ? <forget.p>{userData.messages}</forget.p> : null}
 
                 <CustomButtonComponent
                     buttonCl={"login__sign-in"}

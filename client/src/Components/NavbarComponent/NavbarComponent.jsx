@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { setUserCookieData } from "../../Redux/Action/authAction";
 import { useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
+import { BsList } from "react-icons/bs";
 
 import NavbarListItemComponent from "../NavbarListItemComponent/NavbarListItemComponent";
 import IconsComponent from "../IconsComponent/IconsComponent";
@@ -22,7 +23,7 @@ function NavbarComponent() {
     return (
         <Navbar.div>
             <Navbar.imageDiv>
-                <img src="/images/logo@2x.png" alt="" />
+                <BsList />
             </Navbar.imageDiv>
             <Navbar.innerDiv>
                 {/* <Navbar.list>

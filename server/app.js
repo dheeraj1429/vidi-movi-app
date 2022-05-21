@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
@@ -7,9 +6,10 @@ const dataBaseConnectionFuntion = require("./model/db/db");
 const cookieSession = require("cookie-session");
 const helmet = require("helmet");
 const ejs = require("ejs");
+const cart = require("./cart");
 
 const app = express();
-const port = process.env.PORT || 7000;
+const port = cart.PORT || 7000;
 
 // routes files
 const indexRouter = require("./routes/index.Route");
@@ -29,7 +29,7 @@ app.use(
     cookieSession({
         name: "cookie-session",
         maxAge: 24 * 60 * 60 * 1000,
-        keys: [process.env.KEY_1, process.env.KEY_2],
+        keys: [cart.KEY_1, cart.KEY_2],
     })
 );
 

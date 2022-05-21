@@ -21,8 +21,6 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log(cookies);
-
         if (Object.keys(cookies).length > 0) {
             dispatch(setUserCookieData(cookies.user));
         }

@@ -42,7 +42,7 @@ function LogInComponent() {
     };
 
     useEffect(() => {
-        if (userData !== null && userData.data && userData.status !== 500 && userData.success === true) {
+        if (userData !== null && userData !== undefined && userData.data && userData.status !== 500 && userData.success === true) {
             navigate("/");
         }
     }, [userData]);
@@ -62,7 +62,7 @@ function LogInComponent() {
                         type={"password"}
                     />
                     {EmailVarify !== null ? !EmailVarify ? <p>please enter valid email adress</p> : null : null}
-                    {userData !== null && userData.success === false ? <p>{userData.messages}</p> : null}
+                    {userData !== null && userData !== undefined && userData.success === false ? <p>{userData.messages}</p> : null}
                     <CustomButtonComponent buttonCl={"login__sign-in"} innteText={"Sign In"} isLoading={loading} onClick={SendData} />
                 </signIn.loginGroup>
 
