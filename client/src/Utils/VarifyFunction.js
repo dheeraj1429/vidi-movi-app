@@ -5,3 +5,5 @@ export const VarifyEmail = function (email) {
 
     return email;
 };
+
+export const clientId = "293495706232-v2e80a9osn58vl4oh6h2qr6j6v22gki1.apps.googleusercontent.com";

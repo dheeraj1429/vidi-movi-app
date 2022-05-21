@@ -1,16 +1,32 @@
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const JWT_TOKEN = process.env.TOKEN;
 
 const Schema = mongoose.Schema;
 
 const authUserSchema = new Schema({
-    googleId: { type: String, required: true },
-    displayName: { type: String, required: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    image: { type: String, required: true },
+    googleId: { type: String, required: [true, "google is must be requied"] },
+    imageUrl: { type: String, required: [true, "google image is required"] },
+    email: { type: String, required: [true, "google email is required"] },
+    name: { type: String, required: [true, "google name is required"] },
+    givenName: { type: String, required: [true, "google givenName name is required"] },
+    familyName: { type: String, required: [true, "google familyName name is required"] },
+    isAdmin: { type: String, default: "user" },
+    tokens: [{ token: { type: String, required: [true, "please genrate the user token"] } }],
     createdAt: { type: Date, default: Date.now },
 });
 
-const authUser = new mongoose.model("authUser", authUserSchema);
+authUserSchema.methods.genrateUserToken = async function () {
+    try {
+        const token = await jwt.sign({ _id: this._id.toString(), name: this.name, email: this.email }, JWT_TOKEN, { expiresIn: "30d" });
+        this.tokens = this.tokens.concat({ token });
+        this.save();
+        return token;
+    } catch (err) {
+        console.log(err);
+    }
+};
 
-module.exports = authUser;
+const googleAuthUser = new mongoose.model("authUser", authUserSchema);
+
+module.exports = googleAuthUser;

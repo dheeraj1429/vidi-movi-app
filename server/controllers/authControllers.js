@@ -6,6 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const ejs = require("ejs");
 const jwt = require("jsonwebtoken");
+const googleAuthUser = require("../model/Schema/googleAuthSchema");
 
 const JWT_TOKEN = process.env.TOKEN;
 
@@ -185,9 +186,76 @@ const resetPasswordRequest = async function (req, res, next) {
     }
 };
 
+const googleLogin = async function (req, res, next) {
+    try {
+        const { userObject } = req.body;
+
+        const findUserInDb = await googleAuthUser.findOne({
+            googleId: userObject.googleId,
+            email: userObject.email,
+            name: userObject.name,
+        });
+
+        if (findUserInDb) {
+            const findUserToken = await findUserInDb.genrateUserToken();
+
+            const userConfig = {
+                googleId: findUserInDb.googleId,
+                imageUrl: findUserInDb.imageUrl,
+                email: findUserInDb.email,
+                name: findUserInDb.givenName,
+                token: findUserToken,
+            };
+
+            res.cookie("user", {
+                data: userConfig,
+            });
+
+            return res.status(200).json({
+                success: true,
+                data: userConfig,
+            });
+        } else {
+            const newGoogleUser = await googleAuthUser({
+                googleId: userObject.googleId,
+                email: userObject.email,
+                imageUrl: userObject.imageUrl,
+                name: userObject.name,
+                givenName: userObject.givenName,
+                familyName: userObject.familyName,
+            });
+
+            const googleUserRef = await newGoogleUser.save();
+            const userToken = await googleUserRef.genrateUserToken();
+
+            if (googleUserRef) {
+                const userConfig = {
+                    googleId: googleUserRef.googleId,
+                    imageUrl: googleUserRef.imageUrl,
+                    email: googleUserRef.email,
+                    name: googleUserRef.givenName,
+                    token: userToken,
+                };
+
+                res.cookie("user", {
+                    data: userConfig,
+                });
+
+                return res.status(200).json({
+                    success: true,
+                    data: userConfig,
+                });
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     signInUser,
     logInUser,
     forgetPassword,
     resetPasswordRequest,
+    googleLogin,
 };

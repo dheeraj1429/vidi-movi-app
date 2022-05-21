@@ -13,7 +13,7 @@ function UserPasswordChangeRequiestComponent() {
         password: "",
         newPassword: "",
     });
-    const [EmailVarify, setEmailVarify] = useState(null);
+    const [ErrorPassword, setErrorPassword] = useState(null);
     const loading = useSelector((state) => state.auth.loading);
     const forgetPassword = useSelector((state) => state.auth.forgetPassword);
 
@@ -29,6 +29,10 @@ function UserPasswordChangeRequiestComponent() {
 
     const SendData = function () {
         const { password, newPassword } = UserPassword;
+
+        if (password !== newPassword) {
+            setErrorPassword("password and confirm password is not match");
+        }
 
         if (password && newPassword && password === newPassword) {
             dispatch(userForgetPasswordRequiest({ password: password, id: parms.id }));
@@ -59,6 +63,10 @@ function UserPasswordChangeRequiestComponent() {
                 {forgetPassword !== null && forgetPassword.success === true ? (
                     <forgetRequiest.div>
                         <forgetRequiest.p>{forgetPassword.messages}</forgetRequiest.p>
+                    </forgetRequiest.div>
+                ) : ErrorPassword !== null ? (
+                    <forgetRequiest.div>
+                        <forgetRequiest.p className="error_para">{ErrorPassword}</forgetRequiest.p>
                     </forgetRequiest.div>
                 ) : null}
                 {forgetPassword !== null && forgetPassword.success === true ? (

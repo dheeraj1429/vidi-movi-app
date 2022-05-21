@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router";
 import { useCookies } from "react-cookie";
 import { setUserCookieData } from "./Redux/Action/authAction";
 import { useDispatch } from "react-redux";
+import { gapi } from "gapi-script";
+import { clientId } from "./Utils/VarifyFunction";
 
 // components
 import SignInComponent from "./Components/SignInComponent/SignInComponent";
@@ -19,9 +21,18 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        console.log(cookies);
+
         if (Object.keys(cookies).length > 0) {
             dispatch(setUserCookieData(cookies.user));
         }
+
+        gapi.load("client:auth2", function () {
+            gapi.client.init({
+                clientId: clientId,
+                scope: "",
+            });
+        });
     }, []);
 
     return (

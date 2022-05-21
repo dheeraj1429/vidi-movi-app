@@ -37,7 +37,7 @@ function NavbarComponent() {
                 <IconsComponent iconsCl={"fas fa-search"} />
                 <IconsComponent iconsCl={"fas fa-bookmark"} />
                 <IconsComponent>
-                    {user !== null && user.data ? (
+                    {user !== null && user !== undefined && Object.keys(user.data).length > 0 && user.data ? (
                         <div className="user-login-div">
                             <p>wallcome! {user.data.name}</p>
                             <IconsComponent iconsCl={"fas fa-sign-out"} event={removeUser} />

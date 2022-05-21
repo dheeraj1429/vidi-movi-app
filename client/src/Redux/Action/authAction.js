@@ -92,3 +92,18 @@ export const forgetResetError = function (data) {
         payload: data,
     };
 };
+
+export const signInWithGoogle = function (data) {
+    return async function (dispatch) {
+        try {
+            const googleRef = await axios.post("/auth/google/log-in", data, headers);
+
+            dispatch({
+                type: ACTION_TYPE.SIGN_WITH_GOOGLE,
+                payload: googleRef.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};

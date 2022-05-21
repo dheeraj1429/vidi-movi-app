@@ -7,6 +7,13 @@ export const div = styled.div`
     padding: 60px 68px 40px;
 `;
 
+export const SignInWithGoogleDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1rem;
+`;
+
 export const loginDiv = styled.div`
     .login__title {
         margin-bottom: 1.5rem;

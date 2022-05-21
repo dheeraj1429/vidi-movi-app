@@ -28,6 +28,12 @@ const authReduer = function (state = INITAL_STATE, action) {
                 loading: false,
             };
 
+        case ACTION_TYPE.SIGN_WITH_GOOGLE:
+            return {
+                ...state,
+                user: action.payload,
+            };
+
         default:
             return {
                 ...state,

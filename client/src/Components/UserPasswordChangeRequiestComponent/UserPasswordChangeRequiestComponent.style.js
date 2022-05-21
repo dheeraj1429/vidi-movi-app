@@ -7,6 +7,9 @@ export const div = styled.div`
         text-decoration: none;
         color: var(--google-button-cl);
     }
+    .error_para {
+        color: var(--button-cl);
+    }
 `;
 
 export const p = styled.p`

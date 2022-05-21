@@ -3,10 +3,11 @@ import * as SignIn from "./SignInComponent.style";
 import InputComponent from "../InputComponent/InputComponent";
 import CustomButtonComponent from "../CustomButtonComponent/CustomButtonComponent";
 import { useSelector, useDispatch } from "react-redux";
-import { userSignIn, loadingSpen } from "../../Redux/Action/authAction";
+import { userSignIn, loadingSpen, signInWithGoogle } from "../../Redux/Action/authAction";
 import { VarifyEmail } from "../../Utils/VarifyFunction";
 import { Link, useNavigate } from "react-router-dom";
-// import GoogleLogin from "react-google-login";
+import GoogleLogin from "react-google-login";
+import { clientId } from "../../Utils/VarifyFunction";
 
 function SignInComponent() {
     const [SignInData, setSigninData] = useState({
@@ -22,7 +23,7 @@ function SignInComponent() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (userData !== null && userData.data && userData.status !== 500 && userData.success === true) {
+        if (userData !== null && userData !== undefined && userData.data && userData.status !== 500 && userData.success === true) {
             navigate("/");
         }
     }, [userData]);
@@ -49,13 +50,13 @@ function SignInComponent() {
         }
     };
 
-    // const onSuccess = function (response) {
-    //     console.log(response);
-    // };
+    const onSuccess = function (response) {
+        dispatch(signInWithGoogle({ userObject: response.profileObj, token: response.tokenId }));
+    };
 
-    // const onFailure = function (response) {
-    //     console.log(response);
-    // };
+    const onFailure = function (response) {
+        dispatch(signInWithGoogle(response));
+    };
 
     return (
         <SignIn.div>
@@ -90,17 +91,18 @@ function SignInComponent() {
                     </div>
                 </SignIn.loginGroup>
                 {EmailVarify !== null ? !EmailVarify ? <p>please enter valid email adress</p> : null : null}
-                {userData !== null && userData.status ? <p className="error-message">{userData.data.messages}</p> : null}
+                {userData !== null && userData !== undefined && userData.status ? <p className="error-message">{userData.data.messages}</p> : null}
                 <CustomButtonComponent buttonCl={"login__sign-in"} innteText={"Sign In"} isLoading={loading} type={"submit"} onClick={SendData} />
-
-                {/* <GoogleLogin
-                    clientId="293495706232-v2e80a9osn58vl4oh6h2qr6j6v22gki1.apps.googleusercontent.com"
-                    buttonText="Login with Google"
-                    onSuccess={onSuccess}
-                    onFailure={onFailure}
-                    cookiePolicy={"single_host_origin"}
-                    isSignedIn={true}
-                /> */}
+                <SignIn.SignInWithGoogleDiv>
+                    <GoogleLogin
+                        clientId={clientId}
+                        buttonText="Login with Google"
+                        onSuccess={onSuccess}
+                        onFailure={onFailure}
+                        cookiePolicy={"single_host_origin"}
+                        // isSignedIn={true}
+                    />
+                </SignIn.SignInWithGoogleDiv>
 
                 <SignIn.options>
                     <p>Already have account login</p>
