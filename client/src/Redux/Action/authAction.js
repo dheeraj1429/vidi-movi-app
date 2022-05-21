@@ -36,3 +36,59 @@ export const setUserCookieData = function (data) {
         payload: data,
     };
 };
+
+export const logInUser = function (data) {
+    return async function (dispatch) {
+        try {
+            const logInUserRef = await axios.post("/auth/logIn", data, headers);
+
+            dispatch({
+                type: ACTION_TYPE.USER_SIGN_IN,
+                payload: logInUserRef.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const forgetPassword = function (data) {
+    return async function (dispatch) {
+        try {
+            const userForgetRef = await axios.post("/auth/forget-password", data, headers);
+
+            console.log(userForgetRef);
+
+            dispatch({
+                type: ACTION_TYPE.USER_SIGN_IN,
+                payload: userForgetRef.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const userForgetPasswordRequiest = function (data) {
+    console.log(data);
+
+    return async function (dispatch) {
+        try {
+            const forgetPasswordRef = await axios.post("/auth/user/forget-request", data, headers);
+
+            dispatch({
+                type: ACTION_TYPE.FORGET_PASSWORD_REQUIEST,
+                payload: forgetPasswordRef.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const forgetResetError = function (data) {
+    return {
+        type: ACTION_TYPE.USER_SIGN_IN,
+        payload: data,
+    };
+};

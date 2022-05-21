@@ -1,11 +1,11 @@
 import React from "react";
 import * as Auth from "./SignInAndLogInPage.style";
-import SignInComponent from "../../Components/SignInComponent/SignInComponent";
+import { Outlet } from "react-router";
 
 function SignInAndLogInPage() {
     return (
         <Auth.div>
-            <SignInComponent />
+            <Outlet />
         </Auth.div>
     );
 }

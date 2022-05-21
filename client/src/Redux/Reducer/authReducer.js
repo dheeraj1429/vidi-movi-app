@@ -3,6 +3,7 @@ import ACTION_TYPE from "../ActionType/ActionType";
 const INITAL_STATE = {
     loading: false,
     user: null,
+    forgetPassword: null,
 };
 
 const authReduer = function (state = INITAL_STATE, action) {
@@ -18,6 +19,13 @@ const authReduer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 loading: action.payload,
+            };
+
+        case ACTION_TYPE.FORGET_PASSWORD_REQUIEST:
+            return {
+                ...state,
+                forgetPassword: action.payload,
+                loading: false,
             };
 
         default:

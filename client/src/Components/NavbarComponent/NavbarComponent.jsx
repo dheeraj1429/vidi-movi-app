@@ -43,7 +43,7 @@ function NavbarComponent() {
                             <IconsComponent iconsCl={"fas fa-sign-out"} event={removeUser} />
                         </div>
                     ) : (
-                        <CustomButtonComponent innteText={"Sign In"} pathUrl={"/signIn"} />
+                        <CustomButtonComponent innteText={"Sign In"} pathUrl={"/auth/user-signIn"} />
                     )}
                 </IconsComponent>
             </Navbar.IconDiv>

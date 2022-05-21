@@ -5,6 +5,10 @@ import { setUserCookieData } from "./Redux/Action/authAction";
 import { useDispatch } from "react-redux";
 
 // components
+import SignInComponent from "./Components/SignInComponent/SignInComponent";
+import LogInComponent from "./Components/LogInComponent/LogInComponent";
+import ForgetPasswordComponent from "./Components/ForgetPasswordComponent/ForgetPasswordComponent";
+import UserPasswordChangeRequiestComponent from "./Components/UserPasswordChangeRequiestComponent/UserPasswordChangeRequiestComponent";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage";
@@ -24,7 +28,12 @@ function App() {
         <div className="App">
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/signIn" element={<SignInAndLogInPage />} />
+                <Route path="/auth" element={<SignInAndLogInPage />}>
+                    <Route path="user-signIn" element={<SignInComponent />} />
+                    <Route path="user-logIn" element={<LogInComponent />} />
+                    <Route path="forget-password" element={<ForgetPasswordComponent />} />
+                    <Route path="password-reset-request/:id" element={<UserPasswordChangeRequiestComponent />} />
+                </Route>
             </Routes>
         </div>
     );

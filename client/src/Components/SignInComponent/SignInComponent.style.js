@@ -14,7 +14,7 @@ export const loginDiv = styled.div`
         font-weight: 600;
         color: #fff;
     }
-    p {
+    .error-message {
         color: var(--button-cl);
         margin-bottom: 1rem;
     }
@@ -23,4 +23,24 @@ export const loginDiv = styled.div`
 export const loginGroup = styled.div`
     position: relative;
     z-index: 10;
+    p {
+        color: var(--button-cl);
+    }
+`;
+
+export const options = styled.div`
+    text-align: center;
+    padding-top: 1rem;
+    a {
+        text-decoration: none;
+    }
+    p {
+        color: var(--main-cl);
+        font-size: 12px;
+        margin-bottom: 0.5rem;
+    }
+    span {
+        color: var(--google-button-cl);
+        cursor: pointer;
+    }
 `;

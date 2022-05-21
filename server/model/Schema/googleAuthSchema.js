@@ -11,6 +11,6 @@ const authUserSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
 });
 
-const authUser = mongoose.model("authUser", authUserSchema);
+const authUser = new mongoose.model("authUser", authUserSchema);
 
 module.exports = authUser;
