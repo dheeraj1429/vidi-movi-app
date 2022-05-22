@@ -7,7 +7,6 @@ function HomePage() {
     return (
         <Home.div>
             <NavbarComponent />
-            {/* <BannerComponent /> */}
             <HomeComponent />
         </Home.div>
     );

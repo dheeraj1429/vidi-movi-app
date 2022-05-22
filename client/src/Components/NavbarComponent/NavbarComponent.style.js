@@ -14,6 +14,16 @@ export const div = styled.div`
         font-size: 14px;
         margin-left: 1rem;
     }
+    @media (max-width: 1000px) {
+        .navbar-search-div {
+            width: 80%;
+        }
+    }
+    @media (max-width: 400px) {
+        .navbar-search-div {
+            width: 50%;
+        }
+    }
 `;
 
 export const innerDiv = styled.div`
@@ -36,6 +46,12 @@ export const imageDiv = styled.div`
         cursor: pointer;
         font-size: 20px;
     }
+    @media (max-width: 1000px) {
+        width: 60%;
+    }
+    @media (max-width: 600px) {
+        width: auto;
+    }
 `;
 
 export const list = styled.div`
@@ -48,4 +64,10 @@ export const IconDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    @media (max-width: 1000px) {
+        width: 80%;
+    }
+    @media (max-width: 800px) {
+        width: 100%;
+    }
 `;

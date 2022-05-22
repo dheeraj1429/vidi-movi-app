@@ -20,6 +20,16 @@ export const innerDiv = styled.div`
     &:hover {
         background-color: var(--light-gray);
     }
+    @media (max-width: 1000px) {
+        p {
+            font-size: 12px;
+        }
+    }
+    @media (max-width: 600px) {
+        p {
+            display: none;
+        }
+    }
 `;
 
 export const svgDiv = styled.div`
@@ -27,4 +37,10 @@ export const svgDiv = styled.div`
     height: auto;
     display: flex;
     align-items: center;
+    @media (max-width: 1000px) {
+        width: 30px;
+    }
+    @media (max-width: 600px) {
+        width: auto;
+    }
 `;

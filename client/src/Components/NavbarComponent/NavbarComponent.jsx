@@ -25,7 +25,7 @@ function NavbarComponent() {
             <Navbar.imageDiv>
                 <BsList />
             </Navbar.imageDiv>
-            <Navbar.innerDiv>
+            <Navbar.innerDiv className="navbar-search-div">
                 {/* <Navbar.list>
                     <NavbarListItemComponent innerContant={"Home"} />
                     <NavbarListItemComponent innerContant={"Movies"} />
@@ -36,7 +36,6 @@ function NavbarComponent() {
             </Navbar.innerDiv>
             <Navbar.IconDiv>
                 <IconsComponent iconsCl={"fas fa-search"} />
-                <IconsComponent iconsCl={"fas fa-bookmark"} />
                 <IconsComponent>
                     {user !== null && user !== undefined && Object.keys(user.data).length > 0 && user.data ? (
                         <div className="user-login-div">

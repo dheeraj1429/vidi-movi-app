@@ -5,6 +5,11 @@ export const div = styled.div`
     background: rgba(0, 0, 0, 0.75);
     border-radius: 4px;
     padding: 60px 68px 40px;
+    transition: all 0.3s ease;
+    @media (max-width: 600px) {
+        width: 400px;
+        padding: 2rem;
+    }
 `;
 
 export const SignInWithGoogleDiv = styled.div`

@@ -31,4 +31,7 @@ export const button = styled.button`
     border-radius: 5px;
     color: var(--main-cl);
     border: none;
+    @media (max-width: 1000px) {
+        padding: 0.5rem 1rem;
+    }
 `;

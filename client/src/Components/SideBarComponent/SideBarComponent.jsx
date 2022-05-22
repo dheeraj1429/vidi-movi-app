@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import * as sideBar from "./SideBarComponent.style";
-import SideBaOptionComponent from "../SideBaOptionComponent/SideBaOptionComponent";
 import { VscHome } from "@react-icons/all-files/vsc/VscHome";
 import { VscHeart } from "@react-icons/all-files/vsc/VscHeart";
 import { VscSync } from "@react-icons/all-files/vsc/VscSync";
+import SideBarOptionComponent from "../SideBarOptionComponent/SideBarOptionComponent";
 
 function SideBarComponent() {
     const [ActiveBar, setActiveBar] = useState("Home");
@@ -17,9 +17,9 @@ function SideBarComponent() {
     return (
         <sideBar.mainDiv>
             <sideBar.innerDiv>
-                <SideBaOptionComponent icon={<VscHome />} innerText={"Home"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                <SideBaOptionComponent icon={<VscHeart />} innerText={"Link"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                <SideBaOptionComponent icon={<VscSync />} innerText={"History"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                <SideBarOptionComponent icon={<VscHome />} innerText={"Home"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                <SideBarOptionComponent icon={<VscHeart />} innerText={"Like"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                <SideBarOptionComponent icon={<VscSync />} innerText={"History"} event={ActiveBarHandler} activeBar={ActiveBar} />
             </sideBar.innerDiv>
         </sideBar.mainDiv>
     );

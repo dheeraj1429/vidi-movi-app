@@ -1,34 +1,29 @@
 import React from "react";
-import * as Banner from "./BannerComponent.style";
-import CustomButtonComponent from "../CustomButtonComponent/CustomButtonComponent";
+import * as banner from "./BannerComponent.style";
 
 function BannerComponent() {
     return (
-        <Banner.bannerDiv
-            className="side_padding"
-            style={{
-                backgroundImage: `url('/images/slide03.jpg')`,
-            }}
-        >
-            <Banner.contentDiv>
-                <h5>Netflix Original</h5>
-                <h1>Future Hell</h1>
+        <banner.div>
+            <banner.bannerImage
+                style={{
+                    backgroundImage: `url('/images/title-image-1.webp')`,
+                }}
+            >
+                <banner.flexDiv>
+                    <banner.contentDiv>
+                        <h5>2019</h5>
+                        <h4>ADVENCE, FANTASY, MISTERY</h4>
+                        <h1>GREEN BOOK</h1>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
+                            dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
+                        </p>
 
-                <Banner.contentFlex>
-                    <p>2015</p>
-                    <p>2 Seasons</p>
-                    <p className="activeBr">Action</p>
-                </Banner.contentFlex>
-
-                <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore perferendis est dolorem, eveniet voluptatibus exercitationem dolores a ea error neque
-                    excepturi temporibus. Nisi dicta vero, ex distinctio provident magni, velit, error repellendus excepturi libero esse ducimus. Aliquam, velit veritatis?
-                    Aspernatur.
-                </p>
-
-                <CustomButtonComponent innteText={"Watch Now"} buttonCl={"banner-button"} buttonIcon={"fas fa-play"} />
-            </Banner.contentDiv>
-        </Banner.bannerDiv>
+                        <banner.watchDiv></banner.watchDiv>
+                    </banner.contentDiv>
+                </banner.flexDiv>
+            </banner.bannerImage>
+        </banner.div>
     );
 }
 

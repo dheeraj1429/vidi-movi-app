@@ -5,10 +5,18 @@ export const mainDiv = styled.div`
     height: 100vh;
     background-color: var(--dark-cl);
     overflow-x: hidden;
-    position: fixed;
-    left: 0;
+    position: relative;
+    @media (max-width: 1000px) {
+        width: 200px;
+    }
+    @media (max-width: 600px) {
+        width: 100px;
+    }
 `;
 
 export const innerDiv = styled.div`
     padding: 0.5rem 0;
+    position: absolute;
+    left: 0;
+    width: 100%;
 `;

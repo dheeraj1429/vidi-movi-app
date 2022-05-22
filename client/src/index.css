@@ -13,8 +13,43 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+    font-family: "Paralucent-bold";
+    src: url("../public/fonts/Paralucent-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-demi-bold";
+    src: url("../public/fonts/Paralucent-DemiBold.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-extra-light";
+    src: url("../public/fonts/Paralucent-ExtraLight.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-heavy";
+    src: url("../public/fonts/Paralucent-Heavy.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-light";
+    src: url("../public/fonts/Paralucent-Light.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-meduim";
+    src: url("../public/fonts/Paralucent-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-thin";
+    src: url("../public/fonts/Paralucent-Thin.ttf");
+}
+
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-family: CustomFont;
 }
 
 :root {
@@ -25,7 +60,7 @@ code {
     --light-gray: #313131;
     --gray-cl: #1e1e21;
     --body-background-cl: #181818;
-    --smooht-gray-cl: #9f9f9f;
+    --smooht-gray-cl: #dadada;
     --google-button-cl: #4c8cf1;
     --spec-base-background: #0f0f0f;
     --spec-elevated-background: #212121;
@@ -105,4 +140,8 @@ code {
 
 .active-bar {
     background-color: var(--light-gray);
+}
+
+a {
+    text-decoration: none;
 }

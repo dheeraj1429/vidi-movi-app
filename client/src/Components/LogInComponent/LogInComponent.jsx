@@ -69,7 +69,7 @@ function LogInComponent() {
                 <signIn.options>
                     <p>Don't have a account</p>
                     <Link to={"/auth/user-signIn"}>
-                        <span>login</span>
+                        <span>Sign In</span>
                     </Link>
                 </signIn.options>
             </signIn.loginDiv>
