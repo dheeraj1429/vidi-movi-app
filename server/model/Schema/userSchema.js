@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     isAdmin: { type: String, default: "user" },
     createdAt: { type: Date, default: Date.now },
     tokens: [{ token: { type: String, required: [true, "please genrate the user token"] } }],
+    favoriteMovies: [{ movieId: { type: mongoose.Types.ObjectId } }],
 });
 
 // genrate the user token

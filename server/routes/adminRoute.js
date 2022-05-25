@@ -6,7 +6,7 @@ const adminControllers = require("../controllers/adminControllers");
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         if (file.fieldname === "image" || file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
-            callback(null, "./uploads/images");
+            callback(null, "./uploads/thumbnail");
         } else if (
             file.mimetype === "video/mp4" ||
             file.mimetype === "video/3gpp" ||

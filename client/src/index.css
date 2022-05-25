@@ -54,6 +54,7 @@ code {
 
 :root {
     --main-cl: #ffffff;
+    --overlay-cl: rgba(0, 0, 0, 0.411);
     --button-cl: #e50914;
     --watch-cl: #9c0e15;
     --dark-cl: #202020;

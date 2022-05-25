@@ -14,6 +14,7 @@ const port = cart.PORT || 7000;
 // routes files
 const adminRouter = require("./routes/adminRoute");
 const authRouter = require("./routes/authRoute");
+const indexRouter = require("./routes/indexRoute");
 
 // middleware
 app.use(cors());
@@ -22,6 +23,7 @@ app.set("view engine", "ejs");
 app.use(helmet());
 app.use(express.static(path.join(path.resolve(__dirname), "public")));
 app.use(express.static(path.join(path.resolve(__dirname), "build")));
+app.use(express.static(path.join(path.resolve(__dirname), "uploads")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan());
@@ -35,6 +37,7 @@ app.use(
 // routes
 app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
+app.use("/index", indexRouter);
 
 dataBaseConnectionFuntion(() => {
     // server listening
