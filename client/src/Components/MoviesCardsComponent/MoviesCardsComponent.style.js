@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const div = styled.div`
-    width: 200px;
+    width: 300px;
     height: auto;
     transition: all 0.5s ease;
     margin: 0 0.5rem;
@@ -10,17 +10,19 @@ export const div = styled.div`
         font-size: 14px;
         margin-top: 0.5rem;
         font-weight: 400;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s ease;
     }
     .Active-movie-card {
-        transform: scale(1.1) !important;
+        transform: scale(1.2) !important;
         z-index: 400;
     }
     video {
         position: absolute;
-        width: 130%;
-        top: -20px;
-        left: -15px;
-        height: 115%;
+        width: 308% !important;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
     &:hover {
         .play-div {
@@ -28,6 +30,9 @@ export const div = styled.div`
             width: 50px;
             height: 50px;
         }
+    }
+    &:hover h3 {
+        opacity: 0;
     }
     .glightbox_video {
         position: absolute;
@@ -58,6 +63,15 @@ export const div = styled.div`
     }
 `;
 
+export const videoDiv = styled.div`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+`;
+
 export const cartContentDiv = styled.div`
     transition: all 0.5s ease;
     position: relative;
@@ -77,11 +91,11 @@ export const cartContentDiv = styled.div`
         transform: scale(1);
     }
 
-    &:hover .card-hover-div {
+    /* &:hover .card-hover-div {
         opacity: 1;
         width: 100%;
         height: 100%;
-    }
+    } */
 `;
 
 export const info = styled.div`
@@ -101,7 +115,7 @@ export const info = styled.div`
 
 export const moviDiv = styled.div`
     width: 100%;
-    height: 300px;
+    height: 380px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -119,29 +133,6 @@ export const moviDiv = styled.div`
 
     &:hover .movi-information-div {
         bottom: 0px;
-    }
-`;
-
-export const playDiv = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    visibility: hidden;
-    cursor: pointer;
-    width: 0px;
-    height: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    /* background-color: var(--button-cl); */
-    transition: all 0.3s ease;
-    opacity: 0;
-
-    svg {
-        color: var(--main-cl);
-        font-size: 30px;
     }
 `;
 

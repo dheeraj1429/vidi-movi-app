@@ -16,6 +16,7 @@ export const innerDiv = styled.div`
     p {
         color: var(--smooht-gray-cl);
         font-size: 14px;
+        margin-bottom: 0;
     }
     &:hover {
         background-color: var(--light-gray);

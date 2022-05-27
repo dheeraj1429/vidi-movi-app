@@ -56,6 +56,7 @@ code {
     --main-cl: #ffffff;
     --overlay-cl: rgba(0, 0, 0, 0.411);
     --button-cl: #e50914;
+    --user-profile-spec-cl: #757575,
     --watch-cl: #9c0e15;
     --dark-cl: #202020;
     --extra-dark-cl: #121212;
@@ -114,6 +115,17 @@ code {
     --spec-static-grey: #606060;
     --spec-static-overlay-background-solid: #000;
     --spec-static-overlay-background-heavy: rgba(0, 0, 0, 0.8);
+    --edit-popup-onerlay-color: rgba(0, 0, 0, 0.452);
+    --color-bg-primary: #d0d6df;
+    --color-bg-primary-offset: #f1f3f7;
+    --color-bg-secondary: #fff;
+    --color-text-primary: #3a3c42;
+    --color-text-primary-offset: #898c94;
+    --color-orange: #dc9960;
+    --color-green: #1eb8b1;
+    --color-purple: #657cc4;
+    --color-black: var(--color-text-primary);
+    --color-red: #d92027;
 }
 
 /* width */
@@ -148,3 +160,4 @@ code {
 a {
     text-decoration: none;
 }
+

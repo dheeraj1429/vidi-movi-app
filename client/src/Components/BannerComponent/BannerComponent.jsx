@@ -6,7 +6,7 @@ function BannerComponent() {
         <banner.div>
             <banner.bannerImage
                 style={{
-                    backgroundImage: `url('/images/bg.jpg')`,
+                    backgroundImage: `url('/images/popular.jpg')`,
                 }}
             >
                 <banner.flexDiv>

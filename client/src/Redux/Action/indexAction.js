@@ -23,3 +23,24 @@ export const overlayDiv = function (data) {
         payload: data,
     };
 };
+
+export const togglePopUp = function (data) {
+    return {
+        type: ACTION_TYPE.TOGGLE_POPUP,
+        payload: data,
+    };
+};
+
+export const showOptionPopup = function (data) {
+    return {
+        type: ACTION_TYPE.SHOW_OPTIONS_POPUP,
+        payload: data,
+    };
+};
+
+export const changeTheme = function (data) {
+    return {
+        type: ACTION_TYPE.CHANGE_THEME,
+        payload: data,
+    };
+};

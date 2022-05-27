@@ -3,6 +3,9 @@ import ACTION_TYPE from "../ActionType/ActionType";
 const INITAL_STATE = {
     all_movies: null,
     overlay: false,
+    showPopUp: false,
+    showOptionsPopUp: false,
+    changeTheme: "dark",
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -17,6 +20,18 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 overlay: action.payload,
+            };
+
+        case ACTION_TYPE.TOGGLE_POPUP:
+            return {
+                ...state,
+                showPopUp: action.payload,
+            };
+
+        case ACTION_TYPE.SHOW_OPTIONS_POPUP:
+            return {
+                ...state,
+                showOptionsPopUp: action.payload,
             };
 
         default: {

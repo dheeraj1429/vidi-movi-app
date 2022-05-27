@@ -5,7 +5,6 @@ export const div = styled.div``;
 export const formGroup = styled.div`
     padding: 1rem;
     margin-top: 1rem;
-    box-shadow: 0px 0px 4px 2px var(--smooht-gray-cl);
     border-radius: 10px;
     #movie-descriptions {
         width: 100%;

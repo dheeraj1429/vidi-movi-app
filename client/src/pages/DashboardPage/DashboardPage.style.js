@@ -5,8 +5,9 @@ export const div = styled.div`
 `;
 
 export const renderDiv = styled.div`
-    padding: 2rem;
+    padding: 0 2rem;
     width: 100%;
     height: 100vh;
     overflow-x: hidden;
+    /* background-color: var(--body-background-cl); */
 `;

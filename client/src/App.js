@@ -15,6 +15,7 @@ import ForgetPasswordComponent from "./Components/ForgetPasswordComponent/Forget
 import UserPasswordChangeRequiestComponent from "./Components/UserPasswordChangeRequiestComponent/UserPasswordChangeRequiestComponent";
 import HomeContainerComponent from "./Components/HomeContainerComponent/HomeContainerComponent";
 import MoviesUploadComponent from "./DashboardComponents/MoviesUploadComponent/MoviesUploadComponent";
+import DashboardMoviesComponent from "./DashboardComponents/DashboardMoviesComponent/DashboardMoviesComponent";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage";
@@ -50,6 +51,7 @@ function App() {
                 </Route>
                 <Route path="/admin/dashboard" element={<DashboardPage />}>
                     <Route path="movies-upload" element={<MoviesUploadComponent />} />
+                    <Route path="movies" element={<DashboardMoviesComponent />} />
                 </Route>
             </Routes>
         </div>

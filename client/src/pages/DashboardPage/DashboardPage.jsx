@@ -8,7 +8,7 @@ import { Outlet } from "react-router";
 import DashboardSiderComponent from "../../DashboardComponents/DashboardSiderComponent/DashboardSiderComponent";
 
 function DashboardPage() {
-    const [cookie, removeCookie, setCookie] = useCookies(["user"]);
+    const [cookie] = useCookies(["user"]);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -16,6 +16,7 @@ function DashboardPage() {
         if (user === undefined || user.data.admin !== "admin" || user.data === undefined) {
             navigation("/");
         }
+        console.log(user);
     }, []);
 
     return (

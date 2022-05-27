@@ -5,6 +5,7 @@ function FileUploadComponent({ change, paraValue, accept, name, ic }) {
     return (
         <file.div>
             <p>{paraValue}</p>
+            <p>file - {accept}</p>
             <file.flexDiv>
                 <i class={ic}></i>
             </file.flexDiv>

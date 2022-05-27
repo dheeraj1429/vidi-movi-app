@@ -7,6 +7,7 @@ import FileUploadComponent from "../FileUploadComponent/FileUploadComponent";
 import { useSelector, useDispatch } from "react-redux";
 import { movieUpload, loadingAction } from "../../Redux/Action/adminAction";
 import CustomButtonComponent from "../../Components/CustomButtonComponent/CustomButtonComponent";
+import DashboardNavbarComponent from "../DashboardNavbarComponent/DashboardNavbarComponent";
 
 const genresData = [
     { value: "Action", label: "Action" },
@@ -34,8 +35,6 @@ function MoviesUploadComponent() {
     const dispatch = useDispatch();
     const movieStatus = useSelector((state) => state.movie.movie_status);
     const loading = useSelector((state) => state.movie.loading);
-
-    console.log(movieStatus);
 
     const CahngeHander = function (e) {
         const name = e.target.name;
@@ -78,10 +77,12 @@ function MoviesUploadComponent() {
 
     return (
         <Movies.div>
+            <DashboardNavbarComponent />
             <DashBoardHeadingComponent title={"Movies Upload"} titleNav={"Form / movies upload"} />
+
             <Movies.formGroup>
                 <DashBoardHeadingComponent title={"Form Elements"} elmCl={"extra-sm"} />
-                <Movies.innerDiv className="flex-div-inner ">
+                <Movies.innerDiv className="flex-div-inner">
                     <TextField id="outlined-basic" label="Movie name" variant="outlined" value={MovieData.name} name="name" onChange={CahngeHander} />
                     <TextField
                         id="outlined-basic"
