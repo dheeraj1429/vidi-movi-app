@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
-export const div = styled.div``;
+export const div = styled.div`
+    position: relative;
+    .showInenrOptions {
+        visibility: visible;
+        transform: scale(1);
+        opacity: 1;
+    }
+`;
 
 export const innerDiv = styled.div`
     display: flex;
@@ -43,5 +50,22 @@ export const svgDiv = styled.div`
     }
     @media (max-width: 600px) {
         width: auto;
+    }
+`;
+
+export const sideBarInnerOptionsDiv = styled.div`
+    position: absolute;
+    width: 200px;
+    top: 0;
+    left: -200px;
+    background: var(--dark-cl);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    visibility: hidden;
+    transition: all 0.3s ease;
+    transform: scale(0.6);
+    opacity: 0;
+    ul li {
+        list-style: none;
     }
 `;

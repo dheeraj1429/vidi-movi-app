@@ -38,7 +38,7 @@ export const showOptionPopup = function (data) {
     };
 };
 
-export const changeTheme = function (data) {
+export const themChange = function (data) {
     return {
         type: ACTION_TYPE.CHANGE_THEME,
         payload: data,

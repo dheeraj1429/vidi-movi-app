@@ -9,11 +9,8 @@ import { AiOutlineAccountBook } from "@react-icons/all-files/ai/AiOutlineAccount
 import { BiMessageDots } from "@react-icons/all-files/bi/BiMessageDots";
 import { AiOutlineUsergroupAdd } from "@react-icons/all-files/ai/AiOutlineUsergroupAdd";
 import { BiMoon } from "@react-icons/all-files/bi/BiMoon";
-import { changeTheme } from "../../Redux/Action/indexAction";
 
 function OptionsDropDownComponent({ isShow, imageUrl, name, email }) {
-    const user = useSelector((state) => state.auth.user);
-    const theme = useSelector((state) => state.index.changeTheme);
     const [cookies, setCookie, removeCookie] = useCookies(["user"]);
     const dispatch = useDispatch();
 
@@ -21,8 +18,6 @@ function OptionsDropDownComponent({ isShow, imageUrl, name, email }) {
         dispatch(setUserCookieData(null));
         removeCookie("user");
     };
-
-    const ChangeThemeHandler = function () {};
 
     return (
         <options.div id="options_popup" style={!isShow ? { display: "none" } : { display: "block" }}>
@@ -48,7 +43,7 @@ function OptionsDropDownComponent({ isShow, imageUrl, name, email }) {
                 <SideBarOptionComponent icon={<AiOutlineAccountBook />} innerText={"Your Account"} width={"30"} />
                 <SideBarOptionComponent icon={<BiMessageDots />} innerText={"Send feedback"} width={"30"} />
                 <SideBarOptionComponent icon={<AiOutlineUsergroupAdd />} innerText={"Share Account"} width={"30"} />
-                <SideBarOptionComponent icon={<BiMoon />} innerText={"Change Theme"} width={"30"} onClick={ChangeThemeHandler} />
+                <SideBarOptionComponent icon={<BiMoon />} innerText={"Change Theme"} width={"30"} innerOptions={true} />
                 <SideBarOptionComponent icon={<BiLogOut />} innerText={"Log Out"} onClick={removeUser} width={"30"} />
             </options.innerDiv>
         </options.div>

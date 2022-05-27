@@ -34,6 +34,12 @@ const indexReducer = function (state = INITAL_STATE, action) {
                 showOptionsPopUp: action.payload,
             };
 
+        case ACTION_TYPE.CHANGE_THEME:
+            return {
+                ...state,
+                changeTheme: action.payload,
+            };
+
         default: {
             return {
                 ...state,
