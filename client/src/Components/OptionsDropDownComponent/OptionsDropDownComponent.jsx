@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as options from "./OptionsDropDownComponent.style";
 import { BiLogOut } from "@react-icons/all-files/bi/BiLogOut";
 import SideBarOptionComponent from "../SideBarOptionComponent/SideBarOptionComponent";
@@ -13,11 +13,16 @@ import { BiMoon } from "@react-icons/all-files/bi/BiMoon";
 function OptionsDropDownComponent({ isShow, imageUrl, name, email }) {
     const [cookies, setCookie, removeCookie] = useCookies(["user"]);
     const dispatch = useDispatch();
+    const themeSelector = useSelector((state) => state.index.changeTheme);
 
     const removeUser = function () {
         dispatch(setUserCookieData(null));
         removeCookie("user");
     };
+
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", themeSelector);
+    }, [themeSelector]);
 
     return (
         <options.div id="options_popup" style={!isShow ? { display: "none" } : { display: "block" }}>

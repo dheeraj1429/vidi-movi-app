@@ -37,23 +37,23 @@ export const flexDiv = styled.div`
 
 export const contentDiv = styled.div`
     h5 {
-        color: var(--main-cl);
+        color: var(--heading-cl);
         margin-bottom: 3rem;
         font-size: 25px;
         font-family: Paralucent-bold;
     }
     h4 {
-        color: var(--main-cl);
+        color: var(--heading-cl);
         font-size: 20px;
         font-family: Paralucent-bold;
     }
     h1 {
-        color: var(--main-cl);
+        color: var(--heading-cl);
         font-size: 140px;
         font-family: Paralucent-bold;
     }
     p {
-        color: var(--smooht-gray-cl);
+        color: var(--smooht-gray-spec-cl);
         font-size: 15px;
         max-width: 80%;
         line-height: 30px;
