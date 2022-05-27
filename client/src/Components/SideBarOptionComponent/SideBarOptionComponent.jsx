@@ -28,7 +28,7 @@ function SideBarOptionComponent({ icon, innerText, event, activeBar, onClick, wi
 
     return (
         <>
-            <div onClick={onClick ? onClick : null}>
+            <sidebar.parentDiv onClick={onClick ? onClick : null}>
                 <Link
                     to={
                         innerText === "Home" ||
@@ -80,7 +80,7 @@ function SideBarOptionComponent({ icon, innerText, event, activeBar, onClick, wi
                         </sidebar.innerDiv>
                     </sidebar.div>
                 </Link>
-            </div>
+            </sidebar.parentDiv>
         </>
     );
 }

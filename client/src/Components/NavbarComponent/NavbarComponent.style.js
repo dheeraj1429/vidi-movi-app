@@ -3,8 +3,10 @@ import styled from "styled-components";
 export const div = styled.div`
     width: 100%;
     display: flex;
-    background-color: var(--dark-cl);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
+    position: absolute;
+    z-index: 100;
+    justify-content: space-between;
     .user-login-div {
         display: flex;
         align-items: center;
@@ -37,7 +39,6 @@ export const innerDiv = styled.div`
 export const imageDiv = styled.div`
     display: flex;
     align-items: center;
-    width: 80%;
     padding: 1rem;
     img {
         width: auto;
@@ -63,7 +64,6 @@ export const list = styled.div`
 `;
 
 export const IconDiv = styled.div`
-    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;

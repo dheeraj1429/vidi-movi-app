@@ -12,17 +12,14 @@ const moviesSchema = new mongoose.Schema({
     movieVideoPath: { type: String, required: [true, "file name is required"] },
     thumbnailName: { type: String, required: [true, "thumbnailName is required"] },
     thumbnailPath: { type: String, required: [true, "please enter the mmovie url paht"] },
+    activity: [{ like: { type: String }, dislike: { type: String } }],
+    views: { type: String, default: 0 },
+    createdAt: { type: Date, default: Date.now },
     rating: [
         {
             review: { type: String, default: 0 },
             user: { type: mongoose.Types.ObjectId, required: [true, "user is required"] },
             comment: { type: String },
-        },
-    ],
-    activity: [
-        {
-            like: { type: String },
-            dislike: { type: String },
         },
     ],
 });

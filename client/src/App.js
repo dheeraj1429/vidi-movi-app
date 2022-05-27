@@ -16,6 +16,7 @@ import UserPasswordChangeRequiestComponent from "./Components/UserPasswordChange
 import HomeContainerComponent from "./Components/HomeContainerComponent/HomeContainerComponent";
 import MoviesUploadComponent from "./DashboardComponents/MoviesUploadComponent/MoviesUploadComponent";
 import DashboardMoviesComponent from "./DashboardComponents/DashboardMoviesComponent/DashboardMoviesComponent";
+import LikeMoviesComponent from "./Components/LikeMoviesComponent/LikeMoviesComponent";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage";
@@ -42,6 +43,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomePage />}>
                     <Route path="/" element={<HomeContainerComponent />} />
+                    <Route path="/like" element={<LikeMoviesComponent />} />
                 </Route>
                 <Route path="/auth" element={<SignInAndLogInPage />}>
                     <Route path="user-signIn" element={<SignInComponent />} />

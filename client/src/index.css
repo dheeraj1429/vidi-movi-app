@@ -53,16 +53,17 @@ code {
 }
 
 :root {
+    --light-active-spec-cl: #20B5DE;
     --main-cl: #ffffff;
     --overlay-cl: rgba(0, 0, 0, 0.411);
     --button-cl: #e50914;
     --user-profile-spec-cl: #757575,
     --watch-cl: #9c0e15;
-    --dark-cl: #202020;
+    --dark-cl: #000000;
     --extra-dark-cl: #121212;
     --light-gray: #313131;
     --gray-cl: #1e1e21;
-    --body-background-cl: #181818;
+    --body-background-cl: #0e0e0e;
     --smooht-gray-cl: #dadada;
     --google-button-cl: #4c8cf1;
     --spec-base-background: #0f0f0f;
@@ -209,16 +210,17 @@ code {
 }
 
 [data-theme='Dark']  {
+    --light-active-spec-cl: #20B5DE;
     --main-cl: #ffffff;
     --overlay-cl: rgba(0, 0, 0, 0.411);
     --button-cl: #e50914;
     --user-profile-spec-cl: #757575,
     --watch-cl: #9c0e15;
-    --dark-cl: #202020;
+    --dark-cl: #000000;
     --extra-dark-cl: #121212;
     --light-gray: #313131;
     --gray-cl: #1e1e21;
-    --body-background-cl: #181818;
+    --body-background-cl: #0e0e0e;
     --smooht-gray-cl: #dadada;
     --google-button-cl: #4c8cf1;
     --spec-base-background: #0f0f0f;
@@ -309,10 +311,6 @@ code {
 
 .side_padding {
     padding: 0 150px;
-}
-
-.active-bar {
-    background-color: var(--light-gray);
 }
 
 a {

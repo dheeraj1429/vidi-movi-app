@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 export const mainDiv = styled.div`
-    width: 250px;
+    width: 300px;
     background-color: var(--dark-cl);
     overflow-x: hidden;
     position: relative;
+    padding: 3.6rem 0;
     @media (max-width: 1000px) {
         width: 200px;
     }

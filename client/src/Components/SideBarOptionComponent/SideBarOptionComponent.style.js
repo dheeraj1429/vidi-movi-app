@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+export const parentDiv = styled.div`
+    .active-bar {
+        border-left: 2px solid var(--light-active-spec-cl);
+    }
+    .active-bar p {
+        color: var(--light-active-spec-cl);
+    }
+    .active-bar svg {
+        fill: var(--light-active-spec-cl);
+    }
+`;
+
 export const div = styled.div`
     position: relative;
     .showInenrOptions {

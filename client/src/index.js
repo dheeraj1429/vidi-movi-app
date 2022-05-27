@@ -14,7 +14,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
     <Provider store={store}>
-        {/* <StyledEngineProvider injectFirst> */}
         <CookiesProvider>
             <BrowserRouter>
                 <React.StrictMode>
@@ -22,6 +21,5 @@ root.render(
                 </React.StrictMode>
             </BrowserRouter>
         </CookiesProvider>
-        {/* </StyledEngineProvider> */}
     </Provider>
 );

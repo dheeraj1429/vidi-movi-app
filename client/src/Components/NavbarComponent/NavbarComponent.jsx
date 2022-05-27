@@ -1,8 +1,6 @@
 import React from "react";
 import * as Navbar from "./NavbarComponent.style";
 import { useSelector, useDispatch } from "react-redux";
-import { setUserCookieData } from "../../Redux/Action/authAction";
-import { useCookies } from "react-cookie";
 import { BsList } from "react-icons/bs";
 import IconsComponent from "../IconsComponent/IconsComponent";
 import CustomButtonComponent from "../CustomButtonComponent/CustomButtonComponent";
@@ -24,7 +22,6 @@ function NavbarComponent() {
             <Navbar.imageDiv>
                 <BsList />
             </Navbar.imageDiv>
-            <Navbar.innerDiv className="navbar-search-div"></Navbar.innerDiv>
             <Navbar.IconDiv>
                 <IconsComponent iconsCl={"fas fa-search"} />
                 <IconsComponent>
