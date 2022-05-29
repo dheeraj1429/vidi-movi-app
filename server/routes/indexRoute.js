@@ -3,6 +3,6 @@ const router = express.Router();
 const indexController = require("../controllers/indexControllers");
 
 router.post("/get-all-movies", indexController.getAllMovies);
-router.get("/stremVideo/:name", indexController.stremVideo);
+router.get("/stream-video/:name", indexController.stremVideo);
 
 module.exports = router;

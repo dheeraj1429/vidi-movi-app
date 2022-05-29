@@ -5,6 +5,8 @@ import { BsFillPlayFill } from "@react-icons/all-files/bs/BsFillPlayFill";
 import { BiPause } from "@react-icons/all-files/bi/BiPause";
 import { GiSoundOn } from "@react-icons/all-files/gi/GiSoundOn";
 import { GiSoundOff } from "@react-icons/all-files/gi/GiSoundOff";
+import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
+import { backendConfigData } from "../../Utils/backendData";
 
 function MoviePlaySinglePage() {
     const [ActiveBtn, setActiveBtn] = useState(false);
@@ -18,7 +20,6 @@ function MoviePlaySinglePage() {
     const CurrentDuractionValue = useRef(null);
     const [ProgressValue, setProgressValue] = useState(0);
     const [SoundLow, setSoundLow] = useState(false);
-    const SickBarValue = useRef(null);
 
     const ButtonHandler = async function () {
         setActiveBtn(!ActiveBtn);
@@ -99,9 +100,22 @@ function MoviePlaySinglePage() {
         const { offsetX } = e.nativeEvent;
         const { offsetWidth } = e.nativeEvent.srcElement;
         const progressBarClickValue = (offsetX / offsetWidth) * 100;
+
+        setProgressValue(progressBarClickValue);
         const time = (offsetX / offsetWidth) * video.current.duration;
-        SickBarValue.current.style.width = `${progressBarClickValue}%`;
         video.current.currentTime = time;
+    };
+
+    const FullScreenHandler = function () {
+        if (video.current.requestFullscreen) {
+            video.current.requestFullscreen();
+        } else if (video.current.webkitRequestFullscreen) {
+            /* Safari */
+            video.current.webkitRequestFullscreen();
+        } else if (video.current.msRequestFullscreen) {
+            /* IE11 */
+            video.current.msRequestFullscreen();
+        }
     };
 
     useEffect(() => {
@@ -127,11 +141,13 @@ function MoviePlaySinglePage() {
                             </div>
                             <video
                                 className={ActiveBtn ? "showVideo" : null}
-                                src={`/videos/${selectedMovie.movieVideo}`}
+                                // src={`/videos/${selectedMovie.movieVideo}`}
+                                src={`${backendConfigData.backendVideoUrl}/${selectedMovie.movieVideo}`}
                                 ref={video}
                                 onTimeUpdate={TimeUpdateHandler}
                                 onPlay={PlayHandler}
                                 onPause={PauseHandler}
+                                onClick={PlayAndPauseHandler}
                             ></video>
                             <single.controllDiv className={ActiveBtn ? "showControlles" : null}>
                                 <div id="flexDiv">
@@ -141,9 +157,9 @@ function MoviePlaySinglePage() {
                                         <BsFillPlayFill ref={playButton} onClick={PlayAndPauseHandler} />
                                     )}
 
-                                    <single.progressBar onClick={(e) => SickBarHandler(e)}>
+                                    <single.progressBar>
+                                        <single.progressEvetDiv onClick={(e) => SickBarHandler(e)} />
                                         <single.progressInner
-                                            ref={SickBarValue}
                                             style={{
                                                 width: `${ProgressValue}%`,
                                             }}
@@ -151,23 +167,28 @@ function MoviePlaySinglePage() {
                                     </single.progressBar>
                                 </div>
                                 <single.timeDiv>
-                                    <p ref={CurrentValue}>00 : 00</p>
-                                    <p>/</p>
-                                    <p ref={CurrentDuractionValue}>00 : 00</p>
-                                    <single.soundDiv>
-                                        {SoundLow ? <GiSoundOff /> : <GiSoundOn />}
+                                    <div className="inner-timer-options-div">
+                                        <p ref={CurrentValue}>00 : 00</p>
+                                        <p>/</p>
+                                        <p ref={CurrentDuractionValue}>00 : 00</p>
+                                        <single.soundDiv>
+                                            {SoundLow ? <GiSoundOff /> : <GiSoundOn />}
 
-                                        <input
-                                            class="range"
-                                            type="range"
-                                            min="0"
-                                            max="100"
-                                            step="1"
-                                            onmousemove="rangevalue2.value=value"
-                                            ref={SoundValue}
-                                            onChange={ChangeHandler}
-                                        />
-                                    </single.soundDiv>
+                                            <input
+                                                class="range"
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                step="1"
+                                                onmousemove="rangevalue2.value=value"
+                                                ref={SoundValue}
+                                                onChange={ChangeHandler}
+                                            />
+                                        </single.soundDiv>
+                                    </div>
+                                    <div className="inner-timer-options-div">
+                                        <BiFullscreen onClick={FullScreenHandler} />
+                                    </div>
                                 </single.timeDiv>
                             </single.controllDiv>
                         </single.movieDiv>

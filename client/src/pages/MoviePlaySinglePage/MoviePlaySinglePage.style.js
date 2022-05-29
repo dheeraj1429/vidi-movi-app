@@ -3,6 +3,15 @@ import styled from "styled-components";
 export const div = styled.div`
     width: 100%;
     height: auto;
+
+    svg {
+        fill: var(--heading-cl);
+        transition: all 0.3s ease;
+    }
+
+    svg:hover {
+        transform: scale(1.1);
+    }
 `;
 
 export const movieDiv = styled.div`
@@ -109,6 +118,17 @@ export const progressBar = styled.div`
     cursor: pointer;
 `;
 
+export const progressEvetDiv = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 100;
+    background-color: transparent;
+`;
+
 export const progressInner = styled.div`
     position: absolute;
     top: 0;
@@ -116,15 +136,20 @@ export const progressInner = styled.div`
     height: 100%;
     background-color: var(--button-cl);
     transition: all 0.6s ease;
+    z-index: 10;
 `;
 
 export const timeDiv = styled.div`
     display: flex;
-    width: 100%;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    max-width: fit-content;
     padding: 1rem;
+
+    .inner-timer-options-div {
+        display: flex;
+        align-items: center;
+    }
+
     p {
         font-size: 12px;
         color: var(--heading-cl);

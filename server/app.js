@@ -7,6 +7,7 @@ const cookieSession = require("cookie-session");
 const helmet = require("helmet");
 const ejs = require("ejs");
 const cart = require("./cart");
+const flash = require("connect-flash");
 
 const app = express();
 const port = cart.PORT || 7000;
@@ -18,9 +19,14 @@ const indexRouter = require("./routes/indexRoute");
 
 // middleware
 app.use(cors());
+app.use(flash());
 app.engine("ejs", ejs.renderFile);
 app.set("view engine", "ejs");
-app.use(helmet());
+app.use(
+    helmet({
+        crossOriginResourcePolicy: false,
+    })
+);
 app.use(express.static(path.join(path.resolve(__dirname), "public")));
 app.use(express.static(path.join(path.resolve(__dirname), "build")));
 app.use(express.static(path.join(path.resolve(__dirname), "uploads")));
