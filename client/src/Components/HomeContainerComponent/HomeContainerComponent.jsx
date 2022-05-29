@@ -25,7 +25,9 @@ function HomeContainerComponent() {
             <HeadingComponent heading={"Trending Now"} />
             <Home.moviesShowDiv>
                 {all_movies !== null && all_movies.success === true && all_movies.allMoviesDataCollection.length > 0
-                    ? all_movies.allMoviesDataCollection.map(({ _id, ...otherProps }) => <MoviesCardsComponent key={_id} {...otherProps} />)
+                    ? all_movies.allMoviesDataCollection.map(({ _id, ...otherProps }) => (
+                          <MoviesCardsComponent key={_id} {...otherProps} data={Object.assign(otherProps, { _id })} />
+                      ))
                     : null}
             </Home.moviesShowDiv>
             <HeadingComponent heading={"Best in 2022"} />

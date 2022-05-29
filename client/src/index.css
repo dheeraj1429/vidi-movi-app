@@ -53,6 +53,7 @@ code {
 }
 
 :root {
+    --progress-cl: rgba(235, 235, 235, 0.562);
     --light-active-spec-cl: #20B5DE;
     --main-cl: #ffffff;
     --overlay-cl: rgba(0, 0, 0, 0.411);

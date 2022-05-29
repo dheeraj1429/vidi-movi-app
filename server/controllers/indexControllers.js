@@ -1,4 +1,5 @@
 const movieModel = require("../model/Schema/MoviesSchema");
+const fs = require("fs");
 
 const getAllMovies = async function (req, res, next) {
     try {
@@ -15,6 +16,11 @@ const getAllMovies = async function (req, res, next) {
     }
 };
 
+const stremVideo = function (req, res, next) {
+    console.log(req.body);
+};
+
 module.exports = {
     getAllMovies,
+    stremVideo,
 };

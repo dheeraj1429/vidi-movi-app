@@ -44,3 +44,21 @@ export const themChange = function (data) {
         payload: data,
     };
 };
+
+export const selectedMovies = function (data) {
+    return {
+        type: ACTION_TYPE.SELECTED_MOVIE,
+        payload: data,
+    };
+};
+
+export const stremVideo = function (data) {
+    return async function (dispatch) {
+        try {
+            const videoRef = await axios.get("/index/stremVideo/:name", data, headers);
+            console.log(videoRef);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};

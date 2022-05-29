@@ -34,33 +34,6 @@ export const div = styled.div`
     &:hover h3 {
         opacity: 0;
     }
-    .glightbox_video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.5);
-    }
-    .outer_circle {
-        stroke-width: 3;
-        stroke-dasharray: 410;
-        stroke-dashoffset: 0;
-        stroke-linecap: square;
-        transition: all 0.4s ease-out;
-    }
-    .glightbox_video:hover .outer_circle {
-        stroke-dashoffset: 410;
-        transition: stroke 0.7s 0.4s ease-out, stroke-dashoffset 0.4s ease-out;
-    }
-
-    .glightbox_video:hover .inner-circle {
-        fill: #bf2428;
-        transition: fill 0.4s 0.3s ease-out;
-    }
-
-    .glightbox_video:hover .play {
-        fill: white;
-        transition: fill 0.4s 0.3s ease-out;
-    }
 `;
 
 export const videoDiv = styled.div`

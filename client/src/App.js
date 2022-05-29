@@ -1,5 +1,3 @@
-// https://demo.gloriathemes.com/noxe/demo/movie-studio-v1/
-
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router";
 import { useCookies } from "react-cookie";
@@ -22,6 +20,7 @@ import LikeMoviesComponent from "./Components/LikeMoviesComponent/LikeMoviesComp
 import HomePage from "./pages/HomePage/HomePage";
 import SignInAndLogInPage from "./pages/SignInAndLogInPage/SignInAndLogInPage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
+import MoviePlaySinglePage from "./pages/MoviePlaySinglePage/MoviePlaySinglePage";
 
 function App() {
     const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -44,6 +43,7 @@ function App() {
                 <Route path="/" element={<HomePage />}>
                     <Route path="/" element={<HomeContainerComponent />} />
                     <Route path="/like" element={<LikeMoviesComponent />} />
+                    <Route path="/movie/play/:name/:id" element={<MoviePlaySinglePage />} />
                 </Route>
                 <Route path="/auth" element={<SignInAndLogInPage />}>
                     <Route path="user-signIn" element={<SignInComponent />} />

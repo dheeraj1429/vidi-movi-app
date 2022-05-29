@@ -2,22 +2,25 @@ import React, { useState, useRef } from "react";
 import * as card from "./MoviesCardsComponent.style";
 import { backendConfigData } from "../../Utils/backendData";
 import CardsPlayOptionComponent from "../CardsPlayOptionComponent/CardsPlayOptionComponent";
+import { useDispatch } from "react-redux";
+import { selectedMovies } from "../../Redux/Action/indexAction";
 
-function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName }) {
+function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data }) {
     const [IsEnter, setIsEnter] = useState(false);
     const [ShowVideo, setShowVideo] = useState(false);
     const [HoverTime, setHoverTime] = useState(0);
     const video = useRef(null);
+    const dispatch = useDispatch();
 
     const MouseEnterHanlder = async function () {
         setIsEnter(true);
-        await video.current.play();
+        // await video.current.play();
     };
 
     const MouseLeaveHanlder = async function () {
         setIsEnter(false);
-        await video.current.pause();
-        video.current.currentTime = 0;
+        // await video.current.pause();
+        // video.current.currentTime = 0;
         setHoverTime(-1);
         setShowVideo(false);
     };
@@ -29,17 +32,18 @@ function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName }) {
         }
     };
 
+    const PlayHandler = function () {
+        dispatch(selectedMovies(data));
+    };
+
     return (
         <card.div>
-            {/* <h3>{name.slice(0, 40)}...</h3> */}
             <card.cartContentDiv className={IsEnter ? "Active-movie-card" : null}>
-                <div className="card-hover-div"></div>
-                <card.videoDiv>
+                {/* <card.videoDiv>
                     <video webkit-playsinline="true" muted playsinline="true" ref={video} onTimeUpdate={CheckTimeFunction}>
                         <source src={`${backendConfigData.videoUrl}/${movieVideo}`} type="video/mp4" />
-                        Your browser does not support HTML5 video.
                     </video>
-                </card.videoDiv>
+                </card.videoDiv> */}
                 <card.moviDiv
                     style={
                         !ShowVideo
@@ -49,7 +53,13 @@ function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName }) {
                             : null
                     }
                 >
-                    <CardsPlayOptionComponent onMouseEnter={MouseEnterHanlder} onMouseLeave={MouseLeaveHanlder} />
+                    <CardsPlayOptionComponent
+                        onMouseEnter={MouseEnterHanlder}
+                        onMouseLeave={MouseLeaveHanlder}
+                        onClick={PlayHandler}
+                        id={data._id}
+                        name={data.name}
+                    />
                     <card.progressPosDiv>
                         <card.progress>
                             <card.progressInner
