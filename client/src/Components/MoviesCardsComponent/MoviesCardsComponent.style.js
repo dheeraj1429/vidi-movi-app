@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const div = styled.div`
-    width: 300px;
+    /* width: 300px; */
     height: auto;
     transition: all 0.5s ease;
     margin: 0.5rem 0.5rem;
@@ -33,6 +33,11 @@ export const div = styled.div`
     }
     &:hover h3 {
         opacity: 0;
+    }
+
+    @media (max-width: 1600px) {
+        width: 100%;
+        padding: 0.5rem;
     }
 `;
 
@@ -106,6 +111,12 @@ export const moviDiv = styled.div`
 
     &:hover .movi-information-div {
         bottom: 0px;
+    }
+    @media (max-width: 1000px) {
+        height: 300px;
+    }
+    @media (max-width: 800px) {
+        height: 300px;
     }
 `;
 

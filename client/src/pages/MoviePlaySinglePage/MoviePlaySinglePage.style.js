@@ -12,6 +12,9 @@ export const div = styled.div`
     svg:hover {
         transform: scale(1.1);
     }
+    .ant-slider {
+        width: 100px;
+    }
 `;
 
 export const movieDiv = styled.div`
@@ -52,6 +55,23 @@ export const movieDiv = styled.div`
         visibility: visible;
         opacity: 1;
     }
+
+    @media (max-width: 1700px) {
+        height: auto;
+    }
+
+    video {
+        position: relative;
+    }
+
+    .showPlayButton {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .ant-slider-track {
+        background-color: var(--progress-cl);
+    }
 `;
 
 export const bufferLoadingDiv = styled.div`
@@ -89,13 +109,21 @@ export const bannerDiv = styled.div`
 export const playDiv = styled.div`
     width: 70px;
     height: 70px;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    border: 2px solid #fff;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 1); */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
 
     svg {
         fill: white;
@@ -204,7 +232,6 @@ export const soundDiv = styled.div`
     }
 
     .range::-webkit-slider-runnable-track {
-        background-color: red;
         height: 6px;
         border-radius: 3px;
         border: 1px solid transparent;
@@ -223,7 +250,6 @@ export const soundDiv = styled.div`
         border: none;
     }
     .range::-webkit-slider-runnable-track {
-        background-color: var(--progress-cl);
     }
 
     .range::-webkit-slider-thumb {

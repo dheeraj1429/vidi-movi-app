@@ -23,9 +23,9 @@ export const bannerImage = styled.div`
     @media (max-width: 1000px) {
         height: 400px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
         height: auto;
-        padding: 1rem;
+        padding: 2rem 1rem;
     }
 `;
 
@@ -82,7 +82,7 @@ export const contentDiv = styled.div`
             font-size: 15px;
         }
     }
-    @media (max-width: 400px) {
+    @media (max-width: 700px) {
         h1 {
             font-size: 30px;
         }

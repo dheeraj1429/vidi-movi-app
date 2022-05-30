@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import * as card from "./MoviesCardsComponent.style";
 import { backendConfigData } from "../../Utils/backendData";
 import CardsPlayOptionComponent from "../CardsPlayOptionComponent/CardsPlayOptionComponent";
-import { useDispatch } from "react-redux";
-import { selectedMovies } from "../../Redux/Action/indexAction";
 
 function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data }) {
     const [IsEnter, setIsEnter] = useState(false);
     const [ShowVideo, setShowVideo] = useState(false);
-    const [HoverTime, setHoverTime] = useState(0);
-    const dispatch = useDispatch();
 
     const MouseEnterHanlder = async function () {
         setIsEnter(true);
@@ -17,15 +13,7 @@ function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data }) 
 
     const MouseLeaveHanlder = async function () {
         setIsEnter(false);
-        setHoverTime(-1);
         setShowVideo(false);
-    };
-
-    const CheckTimeFunction = function () {
-        setHoverTime(HoverTime + 1);
-        if (HoverTime > 1) {
-            setShowVideo(true);
-        }
     };
 
     return (
@@ -43,11 +31,7 @@ function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data }) 
                     <CardsPlayOptionComponent onMouseEnter={MouseEnterHanlder} onMouseLeave={MouseLeaveHanlder} id={data._id} name={data.name} />
                     <card.progressPosDiv>
                         <card.progress>
-                            <card.progressInner
-                            // style={{
-                            //     width: "50%",
-                            // }}
-                            />
+                            <card.progressInner />
                         </card.progress>
                     </card.progressPosDiv>
                 </card.moviDiv>

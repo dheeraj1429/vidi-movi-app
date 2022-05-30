@@ -7,6 +7,7 @@ const INITAL_STATE = {
     showOptionsPopUp: false,
     changeTheme: "dark",
     selectedMovie: null,
+    playVideo: false,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -45,6 +46,7 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 selectedMovie: action.payload,
+                playVideo: true,
             };
 
         default: {
