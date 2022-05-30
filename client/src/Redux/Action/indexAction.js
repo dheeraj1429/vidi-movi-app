@@ -62,3 +62,18 @@ export const stremVideo = function (data) {
         }
     };
 };
+
+export const fetchSelectedMovi = function (id) {
+    return async function (dispatch) {
+        try {
+            const movieRef = await axios.post(`/index/get-one-movie/${id}`, headers);
+
+            dispatch({
+                type: ACTION_TYPE.SELECTED_MOVIE,
+                payload: movieRef.data.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};

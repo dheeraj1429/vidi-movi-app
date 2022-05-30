@@ -50,7 +50,27 @@ const stremVideo = function (req, res, next) {
     videoStream.pipe(res);
 };
 
+const getOneMovi = async function (req, res, next) {
+    try {
+        const param = req.params.id;
+        if (!param) {
+            return res.status(400).send("Param is required");
+        }
+        const findMoviInDb = await movieModel.findOne({ _id: param });
+
+        if (findMoviInDb) {
+            return res.status(200).json({
+                success: true,
+                data: findMoviInDb,
+            });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMovies,
     stremVideo,
+    getOneMovi,
 };

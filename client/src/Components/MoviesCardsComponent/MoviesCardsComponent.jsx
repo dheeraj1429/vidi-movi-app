@@ -28,10 +28,6 @@ function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data }) 
         }
     };
 
-    const PlayHandler = function () {
-        dispatch(selectedMovies(data));
-    };
-
     return (
         <card.div>
             <card.cartContentDiv className={IsEnter ? "Active-movie-card" : null}>
@@ -44,13 +40,7 @@ function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data }) 
                             : null
                     }
                 >
-                    <CardsPlayOptionComponent
-                        onMouseEnter={MouseEnterHanlder}
-                        onMouseLeave={MouseLeaveHanlder}
-                        onClick={PlayHandler}
-                        id={data._id}
-                        name={data.name}
-                    />
+                    <CardsPlayOptionComponent onMouseEnter={MouseEnterHanlder} onMouseLeave={MouseLeaveHanlder} id={data._id} name={data.name} />
                     <card.progressPosDiv>
                         <card.progress>
                             <card.progressInner

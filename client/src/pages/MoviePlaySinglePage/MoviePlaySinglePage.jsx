@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as single from "./MoviePlaySinglePage.style";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { BsFillPlayFill } from "@react-icons/all-files/bs/BsFillPlayFill";
 import { BiPause } from "@react-icons/all-files/bi/BiPause";
 import { GiSoundOn } from "@react-icons/all-files/gi/GiSoundOn";
 import { GiSoundOff } from "@react-icons/all-files/gi/GiSoundOff";
 import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
 import { backendConfigData } from "../../Utils/backendData";
+import { useLocation } from "react-router-dom";
+import { fetchSelectedMovi } from "../../Redux/Action/indexAction";
 
 function MoviePlaySinglePage() {
     const [ActiveBtn, setActiveBtn] = useState(false);
@@ -22,6 +24,8 @@ function MoviePlaySinglePage() {
     const [SoundLow, setSoundLow] = useState(false);
     const bufferElem = useRef(null);
     const [WaitFrame, setWaitFrame] = useState(false);
+    const loaction = useLocation();
+    const dispatch = useDispatch();
 
     const ButtonHandler = async function () {
         setActiveBtn(!ActiveBtn);
@@ -132,7 +136,12 @@ function MoviePlaySinglePage() {
     };
 
     useEffect(() => {
-        SoundValue.current.value = `${video.current.volume}00`;
+        if (video.current) {
+            SoundValue.current.value = `${video.current.volume}00`;
+        }
+        const path = loaction.pathname;
+        const id = path.split("/").slice(-1).join("");
+        dispatch(fetchSelectedMovi(id));
     }, []);
 
     return (
