@@ -47,6 +47,29 @@ export const movieDiv = styled.div`
     .showControlles {
         display: flow-root;
     }
+
+    .showBufferLoading {
+        visibility: visible;
+        opacity: 1;
+    }
+`;
+
+export const bufferLoadingDiv = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 export const bannerDiv = styled.div`
@@ -111,7 +134,7 @@ export const controllDiv = styled.div`
 export const progressBar = styled.div`
     width: 100%;
     background-color: var(--progress-cl);
-    height: 5px;
+    height: 3px;
     border-radius: 8px;
     position: relative;
     overflow: hidden;
@@ -137,6 +160,16 @@ export const progressInner = styled.div`
     background-color: var(--button-cl);
     transition: all 0.6s ease;
     z-index: 10;
+`;
+
+export const bufferDiv = styled.div`
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: #f2f2f2;
+    transition: all 0.3s ease;
+    border-radius: 30px;
 `;
 
 export const timeDiv = styled.div`

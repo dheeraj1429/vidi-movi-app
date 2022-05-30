@@ -4,7 +4,7 @@ export const div = styled.div`
     width: 300px;
     height: auto;
     transition: all 0.5s ease;
-    margin: 0 0.5rem;
+    margin: 0.5rem 0.5rem;
     h3 {
         color: var(--main-cl);
         font-size: 14px;

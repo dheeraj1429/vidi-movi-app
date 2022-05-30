@@ -20,6 +20,8 @@ function MoviePlaySinglePage() {
     const CurrentDuractionValue = useRef(null);
     const [ProgressValue, setProgressValue] = useState(0);
     const [SoundLow, setSoundLow] = useState(false);
+    const bufferElem = useRef(null);
+    const [WaitFrame, setWaitFrame] = useState(false);
 
     const ButtonHandler = async function () {
         setActiveBtn(!ActiveBtn);
@@ -46,6 +48,9 @@ function MoviePlaySinglePage() {
     };
 
     const TimeUpdateHandler = function () {
+        const videoBufferData = (video.current.buffered.end(0) / video.current.duration) * 100;
+        bufferElem.current.style.width = `${videoBufferData}%`;
+
         const duration = video.current.duration;
         const currentTime = video.current.currentTime;
         const widthValue = (currentTime / duration) * 100;
@@ -61,6 +66,14 @@ function MoviePlaySinglePage() {
         if (currentTime === duration) {
             setIsPlay(false);
         }
+    };
+
+    const WaitFunction = function () {
+        setWaitFrame(true);
+    };
+
+    const VideoPlayHandler = function () {
+        setWaitFrame(false);
     };
 
     const PlayAndPauseHandler = function () {
@@ -139,15 +152,19 @@ function MoviePlaySinglePage() {
                                     <BsFillPlayFill />
                                 </single.playDiv>
                             </div>
+                            <single.bufferLoadingDiv className={WaitFrame ? "showBufferLoading" : null}>
+                                <img src="/images/wating.svg" />
+                            </single.bufferLoadingDiv>
                             <video
                                 className={ActiveBtn ? "showVideo" : null}
-                                // src={`/videos/${selectedMovie.movieVideo}`}
                                 src={`${backendConfigData.backendVideoUrl}/${selectedMovie.movieVideo}`}
                                 ref={video}
                                 onTimeUpdate={TimeUpdateHandler}
                                 onPlay={PlayHandler}
                                 onPause={PauseHandler}
                                 onClick={PlayAndPauseHandler}
+                                onWaiting={WaitFunction}
+                                onPlaying={VideoPlayHandler}
                             ></video>
                             <single.controllDiv className={ActiveBtn ? "showControlles" : null}>
                                 <div id="flexDiv">
@@ -159,6 +176,7 @@ function MoviePlaySinglePage() {
 
                                     <single.progressBar>
                                         <single.progressEvetDiv onClick={(e) => SickBarHandler(e)} />
+                                        <single.bufferDiv ref={bufferElem} />
                                         <single.progressInner
                                             style={{
                                                 width: `${ProgressValue}%`,
