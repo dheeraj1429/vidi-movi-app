@@ -11,13 +11,17 @@ const userSchema = new mongoose.Schema({
     isAdmin: { type: String, default: "user" },
     createdAt: { type: Date, default: Date.now },
     tokens: [{ token: { type: String, required: [true, "please genrate the user token"] } }],
+    provider: { type: String },
     favoriteMovies: [{ movieId: { type: mongoose.Types.ObjectId } }],
+    history: [{ moviesId: { type: mongoose.Schema.Types.ObjectId, ref: "movie", watchTime: { type: Date, default: Date.now } } }],
 });
 
 // genrate the user token
 userSchema.methods.genrateUserToken = async function () {
     try {
-        const token = await jwt.sign({ _id: this._id.toString(), name: this.name, isAdmin: this.isAdmin }, JWT_TOKEN, { expiresIn: "30d" });
+        const token = await jwt.sign({ _id: this._id.toString(), name: this.name, isAdmin: this.isAdmin, provider: this.provider }, JWT_TOKEN, {
+            expiresIn: "30d",
+        });
         this.tokens = this.tokens.concat({ token });
         this.save();
         return token;

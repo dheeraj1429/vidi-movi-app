@@ -10,10 +10,13 @@ import { backendConfigData } from "../../Utils/backendData";
 import { useLocation } from "react-router-dom";
 import { fetchSelectedMovi } from "../../Redux/Action/indexAction";
 import { Slider } from "antd";
+import { storeHistoryVideo } from "../../Redux/Action/indexAction";
 
 function MoviePlaySinglePage() {
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
-    const [ShowPlayButton, setShowPlayButton] = useState(false);
+    const user = useSelector((state) => state.auth.user);
+    const [ShowPlayButton, setShowPlayButton] = useState(true);
+    const [IsHistoryVideo, setIsHistoryVideo] = useState(false);
     const [video, setVideo] = useState();
     const playButton = useRef(null);
     const pauseButton = useRef(null);
@@ -27,7 +30,11 @@ function MoviePlaySinglePage() {
     const loaction = useLocation();
     const dispatch = useDispatch();
 
+    const path = loaction.pathname;
+    const id = path.split("/").slice(-1).join("");
+
     const ButtonHandler = async function () {
+        video.load();
         PlayAndPauseHandler();
         setIsPlay(true);
     };
@@ -60,6 +67,10 @@ function MoviePlaySinglePage() {
         const currentTime = video.currentTime;
         const widthValue = (currentTime / duration) * 100;
 
+        if (currentTime > 15) {
+            setIsHistoryVideo(true);
+        }
+
         setProgressValue(widthValue);
 
         const currentTimeValue = musicInfoData(currentTime);
@@ -79,6 +90,7 @@ function MoviePlaySinglePage() {
 
     const VideoPlayHandler = function () {
         setWaitFrame(false);
+        setShowPlayButton(false);
     };
 
     const PlayAndPauseHandler = async function () {
@@ -105,6 +117,8 @@ function MoviePlaySinglePage() {
         const value = event;
         if (value === 100 || value > 99) {
             video.volume = 1;
+        } else if (value < 10) {
+            video.volume = `.0${value}`;
         } else {
             video.volume = `.${value}`;
         }
@@ -138,30 +152,14 @@ function MoviePlaySinglePage() {
         }
     };
 
-    const WaitForAutoPlay = function () {
-        video.load();
-        var promise = video.play();
-
-        if (promise !== undefined) {
-            promise
-                .then((_) => {
-                    // Autoplay worked!
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+    useEffect(() => {
+        if (IsHistoryVideo) {
+            const token = user.data.token;
+            dispatch(storeHistoryVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
         }
-    };
+    }, [IsHistoryVideo]);
 
     useEffect(() => {
-        if (video) {
-            WaitForAutoPlay();
-        }
-    }, [video]);
-
-    useEffect(() => {
-        const path = loaction.pathname;
-        const id = path.split("/").slice(-1).join("");
         dispatch(fetchSelectedMovi(id));
     }, []);
 
@@ -192,6 +190,7 @@ function MoviePlaySinglePage() {
                                 onPlaying={VideoPlayHandler}
                                 preLoad="auto"
                                 id="single_video"
+                                allow="autoplay; fullscreen"
                             ></video>
                             <single.controllDiv className="showControlles">
                                 <div id="flexDiv">

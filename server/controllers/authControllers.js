@@ -25,6 +25,7 @@ const signInUser = async function (req, res, next) {
                 name,
                 email,
                 password,
+                provider: "login",
             });
 
             const userRef = await user.save();
@@ -40,6 +41,7 @@ const signInUser = async function (req, res, next) {
                 email,
                 admin: user.isAdmin,
                 token,
+                provider: "login",
             };
 
             res.cookie("user", {
@@ -81,6 +83,7 @@ const logInUser = async function (req, res, next) {
                 email: findDbUser.email,
                 admin: findDbUser.isAdmin,
                 token: token,
+                provider: "login",
             };
 
             res.cookie("user", {
@@ -207,6 +210,7 @@ const googleLogin = async function (req, res, next) {
                 email: findUserInDb.email,
                 name: findUserInDb.givenName,
                 token: findUserToken,
+                provider: "google",
             };
 
             res.cookie("user", {
@@ -225,6 +229,7 @@ const googleLogin = async function (req, res, next) {
                 name: userObject.name,
                 givenName: userObject.givenName,
                 familyName: userObject.familyName,
+                provider: "google",
             });
 
             const googleUserRef = await newGoogleUser.save();
@@ -237,6 +242,7 @@ const googleLogin = async function (req, res, next) {
                     email: googleUserRef.email,
                     name: googleUserRef.givenName,
                     token: userToken,
+                    provider: "google",
                 };
 
                 res.cookie("user", {

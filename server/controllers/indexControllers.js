@@ -1,6 +1,12 @@
 const movieModel = require("../model/Schema/MoviesSchema");
+const userModel = require("../model/Schema/userSchema");
+const googleAuthUser = require("../model/Schema/googleAuthSchema");
 const fs = require("fs");
 const path = require("path");
+const jwt = require("jsonwebtoken");
+const cart = require("../cart");
+
+const JWT_TOKEN = cart.TOKEN;
 
 const getAllMovies = async function (req, res, next) {
     try {
@@ -69,8 +75,79 @@ const getOneMovi = async function (req, res, next) {
     }
 };
 
+// check the movie data is present into the database
+const isMoviesPresent = async function (collection, userId, movieId) {
+    const finMovieInDb = await collection.findOne({ _id: userId }, { history: { $elemMatch: { moviesId: movieId } } });
+    return finMovieInDb;
+};
+
+const storeHistoryVideo = async function (req, res, next) {
+    try {
+        const { id, name, userToken } = req.body;
+
+        // find the video into the database
+        const findMovieInDatabase = await movieModel.findOne({ _id: id, name: name });
+        const movieId = findMovieInDatabase._id;
+
+        if (!findMovieInDatabase) {
+            return res.status(400).json({ success: false, message: "movie is not find in database" });
+        }
+
+        if (!userToken) return res.status(400).json({ success: false, message: "user token is null" });
+
+        const userVarify = await jwt.verify(userToken, JWT_TOKEN);
+        const userId = userVarify._id;
+        const userName = userVarify.name;
+        const userEmail = userVarify.email;
+        const provider = userVarify.provider;
+
+        if (provider === "google") {
+            const goolgeUserMoviePresent = await isMoviesPresent(googleAuthUser, userId, movieId);
+
+            if (goolgeUserMoviePresent.history.length > 0) {
+                console.log("movie is already present");
+            } else {
+                await googleAuthUser.update(
+                    { _id: userId, name: userName, email: userEmail },
+                    {
+                        $push: {
+                            history: [
+                                {
+                                    moviesId: movieId,
+                                },
+                            ],
+                        },
+                    }
+                );
+            }
+        } else if (provider === "login") {
+            const userFindInDb = await isMoviesPresent(userModel, userId, movieId);
+
+            if (userFindInDb.history.length > 0) {
+                console.log("movie is already present");
+            } else {
+                await userModel.update(
+                    { _id: userVarify._id },
+                    {
+                        $push: {
+                            history: [
+                                {
+                                    moviesId: movieId,
+                                },
+                            ],
+                        },
+                    }
+                );
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMovies,
     stremVideo,
     getOneMovi,
+    storeHistoryVideo,
 };

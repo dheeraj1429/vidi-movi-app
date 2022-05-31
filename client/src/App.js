@@ -5,6 +5,7 @@ import { setUserCookieData } from "./Redux/Action/authAction";
 import { useDispatch } from "react-redux";
 import useLoad from "./Hooks/useLoad";
 import { getAllMovies } from "./Redux/Action/indexAction";
+import { storeHistoryVideo } from "./Redux/Action/indexAction";
 
 // components
 import SignInComponent from "./Components/SignInComponent/SignInComponent";
@@ -15,6 +16,7 @@ import HomeContainerComponent from "./Components/HomeContainerComponent/HomeCont
 import MoviesUploadComponent from "./DashboardComponents/MoviesUploadComponent/MoviesUploadComponent";
 import DashboardMoviesComponent from "./DashboardComponents/DashboardMoviesComponent/DashboardMoviesComponent";
 import LikeMoviesComponent from "./Components/LikeMoviesComponent/LikeMoviesComponent";
+import HistoryPageComponent from "./Components/HistoryPageComponent/HistoryPageComponent";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage";
@@ -44,6 +46,7 @@ function App() {
                     <Route path="/" element={<HomeContainerComponent />} />
                     <Route path="/like" element={<LikeMoviesComponent />} />
                     <Route path="/movie/play/:name/:id" element={<MoviePlaySinglePage />} />
+                    <Route path="/history" element={<HistoryPageComponent />} />
                 </Route>
                 <Route path="/auth" element={<SignInAndLogInPage />}>
                     <Route path="user-signIn" element={<SignInComponent />} />

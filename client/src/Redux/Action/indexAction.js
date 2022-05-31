@@ -77,3 +77,14 @@ export const fetchSelectedMovi = function (id) {
         }
     };
 };
+
+export const storeHistoryVideo = function (data) {
+    console.log("request");
+    return async function (dispatch) {
+        try {
+            await axios.post(`/index/video-history`, data, headers);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
