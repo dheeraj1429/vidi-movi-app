@@ -8,6 +8,8 @@ const INITAL_STATE = {
     changeTheme: "dark",
     selectedMovie: null,
     playVideo: false,
+    userHistory: null,
+    loadingHistory: true,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -47,6 +49,13 @@ const indexReducer = function (state = INITAL_STATE, action) {
                 ...state,
                 selectedMovie: action.payload,
                 playVideo: true,
+            };
+
+        case ACTION_TYPE.USER_HISTORY:
+            return {
+                ...state,
+                userHistory: action.payload,
+                loadingHistory: false,
             };
 
         default: {

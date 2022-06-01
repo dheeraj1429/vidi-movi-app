@@ -5,7 +5,6 @@ import { setUserCookieData } from "./Redux/Action/authAction";
 import { useDispatch } from "react-redux";
 import useLoad from "./Hooks/useLoad";
 import { getAllMovies } from "./Redux/Action/indexAction";
-import { storeHistoryVideo } from "./Redux/Action/indexAction";
 
 // components
 import SignInComponent from "./Components/SignInComponent/SignInComponent";

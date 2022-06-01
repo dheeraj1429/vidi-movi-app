@@ -5,7 +5,7 @@ import { headers } from "./headers";
 export const getAllMovies = function () {
     return async function (dispatch) {
         try {
-            const moviesRef = await axios.post("/index/get-all-movies", headers);
+            const moviesRef = await axios.get("/index/get-all-movies", headers);
 
             dispatch({
                 type: ACTION_TYPE.GET_ALL_MOVIES,
@@ -66,7 +66,7 @@ export const stremVideo = function (data) {
 export const fetchSelectedMovi = function (id) {
     return async function (dispatch) {
         try {
-            const movieRef = await axios.post(`/index/get-one-movie/${id}`, headers);
+            const movieRef = await axios.get(`/index/get-one-movie/${id}`, headers);
 
             dispatch({
                 type: ACTION_TYPE.SELECTED_MOVIE,
@@ -79,10 +79,31 @@ export const fetchSelectedMovi = function (id) {
 };
 
 export const storeHistoryVideo = function (data) {
-    console.log("request");
     return async function (dispatch) {
         try {
             await axios.post(`/index/video-history`, data, headers);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const userHistory = function (data) {
+    return async function (dispatch) {
+        try {
+            const userHistoryRef = await axios.get("/index/user-history", headers);
+
+            if (userHistoryRef && userHistoryRef.data.movieHistoryObject) {
+                dispatch({
+                    type: ACTION_TYPE.USER_HISTORY,
+                    payload: userHistoryRef.data.movieHistoryObject,
+                });
+            } else {
+                dispatch({
+                    type: ACTION_TYPE.USER_HISTORY,
+                    payload: userHistoryRef.data,
+                });
+            }
         } catch (err) {
             console.log(err);
         }

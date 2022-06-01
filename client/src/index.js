@@ -17,9 +17,9 @@ root.render(
     <Provider store={store}>
         <CookiesProvider>
             <BrowserRouter>
-                <React.StrictMode>
-                    <App />
-                </React.StrictMode>
+                {/* <React.StrictMode> */}
+                <App />
+                {/* </React.StrictMode> */}
             </BrowserRouter>
         </CookiesProvider>
     </Provider>

@@ -16,7 +16,7 @@ const authUserSchema = new Schema({
     tokens: [{ token: { type: String, required: [true, "please genrate the user token"] } }],
     provider: { type: String },
     createdAt: { type: Date, default: Date.now },
-    history: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie", watchTime: { type: Date, default: Date.now } } }],
+    history: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie" }, watchTime: { type: Date, default: Date.now } }],
 });
 
 authUserSchema.methods.genrateUserToken = async function () {

@@ -23,12 +23,15 @@ const getAllMovies = async function (req, res, next) {
     }
 };
 
+// share the video with the stream data
 const stremVideo = function (req, res, next) {
     const param = req.params.name;
     const range = req.headers.range;
+
     if (!range) {
         return res.status(400).send("Requires Range header");
     }
+
     const videoPath = path.join(path.dirname(__dirname), "uploads", "videos", param);
     const videoSize = fs.statSync(videoPath).size; // Parse Range
 
@@ -75,7 +78,7 @@ const getOneMovi = async function (req, res, next) {
     }
 };
 
-// check the movie data is present into the database
+// check the movie data is present into the database if the movie object is already present into the database collection then we don't want to store the movie data inside any object and array.
 const isMoviesPresent = async function (collection, userId, movieId) {
     const finMovieInDb = await collection.findOne({ _id: userId }, { history: { $elemMatch: { moviesId: movieId } } });
     return finMovieInDb;
@@ -95,6 +98,7 @@ const storeHistoryVideo = async function (req, res, next) {
 
         if (!userToken) return res.status(400).json({ success: false, message: "user token is null" });
 
+        // varify the user is vaild or not
         const userVarify = await jwt.verify(userToken, JWT_TOKEN);
         const userId = userVarify._id;
         const userName = userVarify.name;
@@ -145,9 +149,59 @@ const storeHistoryVideo = async function (req, res, next) {
     }
 };
 
+// grab the user history data and return from the function
+const getHistoryFunction = async function (collection, _id, name, req, res) {
+    const userHistoryObjectRef = await collection.findOne({ _id, name }).populate("history.moviesId");
+    if (userHistoryObjectRef.history.length === 0 || userHistoryObjectRef.history === []) {
+        return res.status(200).json({ success: true, message: "No history" });
+    }
+
+    const MovieHistoryArry = [];
+
+    if (userHistoryObjectRef) {
+        userHistoryObjectRef.history.map((el) => {
+            const movieObject = el.moviesId;
+            MovieHistoryArry.push(movieObject);
+        });
+    }
+
+    return res.status(200).json({
+        success: true,
+        movieHistoryObject: MovieHistoryArry,
+    });
+};
+
+const userHistory = async function (req, res, next) {
+    try {
+        const token = req.cookies?.user?.data?.token;
+
+        if (!token) {
+            return res.status(200).json({
+                success: false,
+                message: "there is no user found in session",
+            });
+        }
+
+        const userVarify = await jwt.verify(token, JWT_TOKEN);
+        const { _id, name, provider } = userVarify;
+
+        // if the user is login with the google account the we want to store the history object inside the user google account object is the user login with the normal account then we want the store the history data into the user collection.
+        if (provider === "google") {
+            getHistoryFunction(googleAuthUser, _id, name, req, res);
+        }
+
+        if (provider === "login") {
+            getHistoryFunction(userModel, _id, name, req, res);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMovies,
     stremVideo,
     getOneMovi,
     storeHistoryVideo,
+    userHistory,
 };
