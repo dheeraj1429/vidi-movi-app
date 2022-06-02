@@ -1,11 +1,23 @@
 import styled from "styled-components";
 
+export const mainDiv = styled.div`
+    .card_second_cl {
+        display: flex;
+        align-items: center;
+    }
+
+    .flex_card_el {
+        width: 500px;
+        margin-right: 1rem;
+    }
+`;
+
 export const div = styled.div`
-    /* width: 300px; */
     height: auto;
     transition: all 0.5s ease;
     margin: 0.5rem 0.5rem;
     position: relative;
+
     h3 {
         color: var(--main-cl);
         font-size: 14px;
@@ -45,8 +57,8 @@ export const div = styled.div`
         fill: white;
         z-index: 100;
         cursor: pointer;
-        top: 10px;
-        right: 10px;
+        top: 20px;
+        right: 20px;
         font-size: 25px;
         fill: white;
         opacity: 0;
@@ -167,4 +179,12 @@ export const progressInner = styled.div`
     height: 100%;
     background-color: var(--watch-cl);
     transition: all 0.3s ease;
+`;
+
+export const styledSecond = styled.div`
+    h4 {
+        color: var(--main-cl);
+        font-size: 22px;
+        font-weight: 400;
+    }
 `;

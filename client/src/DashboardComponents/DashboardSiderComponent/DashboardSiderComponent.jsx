@@ -5,27 +5,20 @@ import { AiOutlineVideoCamera } from "@react-icons/all-files/ai/AiOutlineVideoCa
 import SideBarOptionComponent from "../../Components/SideBarOptionComponent/SideBarOptionComponent";
 import { BiVideo } from "@react-icons/all-files/bi/BiVideo";
 import { useLocation } from "react-router-dom";
+import useNav from "../../Hooks/useNav";
 
 function DashboardSiderComponent() {
     const [ActiveBar, setActiveBar] = useState("Dashboard");
     const loaction = useLocation();
+    const nav = useNav();
 
     useEffect(() => {
-        const upFn = function (str, index) {
-            return str[index].charAt(0).toUpperCase() + str[index].slice(1);
-        };
-
-        const path = loaction.pathname.split("/").slice(-1)[0];
-        if (path.split("-").length >= 2) {
-            console.log(path.split("-").length);
-            const strSplit = path.split("-");
-            const splitText = upFn(strSplit, 0) + " " + upFn(strSplit, 1);
-            setActiveBar(splitText);
+        if (loaction.pathname === "/Dashboard") {
+            return;
         } else {
-            const str = path.charAt(0).toUpperCase() + path.slice(1);
-            setActiveBar(str);
+            setActiveBar(nav);
         }
-    }, []);
+    }, [nav]);
 
     const ActiveBarHandler = function (e) {
         const target = e.currentTarget;

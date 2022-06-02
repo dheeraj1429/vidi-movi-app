@@ -18,7 +18,6 @@ function HistoryPageComponent() {
         dispatch(historyFunction());
     }, []);
 
-    console.log(userHistoryObject);
     return (
         <history.div>
             <BannerComponent
@@ -34,6 +33,7 @@ function HistoryPageComponent() {
                 {userHistoryObject !== null && userHistoryObject.length > 0 && userHistoryObject[0] !== null ? (
                     userHistoryObject.map(({ ...otherProps }) => (
                         <MoviesCardsComponent
+                            style_change={"style-two"}
                             key={otherProps._id}
                             {...otherProps}
                             data={otherProps}

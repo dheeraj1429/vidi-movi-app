@@ -3,7 +3,7 @@ import * as card from "./MoviesCardsComponent.style";
 import { backendConfigData } from "../../Utils/backendData";
 import CardsPlayOptionComponent from "../CardsPlayOptionComponent/CardsPlayOptionComponent";
 
-function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data, closeIcon }) {
+function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data, closeIcon, style_change, description }) {
     const [IsEnter, setIsEnter] = useState(false);
     const [ShowVideo, setShowVideo] = useState(false);
 
@@ -17,27 +17,38 @@ function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data, cl
     };
 
     return (
-        <card.div>
-            <card.cartContentDiv className={IsEnter ? "Active-movie-card" : null}>
-                {closeIcon ? closeIcon : null}
-                <card.moviDiv
-                    style={
-                        !ShowVideo
-                            ? {
-                                  backgroundImage: `url(${backendConfigData.imageUrl}/${thumbnailName})`,
-                              }
-                            : null
-                    }
-                >
-                    <CardsPlayOptionComponent onMouseEnter={MouseEnterHanlder} onMouseLeave={MouseLeaveHanlder} id={data._id} name={data.name} />
-                    <card.progressPosDiv>
-                        <card.progress>
-                            <card.progressInner />
-                        </card.progress>
-                    </card.progressPosDiv>
-                </card.moviDiv>
-            </card.cartContentDiv>
-        </card.div>
+        <card.mainDiv>
+            <card.div>
+                <card.cartContentDiv className={IsEnter ? "Active-movie-card" : null}>
+                    {closeIcon ? closeIcon : null}
+                    <card.moviDiv
+                        // className={style_change ? "flex_card_el" : null}
+                        style={
+                            !ShowVideo
+                                ? {
+                                      backgroundImage: `url(${backendConfigData.imageUrl}/${thumbnailName})`,
+                                  }
+                                : null
+                        }
+                    >
+                        <CardsPlayOptionComponent onMouseEnter={MouseEnterHanlder} onMouseLeave={MouseLeaveHanlder} id={data._id} name={data.name} />
+                        <card.progressPosDiv>
+                            <card.progress>
+                                <card.progressInner />
+                            </card.progress>
+                        </card.progressPosDiv>
+                    </card.moviDiv>
+                </card.cartContentDiv>
+                {/* {style_change ? (
+                    <>
+                        <card.styledSecond>
+                            <h4>{name}</h4>
+                            <p>{description.slice(0, 200)}..</p>
+                        </card.styledSecond>
+                    </>
+                ) : null} */}
+            </card.div>
+        </card.mainDiv>
     );
 }
 
