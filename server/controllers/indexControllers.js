@@ -198,10 +198,46 @@ const userHistory = async function (req, res, next) {
     }
 };
 
+const removerMoviesHistoryOne = async function (collection, _id, movieSelectedId) {
+    // grab the user first form the databse and remove the user collection object after that.
+    await collection.updateOne({ _id }, { $pull: { history: { moviesId: movieSelectedId } } }, { new: true });
+};
+
+const removeMovieFromHistory = async function (req, res, next) {
+    try {
+        const { movieSelectedId } = req.body;
+
+        if (!movieSelectedId) return res.status(400).json({ success: false, message: "please send the selected movie id" });
+
+        const token = req.cookies?.user?.data?.token;
+
+        if (!token) {
+            return res.status(200).json({
+                success: false,
+                message: "there is no user found in session",
+            });
+        }
+
+        const varifyUser = await jwt.verify(token, JWT_TOKEN);
+        const { _id, name, provider } = varifyUser;
+        if (provider === "google") {
+            removerMoviesHistoryOne(googleAuthUser, _id, movieSelectedId);
+            getHistoryFunction(googleAuthUser, _id, name, req, res);
+        }
+        if (provider === "login") {
+            removerMoviesHistoryOne(userModel, _id, movieSelectedId);
+            getHistoryFunction(userModel, _id, name, req, res);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMovies,
     stremVideo,
     getOneMovi,
     storeHistoryVideo,
     userHistory,
+    removeMovieFromHistory,
 };

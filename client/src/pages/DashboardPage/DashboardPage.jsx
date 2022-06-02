@@ -16,7 +16,6 @@ function DashboardPage() {
         if (user === undefined || user.data.admin !== "admin" || user.data === undefined) {
             navigation("/");
         }
-        console.log(user);
     }, []);
 
     return (

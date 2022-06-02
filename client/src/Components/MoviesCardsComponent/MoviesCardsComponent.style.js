@@ -5,6 +5,7 @@ export const div = styled.div`
     height: auto;
     transition: all 0.5s ease;
     margin: 0.5rem 0.5rem;
+    position: relative;
     h3 {
         color: var(--main-cl);
         font-size: 14px;
@@ -39,6 +40,18 @@ export const div = styled.div`
         width: 100%;
         padding: 0.5rem;
     }
+    .close_icons {
+        position: absolute;
+        fill: white;
+        z-index: 100;
+        cursor: pointer;
+        top: 10px;
+        right: 10px;
+        font-size: 25px;
+        fill: white;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
 `;
 
 export const videoDiv = styled.div`
@@ -67,6 +80,9 @@ export const cartContentDiv = styled.div`
     }
     &:hover {
         transform: scale(1);
+    }
+    &:hover .close_icons {
+        opacity: 1;
     }
 
     /* &:hover .card-hover-div {

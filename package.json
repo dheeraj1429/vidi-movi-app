@@ -11,6 +11,7 @@
         "server-remove-dep": "npm uninstall --prefix server",
         "client": "npm start --prefix client",
         "server": "npm run dev --prefix server",
+        "server-pm2": "npm run pm2 --prefix server",
         "watch": "npm run server & npm run client"
     },
     "author": "",

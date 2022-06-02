@@ -4,7 +4,8 @@
     "private": true,
     "scripts": {
         "start": "node ./bin/www",
-        "dev": "nodemon app.js -e ejs,js,css"
+        "dev": "nodemon app.js -e ejs,js,css",
+        "pm2": "pm2 start app.js"
     },
     "dependencies": {
         "bcryptjs": "^2.4.3",
@@ -25,6 +26,7 @@
         "nodemailer": "^6.7.5",
         "passport": "^0.5.3",
         "passport-google-oauth20": "^2.0.0",
+        "pm2": "^5.2.0",
         "vidi": "file:.."
     }
 }
