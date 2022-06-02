@@ -20,7 +20,7 @@ export const spnenrDiv = styled.div`
 export const moviesShowDiv = styled.div`
     padding: 1rem;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     transition: all 0.3s ease;
     position: relative;
 

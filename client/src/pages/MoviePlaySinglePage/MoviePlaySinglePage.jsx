@@ -8,25 +8,29 @@ import { GiSoundOff } from "@react-icons/all-files/gi/GiSoundOff";
 import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
 import { backendConfigData } from "../../Utils/backendData";
 import { useLocation } from "react-router-dom";
-import { fetchSelectedMovi } from "../../Redux/Action/indexAction";
+import { fetchSelectedMovi, movieLike, storeHistoryVideo } from "../../Redux/Action/indexAction";
 import { Slider } from "antd";
-import { storeHistoryVideo } from "../../Redux/Action/indexAction";
+import { BiLike } from "@react-icons/all-files/bi/BiLike";
 
 function MoviePlaySinglePage() {
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
     const user = useSelector((state) => state.auth.user);
     const [ShowPlayButton, setShowPlayButton] = useState(true);
     const [IsHistoryVideo, setIsHistoryVideo] = useState(false);
+    const [VideoHandler, setVideoHandler] = useState({
+        isFullScreen: false,
+        showControlles: false,
+        waitFrame: false,
+        isPlay: false,
+        soundLow: false,
+    });
     const [video, setVideo] = useState();
     const playButton = useRef(null);
     const pauseButton = useRef(null);
-    const [IsPlay, setIsPlay] = useState(false);
     const CurrentValue = useRef(null);
     const CurrentDuractionValue = useRef(null);
     const [ProgressValue, setProgressValue] = useState(0);
-    const [SoundLow, setSoundLow] = useState(false);
     const bufferElem = useRef(null);
-    const [WaitFrame, setWaitFrame] = useState(false);
     const loaction = useLocation();
     const dispatch = useDispatch();
 
@@ -36,7 +40,8 @@ function MoviePlaySinglePage() {
     const ButtonHandler = async function () {
         video.load();
         PlayAndPauseHandler();
-        setIsPlay(true);
+        setVideoHandler({ ...VideoHandler, isPlay: true });
+        setVideoHandler({ ...VideoHandler, showControlles: !VideoHandler.showControlles });
     };
 
     const musicInfoData = function (duraction) {
@@ -80,23 +85,25 @@ function MoviePlaySinglePage() {
         CurrentDuractionValue.current.textContent = durationValue;
 
         if (currentTime === duration) {
-            setIsPlay(false);
+            setVideoHandler({ ...VideoHandler, isPlay: false });
         }
     };
 
     const WaitFunction = function () {
-        setWaitFrame(true);
+        setVideoHandler({ ...VideoHandler, waitFrame: true });
     };
 
     const VideoPlayHandler = function () {
-        setWaitFrame(false);
+        setVideoHandler({ ...VideoHandler, waitFrame: false });
         setShowPlayButton(false);
     };
 
     const PlayAndPauseHandler = async function () {
-        setIsPlay(!IsPlay);
+        setVideoHandler({ ...VideoHandler, isPlay: !VideoHandler.isPlay });
+        setVideoHandler({ ...VideoHandler, showControlles: true });
+        video.muted = false;
 
-        if (!IsPlay) {
+        if (!VideoHandler.isPlay) {
             await video.play();
             setShowPlayButton(false);
         } else {
@@ -106,11 +113,11 @@ function MoviePlaySinglePage() {
     };
 
     const PlayHandler = function () {
-        setIsPlay(true);
+        setVideoHandler({ ...VideoHandler, isPlay: true });
     };
 
     const PauseHandler = function () {
-        setIsPlay(false);
+        setVideoHandler({ ...VideoHandler, isPlay: false });
     };
 
     const ChangeHandler = function (event) {
@@ -124,9 +131,9 @@ function MoviePlaySinglePage() {
         }
 
         if (value === 0 || value < 1) {
-            setSoundLow(true);
+            setVideoHandler({ ...VideoHandler, soundLow: true });
         } else {
-            setSoundLow(false);
+            setVideoHandler({ ...VideoHandler, soundLow: false });
         }
     };
 
@@ -141,6 +148,7 @@ function MoviePlaySinglePage() {
     };
 
     const FullScreenHandler = function () {
+        setVideoHandler({ ...VideoHandler, isFullScreen: true });
         if (video.requestFullscreen) {
             video.requestFullscreen();
         } else if (video.webkitRequestFullscreen) {
@@ -163,6 +171,52 @@ function MoviePlaySinglePage() {
         dispatch(fetchSelectedMovi(id));
     }, []);
 
+    const MoviesLikeHandler = function (data) {
+        dispatch(movieLike(data));
+    };
+
+    // useEffect(() => {
+    //     if (video) {
+    //         const playMovieHandler = function () {
+    //             video.load();
+    //             video.muted = true;
+    //             const promise = video.play();
+    //             let autoPlayAllowed = true;
+
+    //             if (promise instanceof Promise) {
+    //                 promise
+    //                     .then(() => {
+    //                         if (autoPlayAllowed) {
+    //                             video.muted = false;
+    //                             setVideoHandler({ ...VideoHandler, showControlles: true });
+
+    //                             // Autoplay is allowed - continue with initialization
+    //                             console.log("autoplay allowed");
+    //                         } else {
+    //                             setVideoHandler({ ...VideoHandler, showControlles: false });
+
+    //                             // Autoplay is not allowed - wait for the user to trigger the play button manually
+    //                             console.log("autoplay NOT allowed");
+    //                         }
+    //                     })
+    //                     .catch((error) => {
+    //                         // Check if it is the right error
+    //                         if (error.name === "NotAllowedError") {
+    //                             autoPlayAllowed = false;
+    //                         } else {
+    //                             throw error;
+    //                         }
+    //                     });
+    //             } else {
+    //                 // Unknown if allowed
+    //                 console.log("autoplay unknown");
+    //             }
+    //         };
+
+    //         playMovieHandler();
+    //     }
+    // }, [video]);
+
     return (
         <>
             {selectedMovie !== null && Object.keys(selectedMovie).length > 0 ? (
@@ -175,7 +229,7 @@ function MoviePlaySinglePage() {
                                 </single.playDiv>
                             </div>
 
-                            <single.bufferLoadingDiv className={WaitFrame ? "showBufferLoading" : null}>
+                            <single.bufferLoadingDiv className={VideoHandler.waitFrame ? "showBufferLoading" : null}>
                                 <img src="/images/wating.svg" />
                             </single.bufferLoadingDiv>
                             <video
@@ -185,16 +239,16 @@ function MoviePlaySinglePage() {
                                 onTimeUpdate={TimeUpdateHandler}
                                 onPlay={PlayHandler}
                                 onPause={PauseHandler}
-                                onClick={PlayAndPauseHandler}
+                                onClick={!VideoHandler.isFullScreen ? () => PlayAndPauseHandler() : null}
                                 onWaiting={WaitFunction}
                                 onPlaying={VideoPlayHandler}
                                 preLoad="auto"
                                 id="single_video"
                                 allow="autoplay; fullscreen"
                             ></video>
-                            <single.controllDiv className="showControlles">
+                            <single.controllDiv className={VideoHandler.showControlles ? "showControlles" : null}>
                                 <div id="flexDiv">
-                                    {IsPlay ? (
+                                    {VideoHandler.isPlay ? (
                                         <BiPause ref={pauseButton} onClick={PlayAndPauseHandler} />
                                     ) : (
                                         <BsFillPlayFill ref={playButton} onClick={PlayAndPauseHandler} />
@@ -216,11 +270,12 @@ function MoviePlaySinglePage() {
                                         <p>/</p>
                                         <p ref={CurrentDuractionValue}>00 : 00</p>
                                         <single.soundDiv>
-                                            {SoundLow ? <GiSoundOff /> : <GiSoundOn />}
+                                            {VideoHandler.soundLow ? <GiSoundOff /> : <GiSoundOn />}
                                             <Slider defaultValue={100} onChange={(e) => ChangeHandler(e)} />
                                         </single.soundDiv>
                                     </div>
                                     <div className="inner-timer-options-div">
+                                        <BiLike onClick={() => MoviesLikeHandler({ id: selectedMovie._id, movieVideo: selectedMovie.movieVideo })} />
                                         <BiFullscreen onClick={FullScreenHandler} />
                                     </div>
                                 </single.timeDiv>

@@ -66,6 +66,12 @@ const indexReducer = function (state = INITAL_STATE, action) {
                 userHistory: findHistory,
             };
 
+        case ACTION_TYPE.REMOVER_CLIENT_HISTORY:
+            return {
+                ...state,
+                userHistory: action.payload,
+            };
+
         default: {
             return {
                 ...state,

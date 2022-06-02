@@ -8,5 +8,6 @@ router.get("/get-one-movie/:id", indexController.getOneMovi);
 router.post("/video-history", indexController.storeHistoryVideo);
 router.get("/user-history", indexController.userHistory);
 router.post("/remove-user-history", indexController.removeMovieFromHistory);
+router.post("/like-movies", indexController.likeMovies);
 
 module.exports = router;

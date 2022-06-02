@@ -3,7 +3,7 @@ import * as card from "./MoviesCardsComponent.style";
 import { backendConfigData } from "../../Utils/backendData";
 import CardsPlayOptionComponent from "../CardsPlayOptionComponent/CardsPlayOptionComponent";
 
-function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data, closeIcon, style_change, description }) {
+function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data, closeIcon, description }) {
     const [IsEnter, setIsEnter] = useState(false);
     const [ShowVideo, setShowVideo] = useState(false);
 
@@ -22,7 +22,6 @@ function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data, cl
                 <card.cartContentDiv className={IsEnter ? "Active-movie-card" : null}>
                     {closeIcon ? closeIcon : null}
                     <card.moviDiv
-                        // className={style_change ? "flex_card_el" : null}
                         style={
                             !ShowVideo
                                 ? {

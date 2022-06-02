@@ -79,8 +79,8 @@ const getOneMovi = async function (req, res, next) {
 };
 
 // check the movie data is present into the database if the movie object is already present into the database collection then we don't want to store the movie data inside any object and array.
-const isMoviesPresent = async function (collection, userId, movieId) {
-    const finMovieInDb = await collection.findOne({ _id: userId }, { history: { $elemMatch: { moviesId: movieId } } });
+const isMoviesPresent = async function (collection, userId, fildName, movieId) {
+    const finMovieInDb = await collection.findOne({ _id: userId }, { [fildName]: { $elemMatch: { moviesId: movieId } } });
     return finMovieInDb;
 };
 
@@ -106,7 +106,7 @@ const storeHistoryVideo = async function (req, res, next) {
         const provider = userVarify.provider;
 
         if (provider === "google") {
-            const goolgeUserMoviePresent = await isMoviesPresent(googleAuthUser, userId, movieId);
+            const goolgeUserMoviePresent = await isMoviesPresent(googleAuthUser, userId, "history", movieId);
 
             if (goolgeUserMoviePresent.history.length > 0) {
                 console.log("movie is already present");
@@ -125,7 +125,7 @@ const storeHistoryVideo = async function (req, res, next) {
                 );
             }
         } else if (provider === "login") {
-            const userFindInDb = await isMoviesPresent(userModel, userId, movieId);
+            const userFindInDb = await isMoviesPresent(userModel, userId, "history", movieId);
 
             if (userFindInDb.history.length > 0) {
                 console.log("movie is already present");
@@ -171,18 +171,23 @@ const getHistoryFunction = async function (collection, _id, name, req, res) {
     });
 };
 
+const userFindInCookie = async function (req, res) {
+    const token = req.cookies?.user?.data?.token;
+
+    if (!token) {
+        return res.status(200).json({
+            success: false,
+            message: "there is no user found in session",
+        });
+    }
+    const userVarify = await jwt.verify(token, JWT_TOKEN);
+    return userVarify;
+};
+
 const userHistory = async function (req, res, next) {
     try {
-        const token = req.cookies?.user?.data?.token;
+        const userVarify = await userFindInCookie(req, res);
 
-        if (!token) {
-            return res.status(200).json({
-                success: false,
-                message: "there is no user found in session",
-            });
-        }
-
-        const userVarify = await jwt.verify(token, JWT_TOKEN);
         const { _id, name, provider } = userVarify;
 
         // if the user is login with the google account the we want to store the history object inside the user google account object is the user login with the normal account then we want the store the history data into the user collection.
@@ -209,16 +214,7 @@ const removeMovieFromHistory = async function (req, res, next) {
 
         if (!movieSelectedId) return res.status(400).json({ success: false, message: "please send the selected movie id" });
 
-        const token = req.cookies?.user?.data?.token;
-
-        if (!token) {
-            return res.status(200).json({
-                success: false,
-                message: "there is no user found in session",
-            });
-        }
-
-        const varifyUser = await jwt.verify(token, JWT_TOKEN);
+        const varifyUser = await userFindInCookie(req, res);
         const { _id, name, provider } = varifyUser;
         if (provider === "google") {
             removerMoviesHistoryOne(googleAuthUser, _id, movieSelectedId);
@@ -233,6 +229,61 @@ const removeMovieFromHistory = async function (req, res, next) {
     }
 };
 
+const findUserDb = async function (collection, req, res, _id, name, email) {
+    const userFindRef = collection.findOne({ _id: _id, name: name, email: email });
+
+    if (!userFindRef) {
+        return res.status(200).json({
+            success: false,
+            message: "there is no user",
+        });
+    }
+
+    return userFindRef;
+};
+
+const movieCheckFunction = async function (collection, _id, id, findMovieRef) {
+    const userLikeVideoIsPresent = await collection.findOne({ _id }, { favoriteMovies: { $elemMatch: { movieId: id } } });
+
+    if (userLikeVideoIsPresent.favoriteMovies.length <= 0) {
+        await collection.update(
+            { _id },
+            {
+                $push: {
+                    favoriteMovies: [
+                        {
+                            movieId: findMovieRef._id,
+                        },
+                    ],
+                },
+            }
+        );
+    } else {
+        return;
+    }
+};
+
+const likeMovies = async function (req, res, next) {
+    try {
+        const { id, movieVideo } = req.body;
+        // find the movie by id and the movie name into the databse
+        const findMovieRef = await movieModel.findOne({ _id: id, movieVideo: movieVideo });
+        // read the user is the present into the session
+        const varifyUser = await userFindInCookie(req, res);
+        const { _id, provider } = varifyUser;
+        // find the user into the databse by using the provider key
+        if (provider === "google") {
+            await movieCheckFunction(googleAuthUser, _id, id, findMovieRef);
+        }
+
+        if (provider === "login") {
+            await movieCheckFunction(userModel, _id, id, findMovieRef);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMovies,
     stremVideo,
@@ -240,4 +291,5 @@ module.exports = {
     storeHistoryVideo,
     userHistory,
     removeMovieFromHistory,
+    likeMovies,
 };

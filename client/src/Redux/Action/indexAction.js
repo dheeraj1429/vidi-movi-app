@@ -125,3 +125,29 @@ export const removeUserOneMovieHistory = function (data) {
         }
     };
 };
+
+export const removeClientHistory = function (data) {
+    return {
+        type: ACTION_TYPE.REMOVER_CLIENT_HISTORY,
+        payload: data,
+    };
+};
+
+export const movieLike = function (data) {
+    return async function (dispatch) {
+        try {
+            const likeRef = await axios.post("/index/like-movies", data, headers);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const movieDisLike = function (data) {
+    return async function (dispatch) {
+        try {
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
