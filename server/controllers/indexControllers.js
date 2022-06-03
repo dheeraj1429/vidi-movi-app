@@ -84,6 +84,21 @@ const isMoviesPresent = async function (collection, userId, fildName, movieId) {
     return finMovieInDb;
 };
 
+const storeUserHistoryFunction = async function (collection, userId, userName, movieId) {
+    await collection.update(
+        { _id: userId, name: userName },
+        {
+            $push: {
+                history: [
+                    {
+                        moviesId: movieId,
+                    },
+                ],
+            },
+        }
+    );
+};
+
 const storeHistoryVideo = async function (req, res, next) {
     try {
         const { id, name, userToken } = req.body;
@@ -102,7 +117,6 @@ const storeHistoryVideo = async function (req, res, next) {
         const userVarify = await jwt.verify(userToken, JWT_TOKEN);
         const userId = userVarify._id;
         const userName = userVarify.name;
-        const userEmail = userVarify.email;
         const provider = userVarify.provider;
 
         if (provider === "google") {
@@ -111,18 +125,7 @@ const storeHistoryVideo = async function (req, res, next) {
             if (goolgeUserMoviePresent.history.length > 0) {
                 console.log("movie is already present");
             } else {
-                await googleAuthUser.update(
-                    { _id: userId, name: userName, email: userEmail },
-                    {
-                        $push: {
-                            history: [
-                                {
-                                    moviesId: movieId,
-                                },
-                            ],
-                        },
-                    }
-                );
+                await storeUserHistoryFunction(googleAuthUser, userId, userName, movieId);
             }
         } else if (provider === "login") {
             const userFindInDb = await isMoviesPresent(userModel, userId, "history", movieId);
@@ -130,18 +133,7 @@ const storeHistoryVideo = async function (req, res, next) {
             if (userFindInDb.history.length > 0) {
                 console.log("movie is already present");
             } else {
-                await userModel.update(
-                    { _id: userVarify._id },
-                    {
-                        $push: {
-                            history: [
-                                {
-                                    moviesId: movieId,
-                                },
-                            ],
-                        },
-                    }
-                );
+                await storeUserHistoryFunction(userModel, userId, userName, movieId);
             }
         }
     } catch (err) {
@@ -150,8 +142,8 @@ const storeHistoryVideo = async function (req, res, next) {
 };
 
 // grab the user history data and return from the function
-const getHistoryFunction = async function (collection, _id, name, req, res) {
-    const userHistoryObjectRef = await collection.findOne({ _id, name }).populate("history.moviesId");
+const getHistoryFunction = async function (collection, _id, name, req, res, target) {
+    const userHistoryObjectRef = await collection.findOne({ _id, name }).populate(`${target}.moviesId`);
     if (userHistoryObjectRef.history.length === 0 || userHistoryObjectRef.history === []) {
         return res.status(200).json({ success: true, message: "No history" });
     }
@@ -189,14 +181,14 @@ const userHistory = async function (req, res, next) {
         const userVarify = await userFindInCookie(req, res);
 
         const { _id, name, provider } = userVarify;
-
+        let target = "history";
         // if the user is login with the google account the we want to store the history object inside the user google account object is the user login with the normal account then we want the store the history data into the user collection.
         if (provider === "google") {
-            getHistoryFunction(googleAuthUser, _id, name, req, res);
+            getHistoryFunction(googleAuthUser, _id, name, req, res, target);
         }
 
         if (provider === "login") {
-            getHistoryFunction(userModel, _id, name, req, res);
+            getHistoryFunction(userModel, _id, name, req, res, target);
         }
     } catch (err) {
         console.log(err);
@@ -213,33 +205,20 @@ const removeMovieFromHistory = async function (req, res, next) {
         const { movieSelectedId } = req.body;
 
         if (!movieSelectedId) return res.status(400).json({ success: false, message: "please send the selected movie id" });
-
+        let target = "history";
         const varifyUser = await userFindInCookie(req, res);
         const { _id, name, provider } = varifyUser;
         if (provider === "google") {
             removerMoviesHistoryOne(googleAuthUser, _id, movieSelectedId);
-            getHistoryFunction(googleAuthUser, _id, name, req, res);
+            getHistoryFunction(googleAuthUser, _id, name, req, res, target);
         }
         if (provider === "login") {
             removerMoviesHistoryOne(userModel, _id, movieSelectedId);
-            getHistoryFunction(userModel, _id, name, req, res);
+            getHistoryFunction(userModel, _id, name, req, res, target);
         }
     } catch (err) {
         console.log(err);
     }
-};
-
-const findUserDb = async function (collection, req, res, _id, name, email) {
-    const userFindRef = collection.findOne({ _id: _id, name: name, email: email });
-
-    if (!userFindRef) {
-        return res.status(200).json({
-            success: false,
-            message: "there is no user",
-        });
-    }
-
-    return userFindRef;
 };
 
 const movieCheckFunction = async function (collection, _id, id, findMovieRef) {
@@ -259,7 +238,7 @@ const movieCheckFunction = async function (collection, _id, id, findMovieRef) {
             }
         );
     } else {
-        return;
+        await collection.update({ _id }, { $pull: { favoriteMovies: { movieId: findMovieRef._id } } }, { new: true });
     }
 };
 
@@ -284,6 +263,43 @@ const likeMovies = async function (req, res, next) {
     }
 };
 
+// send back the array of the object which is cantan all the liked movie objects
+const likedMovieArrayFunction = async function (collection, _id, name, findTarget, req, res) {
+    const findAllLikedMoviesInDb = await collection.findOne({ _id, name }).populate(`${findTarget}.movieId`);
+
+    if (findAllLikedMoviesInDb[findTarget].length === 0 || findAllLikedMoviesInDb[findTarget] === []) {
+        return res.status(200).json({ success: true, message: "No history" });
+    }
+
+    const likedMoviedArray = [];
+
+    findAllLikedMoviesInDb.favoriteMovies.map((el) => {
+        likedMoviedArray.push(el.movieId);
+    });
+
+    return res.status(200).json({
+        success: true,
+        moviesLikedObject: likedMoviedArray,
+    });
+};
+
+const getAllLikeMovies = async function (req, res, next) {
+    try {
+        const varifyUser = await userFindInCookie(req, res);
+        const { _id, name, provider } = varifyUser;
+        let findTarget = "favoriteMovies";
+        if (provider === "login") {
+            await likedMovieArrayFunction(userModel, _id, name, findTarget, req, res);
+        }
+
+        if (provider === "google") {
+            await likedMovieArrayFunction(googleAuthUser, _id, name, findTarget, req, res);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMovies,
     stremVideo,
@@ -292,4 +308,5 @@ module.exports = {
     userHistory,
     removeMovieFromHistory,
     likeMovies,
+    getAllLikeMovies,
 };

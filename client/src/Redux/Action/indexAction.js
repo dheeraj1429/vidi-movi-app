@@ -136,16 +136,22 @@ export const removeClientHistory = function (data) {
 export const movieLike = function (data) {
     return async function (dispatch) {
         try {
-            const likeRef = await axios.post("/index/like-movies", data, headers);
+            await axios.post("/index/like-movies", data, headers);
         } catch (err) {
             console.log(err);
         }
     };
 };
 
-export const movieDisLike = function (data) {
+export const getAllLikeMovies = function () {
     return async function (dispatch) {
         try {
+            const getLikedMoviesRef = await axios.get("/index/get-all-liked-moves", headers);
+
+            dispatch({
+                type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
+                payload: getLikedMoviesRef.data.moviesLikedObject,
+            });
         } catch (err) {
             console.log(err);
         }

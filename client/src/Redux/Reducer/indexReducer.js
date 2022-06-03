@@ -10,6 +10,7 @@ const INITAL_STATE = {
     playVideo: false,
     userHistory: null,
     loadingHistory: true,
+    userLikedVideos: null,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -70,6 +71,13 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 userHistory: action.payload,
+            };
+
+        case ACTION_TYPE.GET_ALL_LIKE_MOVIES:
+            return {
+                ...state,
+                userLikedVideos: action.payload,
+                loadingHistory: false,
             };
 
         default: {
