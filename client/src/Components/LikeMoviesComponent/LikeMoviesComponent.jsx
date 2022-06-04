@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as like from "./LikeMoviesComponent.style";
 import BannerComponent from "../BannerComponent/BannerComponent";
 import NavbarComponent from "../NavbarComponent/NavbarComponent";
 import HeadingComponent from "../HeadingComponent/HeadingComponent";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import MoviesCardsComponent from "../MoviesCardsComponent/MoviesCardsComponent";
 import SpnnerComponent from "../SpnnerComponent/SpnnerComponent";
+import { getAllLikeMovies } from "../../Redux/Action/indexAction";
 
 function LikeMoviesComponent() {
     const userLikedVideos = useSelector((state) => state.index.userLikedVideos);
     const loadingHistory = useSelector((state) => state.index.loadingHistory);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (userLikedVideos) {
+            dispatch(getAllLikeMovies());
+        }
+    }, []);
 
     return (
         <like.div>
@@ -24,15 +32,11 @@ function LikeMoviesComponent() {
                 <HeadingComponent heading={"Movies"} />
 
                 <like.moviesShowDiv>
-                    {userLikedVideos !== null && userLikedVideos.length > 0 && userLikedVideos[0] !== null ? (
-                        userLikedVideos.map(({ ...otherProps }) => (
-                            <MoviesCardsComponent style_change={"style-two"} key={otherProps._id} {...otherProps} data={otherProps} />
-                        ))
-                    ) : userLikedVideos !== null && userLikedVideos.success === true && userLikedVideos.message ? (
-                        <>
-                            <p>{userLikedVideos.message}</p>
-                        </>
-                    ) : null}
+                    {userLikedVideos !== null && userLikedVideos !== undefined && userLikedVideos.length > 0 && userLikedVideos[0] !== null
+                        ? userLikedVideos.map(({ ...otherProps }) => (
+                              <MoviesCardsComponent style_change={"style-two"} key={otherProps._id} {...otherProps} data={otherProps} />
+                          ))
+                        : null}
                     {loadingHistory ? (
                         <like.spnenrDiv>
                             <SpnnerComponent />

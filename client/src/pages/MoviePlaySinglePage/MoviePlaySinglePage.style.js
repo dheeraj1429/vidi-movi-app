@@ -15,6 +15,9 @@ export const div = styled.div`
     .ant-slider {
         width: 100px;
     }
+    .LikeMovie_button {
+        fill: var(--spec-static-brand-red);
+    }
 `;
 
 export const movieDiv = styled.div`

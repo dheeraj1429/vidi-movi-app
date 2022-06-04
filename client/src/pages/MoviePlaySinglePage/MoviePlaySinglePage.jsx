@@ -7,14 +7,16 @@ import { GiSoundOn } from "@react-icons/all-files/gi/GiSoundOn";
 import { GiSoundOff } from "@react-icons/all-files/gi/GiSoundOff";
 import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
 import { backendConfigData } from "../../Utils/backendData";
-import { useLocation } from "react-router-dom";
-import { fetchSelectedMovi, movieLike, storeHistoryVideo } from "../../Redux/Action/indexAction";
+import { useLinkClickHandler, useLocation } from "react-router-dom";
+import { fetchSelectedMovi, movieLike, storeHistoryVideo, getAllLikeMovies } from "../../Redux/Action/indexAction";
 import { Slider } from "antd";
 import { BiLike } from "@react-icons/all-files/bi/BiLike";
 
 function MoviePlaySinglePage() {
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
     const user = useSelector((state) => state.auth.user);
+    const userLikedVideos = useSelector((state) => state.index.userLikedVideos);
+
     const [ShowPlayButton, setShowPlayButton] = useState(true);
     const [IsHistoryVideo, setIsHistoryVideo] = useState(false);
     const [VideoHandler, setVideoHandler] = useState({
@@ -24,6 +26,8 @@ function MoviePlaySinglePage() {
         isPlay: false,
         soundLow: false,
     });
+
+    const [IsLike, setIsLike] = useState(false);
     const [video, setVideo] = useState();
     const playButton = useRef(null);
     const pauseButton = useRef(null);
@@ -31,6 +35,7 @@ function MoviePlaySinglePage() {
     const CurrentDuractionValue = useRef(null);
     const [ProgressValue, setProgressValue] = useState(0);
     const bufferElem = useRef(null);
+
     const loaction = useLocation();
     const dispatch = useDispatch();
 
@@ -165,7 +170,17 @@ function MoviePlaySinglePage() {
             const token = user.data.token;
             dispatch(storeHistoryVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
         }
-    }, [IsHistoryVideo]);
+
+        if (selectedMovie && userLikedVideos !== null) {
+            userLikedVideos.find((el) => {
+                if (el._id === selectedMovie._id) {
+                    setIsLike(true);
+                } else {
+                    setIsLike(false);
+                }
+            });
+        }
+    }, [IsHistoryVideo, selectedMovie, userLikedVideos]);
 
     useEffect(() => {
         dispatch(fetchSelectedMovi(id));
@@ -173,6 +188,10 @@ function MoviePlaySinglePage() {
 
     const MoviesLikeHandler = function (data) {
         dispatch(movieLike(data));
+    };
+
+    const AddLikeHandler = function (id) {
+        setIsLike(!IsLike);
     };
 
     // useEffect(() => {
@@ -275,7 +294,13 @@ function MoviePlaySinglePage() {
                                         </single.soundDiv>
                                     </div>
                                     <div className="inner-timer-options-div">
-                                        <BiLike onClick={() => MoviesLikeHandler({ id: selectedMovie._id, movieVideo: selectedMovie.movieVideo })} />
+                                        <BiLike
+                                            className={IsLike ? "LikeMovie_button" : null}
+                                            onClick={() => {
+                                                MoviesLikeHandler({ id: selectedMovie._id, movieVideo: selectedMovie.movieVideo });
+                                                AddLikeHandler(selectedMovie._id);
+                                            }}
+                                        />
                                         <BiFullscreen onClick={FullScreenHandler} />
                                     </div>
                                 </single.timeDiv>

@@ -88,7 +88,7 @@ export const storeHistoryVideo = function (data) {
     };
 };
 
-export const userHistory = function (data) {
+export const userHistory = function () {
     return async function (dispatch) {
         try {
             const userHistoryRef = await axios.get("/index/user-history", headers);
@@ -148,12 +148,26 @@ export const getAllLikeMovies = function () {
         try {
             const getLikedMoviesRef = await axios.get("/index/get-all-liked-moves", headers);
 
-            dispatch({
-                type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
-                payload: getLikedMoviesRef.data.moviesLikedObject,
-            });
+            if (getLikedMoviesRef && getLikedMoviesRef.data.moviesLikedObject) {
+                dispatch({
+                    type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
+                    payload: getLikedMoviesRef.data.moviesLikedObject,
+                });
+            } else {
+                dispatch({
+                    type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
+                    payload: getLikedMoviesRef.data,
+                });
+            }
         } catch (err) {
             console.log(err);
         }
+    };
+};
+
+export const removerLikeVideoFromClient = function (data) {
+    return {
+        type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
+        payload: data,
     };
 };

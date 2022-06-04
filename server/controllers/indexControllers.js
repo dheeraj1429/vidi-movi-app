@@ -267,14 +267,11 @@ const likeMovies = async function (req, res, next) {
 const likedMovieArrayFunction = async function (collection, _id, name, findTarget, req, res) {
     const findAllLikedMoviesInDb = await collection.findOne({ _id, name }).populate(`${findTarget}.movieId`);
 
-    if (findAllLikedMoviesInDb[findTarget].length === 0 || findAllLikedMoviesInDb[findTarget] === []) {
-        return res.status(200).json({ success: true, message: "No history" });
-    }
-
     const likedMoviedArray = [];
 
-    findAllLikedMoviesInDb.favoriteMovies.map((el) => {
-        likedMoviedArray.push(el.movieId);
+    findAllLikedMoviesInDb[findTarget].map((el) => {
+        const movieObject = el.movieId;
+        likedMoviedArray.push(movieObject);
     });
 
     return res.status(200).json({
