@@ -5,6 +5,8 @@ import { AiOutlineVideoCamera } from "@react-icons/all-files/ai/AiOutlineVideoCa
 import SideBarOptionComponent from "../../Components/SideBarOptionComponent/SideBarOptionComponent";
 import { BiVideo } from "@react-icons/all-files/bi/BiVideo";
 import { useLocation } from "react-router-dom";
+import { VscSymbolStructure } from "@react-icons/all-files/vsc/VscSymbolStructure";
+import { FiUsers } from "@react-icons/all-files/fi/FiUsers";
 import useNav from "../../Hooks/useNav";
 
 function DashboardSiderComponent() {
@@ -32,6 +34,7 @@ function DashboardSiderComponent() {
                 <SideBarOptionComponent icon={<VscHome />} innerText={"Dashboard"} event={ActiveBarHandler} activeBar={ActiveBar} />
                 <SideBarOptionComponent icon={<AiOutlineVideoCamera />} innerText={"Movies Upload"} event={ActiveBarHandler} activeBar={ActiveBar} />
                 <SideBarOptionComponent icon={<BiVideo />} innerText={"Movies"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                <SideBarOptionComponent icon={<FiUsers />} innerText={"Users"} event={ActiveBarHandler} activeBar={ActiveBar} />
             </sidebar.innerDiv>
         </sidebar.div>
     );

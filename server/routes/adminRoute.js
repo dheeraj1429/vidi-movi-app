@@ -25,5 +25,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).any();
 
 router.post("/movie-upload", upload, adminControllers.moviesUpload);
+router.get("/get-all-users", adminControllers.getAllUser);
+router.post("/update-user-profile", adminControllers.updateUserProfile);
+router.post("/delete-account", adminControllers.deleteAccount);
 
 module.exports = router;

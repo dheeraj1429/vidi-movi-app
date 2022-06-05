@@ -8,6 +8,9 @@ export const div = styled.div`
         font-size: 20px;
         font-weight: 400;
     }
+    span {
+        font-size: 13px;
+    }
     p {
         font-size: 14px;
     }

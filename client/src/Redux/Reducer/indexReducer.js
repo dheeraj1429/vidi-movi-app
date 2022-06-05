@@ -11,6 +11,9 @@ const INITAL_STATE = {
     userHistory: null,
     loadingHistory: true,
     userLikedVideos: null,
+    allUsers: null,
+    userProfilePopUp: false,
+    userProfileSelected: null,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -78,6 +81,31 @@ const indexReducer = function (state = INITAL_STATE, action) {
                 ...state,
                 userLikedVideos: action.payload,
                 loadingHistory: false,
+            };
+
+        case ACTION_TYPE.REMOVER_LIKE_VIDEO:
+            const filterLikeMovies = state.userLikedVideos.filter((el) => el._id !== action.payload);
+            return {
+                ...state,
+                userLikedVideos: filterLikeMovies,
+            };
+
+        case ACTION_TYPE.GET_ALL_USERS:
+            return {
+                ...state,
+                allUsers: action.payload,
+            };
+
+        case ACTION_TYPE.USER_PROFILE_POPUP:
+            return {
+                ...state,
+                userProfilePopUp: action.payload,
+            };
+
+        case ACTION_TYPE.USER_PROFILE_SELECTED:
+            return {
+                ...state,
+                userProfileSelected: action.payload,
             };
 
         default: {

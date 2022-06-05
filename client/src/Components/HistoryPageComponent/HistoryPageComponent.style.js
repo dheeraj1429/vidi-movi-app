@@ -17,7 +17,12 @@ export const spnenrDiv = styled.div`
     transform: translate(-50%, -50%);
 `;
 
+export const filterDiv = styled.div`
+    display: flex;
+`;
+
 export const moviesShowDiv = styled.div`
+    width: 100%;
     padding: 1rem;
     display: grid;
     grid-template-columns: repeat(6, 1fr);

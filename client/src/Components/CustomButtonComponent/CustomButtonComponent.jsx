@@ -4,7 +4,7 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import HocSpnner from "../HocSpnnerComponent/HocSpnnerComponent";
 
-function CustomButtonComponent({ innteText, buttonCl, buttonIcon, pathUrl, type, onClick, spnnerImage }) {
+function CustomButtonComponent({ innteText, buttonCl, buttonIcon, pathUrl, type, onClick }) {
     const loaction = useLocation();
 
     return (

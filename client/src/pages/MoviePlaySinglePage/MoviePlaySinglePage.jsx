@@ -7,10 +7,11 @@ import { GiSoundOn } from "@react-icons/all-files/gi/GiSoundOn";
 import { GiSoundOff } from "@react-icons/all-files/gi/GiSoundOff";
 import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
 import { backendConfigData } from "../../Utils/backendData";
-import { useLinkClickHandler, useLocation } from "react-router-dom";
-import { fetchSelectedMovi, movieLike, storeHistoryVideo, getAllLikeMovies } from "../../Redux/Action/indexAction";
+import { useLocation } from "react-router-dom";
+import { fetchSelectedMovi, movieLike, storeHistoryVideo, getAllLikeMovies, selectedMovies } from "../../Redux/Action/indexAction";
 import { Slider } from "antd";
 import { BiLike } from "@react-icons/all-files/bi/BiLike";
+import { CgMiniPlayer } from "@react-icons/all-files/cg/CgMiniPlayer";
 
 function MoviePlaySinglePage() {
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
@@ -43,7 +44,6 @@ function MoviePlaySinglePage() {
     const id = path.split("/").slice(-1).join("");
 
     const ButtonHandler = async function () {
-        video.load();
         PlayAndPauseHandler();
         setVideoHandler({ ...VideoHandler, isPlay: true });
         setVideoHandler({ ...VideoHandler, showControlles: !VideoHandler.showControlles });
@@ -184,6 +184,11 @@ function MoviePlaySinglePage() {
 
     useEffect(() => {
         dispatch(fetchSelectedMovi(id));
+        dispatch(getAllLikeMovies());
+
+        return () => {
+            dispatch(selectedMovies(null));
+        };
     }, []);
 
     const MoviesLikeHandler = function (data) {
@@ -194,47 +199,46 @@ function MoviePlaySinglePage() {
         setIsLike(!IsLike);
     };
 
-    // useEffect(() => {
-    //     if (video) {
-    //         const playMovieHandler = function () {
-    //             video.load();
-    //             video.muted = true;
-    //             const promise = video.play();
-    //             let autoPlayAllowed = true;
+    const playMovieHandler = function () {
+        video.load();
+        video.muted = true;
+        const promise = video.play();
+        let autoPlayAllowed = true;
 
-    //             if (promise instanceof Promise) {
-    //                 promise
-    //                     .then(() => {
-    //                         if (autoPlayAllowed) {
-    //                             video.muted = false;
-    //                             setVideoHandler({ ...VideoHandler, showControlles: true });
+        if (promise instanceof Promise) {
+            promise
+                .then(() => {
+                    if (autoPlayAllowed) {
+                        video.muted = false;
+                    } else {
+                        console.log("auto play is not allow");
+                    }
+                })
+                .catch((error) => {
+                    // Check if it is the right error
+                    if (error.name === "NotAllowedError") {
+                        autoPlayAllowed = false;
+                    } else {
+                        throw error;
+                    }
+                });
+        } else {
+            // Unknown if allowed
+            console.log("autoplay unknown");
+        }
+    };
 
-    //                             // Autoplay is allowed - continue with initialization
-    //                             console.log("autoplay allowed");
-    //                         } else {
-    //                             setVideoHandler({ ...VideoHandler, showControlles: false });
+    const ChangePipHandler = async function () {
+        if (!video) return;
+        video.requestPictureInPicture();
+    };
 
-    //                             // Autoplay is not allowed - wait for the user to trigger the play button manually
-    //                             console.log("autoplay NOT allowed");
-    //                         }
-    //                     })
-    //                     .catch((error) => {
-    //                         // Check if it is the right error
-    //                         if (error.name === "NotAllowedError") {
-    //                             autoPlayAllowed = false;
-    //                         } else {
-    //                             throw error;
-    //                         }
-    //                     });
-    //             } else {
-    //                 // Unknown if allowed
-    //                 console.log("autoplay unknown");
-    //             }
-    //         };
-
-    //         playMovieHandler();
-    //     }
-    // }, [video]);
+    useEffect(() => {
+        if (video) {
+            playMovieHandler();
+            ChangePipHandler();
+        }
+    }, [video]);
 
     return (
         <>
@@ -265,7 +269,10 @@ function MoviePlaySinglePage() {
                                 id="single_video"
                                 allow="autoplay; fullscreen"
                             ></video>
-                            <single.controllDiv className={VideoHandler.showControlles ? "showControlles" : null}>
+                            <single.controllDiv
+                                // className={VideoHandler.showControlles ? "" : null}
+                                className="showControlles"
+                            >
                                 <div id="flexDiv">
                                     {VideoHandler.isPlay ? (
                                         <BiPause ref={pauseButton} onClick={PlayAndPauseHandler} />
@@ -289,8 +296,8 @@ function MoviePlaySinglePage() {
                                         <p>/</p>
                                         <p ref={CurrentDuractionValue}>00 : 00</p>
                                         <single.soundDiv>
-                                            {VideoHandler.soundLow ? <GiSoundOff /> : <GiSoundOn />}
-                                            <Slider defaultValue={100} onChange={(e) => ChangeHandler(e)} />
+                                            {VideoHandler.soundLow ? <GiSoundOff className="sound_elemet" /> : <GiSoundOn className="sound_elemet" />}
+                                            <Slider defaultValue={100} onChange={(e) => ChangeHandler(e)} className="sound-controlle-div" />
                                         </single.soundDiv>
                                     </div>
                                     <div className="inner-timer-options-div">
@@ -301,6 +308,7 @@ function MoviePlaySinglePage() {
                                                 AddLikeHandler(selectedMovie._id);
                                             }}
                                         />
+                                        <CgMiniPlayer onClick={ChangePipHandler} />
                                         <BiFullscreen onClick={FullScreenHandler} />
                                     </div>
                                 </single.timeDiv>

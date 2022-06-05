@@ -3,7 +3,7 @@ import * as Home from "./HomeContainerComponent.style";
 import BannerComponent from "../BannerComponent/BannerComponent";
 import MoviesCardsComponent from "../MoviesCardsComponent/MoviesCardsComponent";
 import { useSelector } from "react-redux";
-import MoviesPlayBannerComponent from "../MoviesPlayBannerComponent/MoviesPlayBannerComponent";
+// import MoviesPlayBannerComponent from "../MoviesPlayBannerComponent/MoviesPlayBannerComponent";
 import HeadingComponent from "../HeadingComponent/HeadingComponent";
 import NavbarComponent from "../NavbarComponent/NavbarComponent";
 import MoviesSmCardsComponent from "../MoviesSmCardsComponent/MoviesSmCardsComponent";
@@ -30,13 +30,13 @@ function HomeContainerComponent() {
                       ))
                     : null}
             </Home.moviesShowDiv>
-            <HeadingComponent heading={"Best in 2022"} />
-            <MoviesPlayBannerComponent
+            {/* <HeadingComponent heading={"Best in 2022"} /> */}
+            {/* <MoviesPlayBannerComponent
                 data={{
                     backgroundImage: "https://res.cloudinary.com/dw369yzsh/image/upload/v1470916846/banner_background_ez243c.jpg",
                     cardImage: "https://res.cloudinary.com/dw369yzsh/image/upload/v1470917169/deadpool_wn1hwe.jpg",
                 }}
-            />
+            /> */}
             <MoviesSmCardsComponent />
         </Home.div>
     );

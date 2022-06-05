@@ -219,6 +219,15 @@ export const timeDiv = styled.div`
         color: var(--heading-cl);
         margin: 0 0.3rem;
     }
+
+    svg {
+        color: var(--main-cl);
+    }
+
+    .watch-latet-div svg {
+        margin: 0;
+        font-size: 12px;
+    }
 `;
 
 export const soundDiv = styled.div`
@@ -258,5 +267,18 @@ export const soundDiv = styled.div`
     .range::-webkit-slider-thumb {
         background-color: #aaa;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .sound-controlle-div {
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+        transition: all 0.3s ease;
+    }
+
+    &:hover .sound-controlle-div {
+        opacity: 1;
+        visibility: visible;
+        width: 100px;
     }
 `;

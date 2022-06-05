@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as sidebar from "./SideBarOptionComponent.style";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";

@@ -15,4 +15,5 @@ export const renderDiv = styled.div`
     padding: 2rem;
     background-color: var(--body-background-cl);
     position: relative;
+    margin: 0;
 `;

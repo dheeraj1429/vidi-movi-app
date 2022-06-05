@@ -20,7 +20,7 @@ export const input = styled.input`
 export const lable = styled.label`
     color: var(--smooht-gray-cl);
     margin-bottom: 0.5rem;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
     position: relative;
     font-size: 13px;
     font-weight: 400;

@@ -171,3 +171,68 @@ export const removerLikeVideoFromClient = function (data) {
         payload: data,
     };
 };
+
+export const removeUserLikeVideo = function (data) {
+    return {
+        type: ACTION_TYPE.REMOVER_LIKE_VIDEO,
+        payload: data,
+    };
+};
+
+export const getAllUsers = function () {
+    return async function (dispatch) {
+        try {
+            const allUserRef = await axios.get("/admin/get-all-users", headers);
+
+            dispatch({
+                type: ACTION_TYPE.GET_ALL_USERS,
+                payload: allUserRef.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const profileSelected = function (data) {
+    return {
+        type: ACTION_TYPE.USER_PROFILE_SELECTED,
+        payload: data,
+    };
+};
+
+export const userProfilePupup = function (data) {
+    return {
+        type: ACTION_TYPE.USER_PROFILE_POPUP,
+        payload: data,
+    };
+};
+
+export const updateUserProfile = function (data) {
+    return async function (dispatch) {
+        try {
+            const userRef = await axios.post("/admin/update-user-profile", data, headers);
+
+            dispatch({
+                type: ACTION_TYPE.GET_ALL_USERS,
+                payload: userRef.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const deleteAccount = function (data) {
+    return async function (dispatch) {
+        try {
+            const delteAccountRef = await axios.post("/admin/delete-account", data, headers);
+            dispatch({
+                type: ACTION_TYPE.GET_ALL_USERS,
+                payload: delteAccountRef.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};

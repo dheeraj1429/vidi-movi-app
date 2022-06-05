@@ -1,4 +1,6 @@
 const movieModel = require("../model/Schema/MoviesSchema");
+const userModel = require("../model/Schema/userSchema");
+const googleAuthUser = require("../model/Schema/googleAuthSchema");
 
 const moviesUpload = async function (req, res, next) {
     try {
@@ -49,6 +51,73 @@ const moviesUpload = async function (req, res, next) {
     }
 };
 
+const getAllUser = async function (req, res, next) {
+    try {
+        const authUserRef = await googleAuthUser.find({}, { password: 0, tokens: 0, history: 0, watchLater: 0, favoriteMovies: 0 });
+        const logInUsers = await userModel.find({}, { password: 0, tokens: 0, history: 0, watchLater: 0, favoriteMovies: 0 });
+        const allUserArray = [];
+
+        authUserRef.map((el) => allUserArray.push(el));
+        logInUsers.map((el) => allUserArray.push(el));
+
+        return res.status(200).json({
+            success: true,
+            userLoginData: allUserArray,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const updateUserInfoFunction = async function (collection, req, res, next, _id, name, email, AdminDataInfo) {
+    const updateUserRef = await collection.updateOne({ _id, name, email }, { $set: { name: name, email: email, isAdmin: AdminDataInfo } });
+
+    if (updateUserRef.modifiedCount === 1) {
+        getAllUser(req, res, next);
+    }
+};
+
+const updateUserProfile = async function (req, res, next) {
+    try {
+        const { name, email, AdminDataInfo, provider, _id } = req.body;
+
+        if (provider === "google") {
+            await updateUserInfoFunction(googleAuthUser, req, res, next, _id, name, email, AdminDataInfo);
+        }
+
+        if (provider === "login") {
+            await updateUserInfoFunction(userModel, req, res, next, _id, name, email, AdminDataInfo);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const userDeleteFunction = async function (req, res, next, collection, id) {
+    const deleteAccountRef = await collection.deleteOne({ _id: id });
+    if (deleteAccountRef.deletedCount === 1) {
+        getAllUser(req, res, next);
+    }
+};
+
+const deleteAccount = async function (req, res, next) {
+    try {
+        const { id, provider } = req.body;
+        if (provider === "google") {
+            userDeleteFunction(req, res, next, googleAuthUser, id);
+        }
+
+        if (provider === "login") {
+            userDeleteFunction(req, res, next, userModel, id);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     moviesUpload,
+    getAllUser,
+    updateUserProfile,
+    deleteAccount,
 };

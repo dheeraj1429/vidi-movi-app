@@ -28,34 +28,35 @@ function HistoryPageComponent() {
             />
             {/* <history.h1>History</history.h1> */}
             {/* <DateHadingComponent innerText={"Today"} /> */}
-
-            <history.moviesShowDiv>
-                {userHistoryObject !== null && userHistoryObject.length > 0 && userHistoryObject[0] !== null ? (
-                    userHistoryObject.map(({ ...otherProps }) => (
-                        <MoviesCardsComponent
-                            style_change={"style-two"}
-                            key={otherProps._id}
-                            {...otherProps}
-                            data={otherProps}
-                            closeIcon={
-                                <IoIosClose
-                                    className="close_icons"
-                                    onClick={() => dispatch(removeUserOneMovieHistory({ movieSelectedId: otherProps._id }))}
-                                />
-                            }
-                        />
-                    ))
-                ) : userHistoryObject !== null && userHistoryObject.success === true && userHistoryObject.message ? (
-                    <>
-                        <p>{userHistoryObject.message}</p>
-                    </>
-                ) : null}
-                {loadingHistory ? (
-                    <history.spnenrDiv>
-                        <SpnnerComponent />
-                    </history.spnenrDiv>
-                ) : null}
-            </history.moviesShowDiv>
+            <history.filterDiv>
+                <history.moviesShowDiv>
+                    {userHistoryObject !== null && userHistoryObject.length > 0 && userHistoryObject[0] !== null ? (
+                        userHistoryObject.map(({ ...otherProps }) => (
+                            <MoviesCardsComponent
+                                style_change={"style-two"}
+                                key={otherProps._id}
+                                {...otherProps}
+                                data={otherProps}
+                                closeIcon={
+                                    <IoIosClose
+                                        className="close_icons"
+                                        onClick={() => dispatch(removeUserOneMovieHistory({ movieSelectedId: otherProps._id }))}
+                                    />
+                                }
+                            />
+                        ))
+                    ) : userHistoryObject !== null && userHistoryObject.success === true && userHistoryObject.message ? (
+                        <>
+                            <p>{userHistoryObject.message}</p>
+                        </>
+                    ) : null}
+                    {loadingHistory ? (
+                        <history.spnenrDiv>
+                            <SpnnerComponent />
+                        </history.spnenrDiv>
+                    ) : null}
+                </history.moviesShowDiv>
+            </history.filterDiv>
         </history.div>
     );
 }

@@ -3,8 +3,7 @@ import * as dashboard from "./DashboardPage.style";
 import { useNavigate } from "react-router";
 import { useCookies } from "react-cookie";
 import { Outlet } from "react-router";
-
-// dashboard components
+import DashboardNavbarComponent from "../../DashboardComponents/DashboardNavbarComponent/DashboardNavbarComponent";
 import DashboardSiderComponent from "../../DashboardComponents/DashboardSiderComponent/DashboardSiderComponent";
 
 function DashboardPage() {
@@ -19,12 +18,19 @@ function DashboardPage() {
     }, []);
 
     return (
-        <dashboard.div>
-            <DashboardSiderComponent />
-            <dashboard.renderDiv>
-                <Outlet />
-            </dashboard.renderDiv>
-        </dashboard.div>
+        <>
+            <dashboard.mainDiv>
+                <div className="navbar-div">
+                    <DashboardNavbarComponent />
+                </div>
+                <dashboard.div>
+                    <DashboardSiderComponent />
+                    <dashboard.renderDiv id="rander_div">
+                        <Outlet />
+                    </dashboard.renderDiv>
+                </dashboard.div>
+            </dashboard.mainDiv>
+        </>
     );
 }
 

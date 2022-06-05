@@ -11,7 +11,7 @@ import { AiOutlineUsergroupAdd } from "@react-icons/all-files/ai/AiOutlineUsergr
 import { BiMoon } from "@react-icons/all-files/bi/BiMoon";
 import { removeClientHistory, removerLikeVideoFromClient } from "../../Redux/Action/indexAction";
 
-function OptionsDropDownComponent({ isShow, imageUrl, name, email }) {
+function OptionsDropDownComponent({ isShow, imageUrl, name, email, optionsShows }) {
     const [cookies, setCookie, removeCookie] = useCookies(["user"]);
     const dispatch = useDispatch();
     const themeSelector = useSelector((state) => state.index.changeTheme);
@@ -48,11 +48,17 @@ function OptionsDropDownComponent({ isShow, imageUrl, name, email }) {
                 <span>{email}</span>
             </div>
             <options.innerDiv>
-                <SideBarOptionComponent icon={<AiOutlineAccountBook />} innerText={"Your Account"} width={"30"} />
-                <SideBarOptionComponent icon={<BiMessageDots />} innerText={"Send feedback"} width={"30"} />
-                <SideBarOptionComponent icon={<AiOutlineUsergroupAdd />} innerText={"Share Account"} width={"30"} />
-                <SideBarOptionComponent icon={<BiMoon />} innerText={"Change Theme"} width={"30"} innerOptions={true} />
-                <SideBarOptionComponent icon={<BiLogOut />} innerText={"Log Out"} onClick={removeUser} width={"30"} />
+                {optionsShows ? (
+                    <>
+                        <SideBarOptionComponent icon={<AiOutlineAccountBook />} innerText={"Your Account"} width={"30"} />
+                        <SideBarOptionComponent icon={<BiMessageDots />} innerText={"Send feedback"} width={"30"} />
+                        <SideBarOptionComponent icon={<AiOutlineUsergroupAdd />} innerText={"Share Account"} width={"30"} />
+                        <SideBarOptionComponent icon={<BiMoon />} innerText={"Change Theme"} width={"30"} innerOptions={true} />
+                        <SideBarOptionComponent icon={<BiLogOut />} innerText={"Log Out"} onClick={removeUser} width={"30"} />
+                    </>
+                ) : (
+                    <SideBarOptionComponent icon={<BiLogOut />} innerText={"Log Out"} onClick={removeUser} width={"30"} />
+                )}
             </options.innerDiv>
         </options.div>
     );

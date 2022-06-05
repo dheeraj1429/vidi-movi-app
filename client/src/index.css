@@ -13,39 +13,43 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+    text-decoration: none !important;
+}
+
 @font-face {
     font-family: "Paralucent-bold";
-    src: url("../public/fonts/Paralucent-Bold.ttf");
+    src: url("../public/fonts/Paralucent/Paralucent-Bold.ttf");
 }
 
 @font-face {
     font-family: "Paralucent-demi-bold";
-    src: url("../public/fonts/Paralucent-DemiBold.ttf");
+    src: url("../public/fonts/Paralucent/Paralucent-DemiBold.ttf");
 }
 
 @font-face {
     font-family: "Paralucent-extra-light";
-    src: url("../public/fonts/Paralucent-ExtraLight.ttf");
+    src: url("../public/fonts/Paralucent/Paralucent-ExtraLight.ttf");
 }
 
 @font-face {
     font-family: "Paralucent-heavy";
-    src: url("../public/fonts/Paralucent-Heavy.ttf");
+    src: url("../public/fonts/Paralucent/Paralucent-Heavy.ttf");
 }
 
 @font-face {
     font-family: "Paralucent-light";
-    src: url("../public/fonts/Paralucent-Light.ttf");
+    src: url("../public/fonts/Paralucent/Paralucent-Light.ttf");
 }
 
 @font-face {
     font-family: "Paralucent-meduim";
-    src: url("../public/fonts/Paralucent-Medium.ttf");
+    src: url("../public/fonts/Paralucent/Paralucent-Medium.ttf");
 }
 
 @font-face {
     font-family: "Paralucent-thin";
-    src: url("../public/fonts/Paralucent-Thin.ttf");
+    src: url("../public/fonts/Paralucent/Paralucent-Thin.ttf");
 }
 
 code {
@@ -318,4 +322,15 @@ a {
     text-decoration: none;
 }
 
+.showEditPopup {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+}
 
+.hideEditPupup {
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease;
+    transform: scale(.7);
+}

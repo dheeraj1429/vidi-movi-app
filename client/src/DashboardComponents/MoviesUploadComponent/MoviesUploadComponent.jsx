@@ -7,7 +7,6 @@ import FileUploadComponent from "../FileUploadComponent/FileUploadComponent";
 import { useSelector, useDispatch } from "react-redux";
 import { movieUpload, loadingAction } from "../../Redux/Action/adminAction";
 import CustomButtonComponent from "../../Components/CustomButtonComponent/CustomButtonComponent";
-import DashboardNavbarComponent from "../DashboardNavbarComponent/DashboardNavbarComponent";
 
 const genresData = [
     { value: "Action", label: "Action" },
@@ -77,7 +76,6 @@ function MoviesUploadComponent() {
 
     return (
         <Movies.div>
-            <DashboardNavbarComponent />
             <DashBoardHeadingComponent title={"Movies Upload"} titleNav={"Form / movies upload"} />
 
             <Movies.formGroup>

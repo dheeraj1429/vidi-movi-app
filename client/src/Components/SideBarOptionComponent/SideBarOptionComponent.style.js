@@ -77,6 +77,9 @@ export const sideBarInnerOptionsDiv = styled.div`
     transition: all 0.3s ease;
     transform: scale(0.6);
     opacity: 0;
+    ul {
+        padding-left: 0;
+    }
     ul li {
         list-style: none;
     }

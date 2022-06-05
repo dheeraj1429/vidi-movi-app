@@ -12,7 +12,6 @@ const useNav = function (data) {
 
         const path = loaction.pathname.split("/").slice(-1)[0];
         if (path.split("-").length >= 2) {
-            console.log(path.split("-").length);
             const strSplit = path.split("-");
             const splitText = upFn(strSplit, 0) + " " + upFn(strSplit, 1);
             setActiveBar(splitText);

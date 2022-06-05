@@ -16,6 +16,8 @@ import MoviesUploadComponent from "./DashboardComponents/MoviesUploadComponent/M
 import DashboardMoviesComponent from "./DashboardComponents/DashboardMoviesComponent/DashboardMoviesComponent";
 import LikeMoviesComponent from "./Components/LikeMoviesComponent/LikeMoviesComponent";
 import HistoryPageComponent from "./Components/HistoryPageComponent/HistoryPageComponent";
+import UserComponent from "./DashboardComponents/UserComponent/UserComponent";
+import DashboardLandingComponent from "./DashboardComponents/DashboardLandingComponent/DashboardLandingComponent";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage";
@@ -53,8 +55,10 @@ function App() {
                     <Route path="password-reset-request/:id" element={<UserPasswordChangeRequiestComponent />} />
                 </Route>
                 <Route path="/admin/dashboard" element={<DashboardPage />}>
+                    <Route path="" element={<DashboardLandingComponent />} />
                     <Route path="movies-upload" element={<MoviesUploadComponent />} />
                     <Route path="movies" element={<DashboardMoviesComponent />} />
+                    <Route path="users" element={<UserComponent />} />
                 </Route>
             </Routes>
         </div>

@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     provider: { type: String },
     favoriteMovies: [{ movieId: { type: mongoose.Types.ObjectId, ref: "movie" } }],
     history: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie" }, watchTime: { type: Date, default: Date.now } }],
+    watchLater: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movies" } }],
 });
 
 // genrate the user token
