@@ -10,5 +10,8 @@ router.get("/user-history", indexController.userHistory);
 router.post("/remove-user-history", indexController.removeMovieFromHistory);
 router.post("/like-movies", indexController.likeMovies);
 router.get("/get-all-liked-moves", indexController.getAllLikeMovies);
+router.post("/video-views", indexController.videoViewsFunction);
+router.post("/user-play-list-video", indexController.userPlayListVideoFunction);
+router.get("/get-user-playlist", indexController.grabUserPlayList);
 
 module.exports = router;

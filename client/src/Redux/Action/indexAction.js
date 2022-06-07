@@ -236,3 +236,50 @@ export const deleteAccount = function (data) {
         }
     };
 };
+
+export const videoViewsFunction = function (data) {
+    return async function (dispatch) {
+        try {
+            await axios.post("/index/video-views", data, headers);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const userPlayListVideo = function (data) {
+    return async function (dispatch) {
+        try {
+            const playListRef = await axios.post("/index/user-play-list-video", data, headers);
+            if (playListRef) {
+                dispatch({
+                    type: ACTION_TYPE.USER_VIDEO_IN_PLAYLIST,
+                    payload: playListRef.data,
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const getUserPlayListVideo = function () {
+    return async function (dispatch) {
+        try {
+            const userPlayListRef = await axios.get("/index/get-user-playlist", headers);
+            if (userPlayListRef && userPlayListRef.data.playListArray) {
+                dispatch({
+                    type: ACTION_TYPE.USER_ALL_VIDEO_PLAYLIST,
+                    payload: userPlayListRef.data.playListArray,
+                });
+            } else {
+                dispatch({
+                    type: ACTION_TYPE.USER_ALL_VIDEO_PLAYLIST,
+                    payload: userPlayListRef.data,
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};

@@ -230,7 +230,6 @@ const googleLogin = async function (req, res, next) {
                 name: userObject.name,
                 givenName: userObject.givenName,
                 familyName: userObject.familyName,
-                admin: findUserInDb.isAdmin,
                 provider: "google",
             });
 
@@ -244,7 +243,7 @@ const googleLogin = async function (req, res, next) {
                     email: googleUserRef.email,
                     name: googleUserRef.givenName,
                     token: userToken,
-                    admin: findUserInDb.isAdmin,
+                    admin: googleUserRef.isAdmin,
                     provider: "google",
                 };
 

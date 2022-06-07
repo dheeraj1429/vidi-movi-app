@@ -13,7 +13,7 @@ const moviesSchema = new mongoose.Schema({
     thumbnailName: { type: String, required: [true, "thumbnailName is required"] },
     thumbnailPath: { type: String, required: [true, "please enter the mmovie url paht"] },
     activity: [{ like: { type: String }, dislike: { type: String } }],
-    views: { type: String, default: 0 },
+    views: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },
     rating: [
         {

@@ -10,13 +10,14 @@ function MoviesCardSecondComponent({ Album, category, description, genra, thumbn
     const [open, setOpen] = useState(true);
 
     return (
-        <movies.card
-            style={{
-                backgroundImage: `url(${backendConfigData.imageUrl}/${thumbnailName})`,
-            }}
-        >
-            <movies.dateDiv className="date">{Album}</movies.dateDiv>
-            <div className="content">
+        <movies.div>
+            <movies.card
+                style={{
+                    backgroundImage: `url(${backendConfigData.imageUrl}/${thumbnailName})`,
+                }}
+            >
+                <movies.dateDiv className="date">{Album}</movies.dateDiv>
+                {/* <div className="content">
                 <div className="title">{Album}</div>
                 <div className="text">{genra}</div>
             </div>
@@ -28,8 +29,9 @@ function MoviesCardSecondComponent({ Album, category, description, genra, thumbn
                 <div className="view series_lacasa" onClick={() => dispatch(togglePopUp(true))}>
                     edit <AiOutlineEdit />
                 </div>
-            </div>
-        </movies.card>
+            </div> */}
+            </movies.card>
+        </movies.div>
     );
 }
 

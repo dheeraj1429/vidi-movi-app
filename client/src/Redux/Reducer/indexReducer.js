@@ -14,6 +14,8 @@ const INITAL_STATE = {
     allUsers: null,
     userProfilePopUp: false,
     userProfileSelected: null,
+    isPLayListSave: null,
+    userAllVideoPlayList: null,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -106,6 +108,18 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 userProfileSelected: action.payload,
+            };
+
+        case ACTION_TYPE.USER_VIDEO_IN_PLAYLIST:
+            return {
+                ...state,
+                isPLayListSave: action.payload,
+            };
+
+        case ACTION_TYPE.USER_ALL_VIDEO_PLAYLIST:
+            return {
+                ...state,
+                userAllVideoPlayList: action.payload,
             };
 
         default: {

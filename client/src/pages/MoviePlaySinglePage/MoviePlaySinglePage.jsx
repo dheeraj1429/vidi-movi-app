@@ -8,15 +8,28 @@ import { GiSoundOff } from "@react-icons/all-files/gi/GiSoundOff";
 import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
 import { backendConfigData } from "../../Utils/backendData";
 import { useLocation } from "react-router-dom";
-import { fetchSelectedMovi, movieLike, storeHistoryVideo, getAllLikeMovies, selectedMovies } from "../../Redux/Action/indexAction";
+import {
+    fetchSelectedMovi,
+    movieLike,
+    storeHistoryVideo,
+    getAllLikeMovies,
+    selectedMovies,
+    videoViewsFunction,
+    userPlayListVideo,
+    getUserPlayListVideo,
+} from "../../Redux/Action/indexAction";
 import { Slider } from "antd";
 import { BiLike } from "@react-icons/all-files/bi/BiLike";
 import { CgMiniPlayer } from "@react-icons/all-files/cg/CgMiniPlayer";
+import { CgPlayList } from "@react-icons/all-files/cg/CgPlayList";
+import { CgPlayListCheck } from "@react-icons/all-files/cg/CgPlayListCheck";
 
 function MoviePlaySinglePage() {
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
     const user = useSelector((state) => state.auth.user);
     const userLikedVideos = useSelector((state) => state.index.userLikedVideos);
+    const isPLayListSave = useSelector((state) => state.index.isPLayListSave);
+    const userAllVideoPlayList = useSelector((state) => state.index.userAllVideoPlayList);
 
     const [ShowPlayButton, setShowPlayButton] = useState(true);
     const [IsHistoryVideo, setIsHistoryVideo] = useState(false);
@@ -26,6 +39,8 @@ function MoviePlaySinglePage() {
         waitFrame: false,
         isPlay: false,
         soundLow: false,
+        videoInPlaylist: false,
+        isVideoInPlayList: false,
     });
 
     const [IsLike, setIsLike] = useState(false);
@@ -77,7 +92,7 @@ function MoviePlaySinglePage() {
         const currentTime = video.currentTime;
         const widthValue = (currentTime / duration) * 100;
 
-        if (currentTime > 15) {
+        if (currentTime > 5) {
             setIsHistoryVideo(true);
         }
 
@@ -166,9 +181,20 @@ function MoviePlaySinglePage() {
     };
 
     useEffect(() => {
-        if (IsHistoryVideo) {
+        if (IsHistoryVideo && selectedMovie) {
             const token = user.data.token;
+            if (!token) return;
             dispatch(storeHistoryVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
+            dispatch(videoViewsFunction({ id: selectedMovie._id, name: selectedMovie.name }));
+        }
+
+        if (userAllVideoPlayList && selectedMovie) {
+            userAllVideoPlayList.userPlayLists.find((el) => {
+                if (el._id === selectedMovie._id) {
+                    setVideoHandler({ ...VideoHandler, isVideoInPlayList: true });
+                    console.log("video in the playlist");
+                }
+            });
         }
 
         if (selectedMovie && userLikedVideos !== null) {
@@ -180,11 +206,12 @@ function MoviePlaySinglePage() {
                 }
             });
         }
-    }, [IsHistoryVideo, selectedMovie, userLikedVideos]);
+    }, [IsHistoryVideo, selectedMovie, userLikedVideos, userAllVideoPlayList]);
 
     useEffect(() => {
         dispatch(fetchSelectedMovi(id));
         dispatch(getAllLikeMovies());
+        dispatch(getUserPlayListVideo());
 
         return () => {
             dispatch(selectedMovies(null));
@@ -230,7 +257,19 @@ function MoviePlaySinglePage() {
 
     const ChangePipHandler = async function () {
         if (!video) return;
-        video.requestPictureInPicture();
+
+        video
+            .requestPictureInPicture()
+            .then((res) => {})
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const IsePlayHandler = function () {
+        const token = user.data.token;
+        setVideoHandler({ ...VideoHandler, isVideoInPlayList: false });
+        dispatch(userPlayListVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
     };
 
     useEffect(() => {
@@ -310,6 +349,13 @@ function MoviePlaySinglePage() {
                                         />
                                         <CgMiniPlayer onClick={ChangePipHandler} />
                                         <BiFullscreen onClick={FullScreenHandler} />
+                                        {(isPLayListSave !== null && isPLayListSave.success === true) || VideoHandler.isVideoInPlayList ? (
+                                            <CgPlayListCheck onClick={IsePlayHandler} />
+                                        ) : CgPlayListCheck !== null && CgPlayListCheck.success === false ? (
+                                            <CgPlayList onClick={IsePlayHandler} />
+                                        ) : (
+                                            <CgPlayList onClick={IsePlayHandler} />
+                                        )}
                                     </div>
                                 </single.timeDiv>
                             </single.controllDiv>

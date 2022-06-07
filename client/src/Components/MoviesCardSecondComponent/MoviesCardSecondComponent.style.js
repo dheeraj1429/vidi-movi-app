@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
+export const div = styled.div`
+    padding: 0.2rem;
+`;
+
 export const card = styled.div`
     overflow: hidden;
-    width: 400px;
-    height: 600px;
+    width: 100%;
+    height: 320px;
     padding: 1rem;
     background: #fff;
     box-shadow: 1px 22px 44px rgba(0, 0, 0, 0.19);
