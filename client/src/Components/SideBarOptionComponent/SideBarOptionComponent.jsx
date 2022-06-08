@@ -31,12 +31,10 @@ function SideBarOptionComponent({ icon, innerText, event, activeBar, onClick, wi
             <sidebar.parentDiv onClick={onClick ? onClick : null}>
                 <Link
                     to={
-                        innerText === "Home" ||
-                        innerText === "Log Out" ||
-                        innerText === "Change Theme" ||
-                        innerText === "Dark" ||
-                        innerText === "Light"
+                        innerText === "Home"
                             ? "/"
+                            : innerText === "Log Out" || innerText === "Change Theme" || innerText === "Dark" || innerText === "Light"
+                            ? `${location.pathname}`
                             : innerText === "Dashboard"
                             ? "/admin/dashboard"
                             : null

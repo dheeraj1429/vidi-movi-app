@@ -136,7 +136,13 @@ export const removeClientHistory = function (data) {
 export const movieLike = function (data) {
     return async function (dispatch) {
         try {
-            await axios.post("/index/like-movies", data, headers);
+            const userLikeRef = await axios.post("/index/like-movies", data, headers);
+            if (userLikeRef) {
+                dispatch({
+                    type: ACTION_TYPE.MOVIS_IS_LIKED,
+                    payload: userLikeRef.data,
+                });
+            }
         } catch (err) {
             console.log(err);
         }

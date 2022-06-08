@@ -30,6 +30,7 @@ function MoviePlaySinglePage() {
     const userLikedVideos = useSelector((state) => state.index.userLikedVideos);
     const isPLayListSave = useSelector((state) => state.index.isPLayListSave);
     const userAllVideoPlayList = useSelector((state) => state.index.userAllVideoPlayList);
+    const MoviesIsLiked = useSelector((state) => state.index.MoviesIsLiked);
 
     const [ShowPlayButton, setShowPlayButton] = useState(true);
     const [IsHistoryVideo, setIsHistoryVideo] = useState(false);
@@ -192,7 +193,6 @@ function MoviePlaySinglePage() {
             userAllVideoPlayList.userPlayLists.find((el) => {
                 if (el._id === selectedMovie._id) {
                     setVideoHandler({ ...VideoHandler, isVideoInPlayList: true });
-                    console.log("video in the playlist");
                 }
             });
         }
@@ -222,10 +222,6 @@ function MoviePlaySinglePage() {
         dispatch(movieLike(data));
     };
 
-    const AddLikeHandler = function (id) {
-        setIsLike(!IsLike);
-    };
-
     const playMovieHandler = function () {
         video.load();
         video.muted = true;
@@ -253,6 +249,10 @@ function MoviePlaySinglePage() {
             // Unknown if allowed
             console.log("autoplay unknown");
         }
+    };
+
+    const LikeHandler = function () {
+        setIsLike(!IsLike);
     };
 
     const ChangePipHandler = async function () {
@@ -341,10 +341,12 @@ function MoviePlaySinglePage() {
                                     </div>
                                     <div className="inner-timer-options-div">
                                         <BiLike
-                                            className={IsLike ? "LikeMovie_button" : null}
+                                            className={
+                                                (MoviesIsLiked !== null && MoviesIsLiked.success === true) || IsLike ? "LikeMovie_button" : null
+                                            }
                                             onClick={() => {
                                                 MoviesLikeHandler({ id: selectedMovie._id, movieVideo: selectedMovie.movieVideo });
-                                                AddLikeHandler(selectedMovie._id);
+                                                LikeHandler();
                                             }}
                                         />
                                         <CgMiniPlayer onClick={ChangePipHandler} />

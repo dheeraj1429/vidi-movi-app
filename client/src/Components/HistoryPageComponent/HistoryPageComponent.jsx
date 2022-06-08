@@ -8,6 +8,7 @@ import SpnnerComponent from "../SpnnerComponent/SpnnerComponent";
 import { IoIosClose } from "@react-icons/all-files/io/IoIosClose";
 import BannerComponent from "../BannerComponent/BannerComponent";
 import { removeUserOneMovieHistory } from "../../Redux/Action/indexAction";
+import NavbarComponent from "../NavbarComponent/NavbarComponent";
 
 function HistoryPageComponent() {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function HistoryPageComponent() {
 
     return (
         <history.div>
+            <NavbarComponent />
             <BannerComponent
                 backgroundImage={"/images/history-bd.jpg"}
                 heading={"HISTORY"}

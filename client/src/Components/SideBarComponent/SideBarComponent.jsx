@@ -6,6 +6,7 @@ import { VscSync } from "@react-icons/all-files/vsc/VscSync";
 import SideBarOptionComponent from "../SideBarOptionComponent/SideBarOptionComponent";
 import useNav from "../../Hooks/useNav";
 import { useLocation } from "react-router";
+import { RiPlayList2Fill } from "@react-icons/all-files/ri/RiPlayList2Fill";
 
 function SideBarComponent() {
     const [ActiveBar, setActiveBar] = useState("Home");
@@ -32,6 +33,7 @@ function SideBarComponent() {
                 <SideBarOptionComponent icon={<VscHome />} innerText={"Home"} event={ActiveBarHandler} activeBar={ActiveBar} />
                 <SideBarOptionComponent icon={<VscHeart />} innerText={"Like"} event={ActiveBarHandler} activeBar={ActiveBar} />
                 <SideBarOptionComponent icon={<VscSync />} innerText={"History"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                <SideBarOptionComponent icon={<RiPlayList2Fill />} innerText={"Playlist"} event={ActiveBarHandler} activeBar={ActiveBar} />
             </sideBar.innerDiv>
         </sideBar.mainDiv>
     );

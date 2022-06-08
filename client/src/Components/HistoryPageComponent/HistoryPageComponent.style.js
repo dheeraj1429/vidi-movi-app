@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const div = styled.div`
+    position: relative;
     p {
         color: var(--main-cl);
     }

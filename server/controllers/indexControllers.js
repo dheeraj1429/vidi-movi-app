@@ -155,9 +155,9 @@ const getHistoryFunction = async function (collection, _id, name, req, res, targ
         userHistoryObjectRef[`${target}`].map((el) => {
             const movieObject = el.moviesId;
             if (returnData !== undefined && returnData.arrayName !== null && returnData.arrayName) {
-                playListArray.push(movieObject);
+                playListArray.unshift(movieObject);
             } else {
-                MovieHistoryArry.push(movieObject);
+                MovieHistoryArry.unshift(movieObject);
             }
         });
     }
@@ -275,13 +275,30 @@ const likeMovies = async function (req, res, next) {
         const { _id, provider } = varifyUser;
         const target = "favoriteMovies";
 
+        const responserFn = function (playListFn) {
+            if (playListFn.data === "remove") {
+                return res.status(200).json({
+                    success: false,
+                    message: "movie unliked",
+                });
+            }
+            if (playListFn.data === "added") {
+                return res.status(200).json({
+                    success: true,
+                    message: "movie liked",
+                });
+            }
+        };
+
         // find the user into the databse by using the provider key
         if (provider === "google") {
-            await movieCheckFunction(googleAuthUser, _id, id, findMovieRef, target);
+            const userLikeRef = await movieCheckFunction(googleAuthUser, _id, id, findMovieRef, target);
+            responserFn(userLikeRef);
         }
 
         if (provider === "login") {
-            await movieCheckFunction(userModel, _id, id, findMovieRef, target);
+            const userLikeRef = await movieCheckFunction(userModel, _id, id, findMovieRef, target);
+            responserFn(userLikeRef);
         }
     } catch (err) {
         console.log(err);
@@ -296,7 +313,7 @@ const likedMovieArrayFunction = async function (collection, _id, name, findTarge
 
     findAllLikedMoviesInDb[findTarget].map((el) => {
         const movieObject = el.moviesId;
-        likedMoviedArray.push(movieObject);
+        likedMoviedArray.unshift(movieObject);
     });
 
     return res.status(200).json({

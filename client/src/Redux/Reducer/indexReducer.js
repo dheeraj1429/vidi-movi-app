@@ -16,6 +16,7 @@ const INITAL_STATE = {
     userProfileSelected: null,
     isPLayListSave: null,
     userAllVideoPlayList: null,
+    MoviesIsLiked: null,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -120,6 +121,12 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 userAllVideoPlayList: action.payload,
+            };
+
+        case ACTION_TYPE.MOVIS_IS_LIKED:
+            return {
+                ...state,
+                MoviesIsLiked: action.payload,
             };
 
         default: {

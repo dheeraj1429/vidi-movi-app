@@ -5,6 +5,8 @@ export const div = styled.div`
     display: flex;
     padding: 0.5rem;
     position: absolute;
+    top: 0;
+    left: 0;
     z-index: 100;
     justify-content: space-between;
     .user-login-div {
