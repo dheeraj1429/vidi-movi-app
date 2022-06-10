@@ -22,9 +22,13 @@ export const filterDiv = styled.div`
     display: flex;
 `;
 
+export const spaceDiv = styled.div`
+    padding: 2rem 0;
+`;
+
 export const moviesShowDiv = styled.div`
     width: 100%;
-    padding: 1rem;
+    padding: 1rem 0;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     transition: all 0.3s ease;

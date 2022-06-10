@@ -3,7 +3,7 @@ import * as card from "./MoviesCardsComponent.style";
 import { backendConfigData } from "../../Utils/backendData";
 import CardsPlayOptionComponent from "../CardsPlayOptionComponent/CardsPlayOptionComponent";
 
-function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data, closeIcon, description }) {
+function MoviesCardsComponent({ data, closeIcon, style_change }) {
     const [IsEnter, setIsEnter] = useState(false);
     const [ShowVideo, setShowVideo] = useState(false);
 
@@ -18,14 +18,14 @@ function MoviesCardsComponent({ name, movieVideo, genra, thumbnailName, data, cl
 
     return (
         <card.mainDiv>
-            <card.div>
+            <card.div className={style_change ? "second_card_styled" : null}>
                 <card.cartContentDiv className={IsEnter ? "Active-movie-card" : null}>
                     {closeIcon ? closeIcon : null}
                     <card.moviDiv
                         style={
                             !ShowVideo
                                 ? {
-                                      backgroundImage: `url(${backendConfigData.imageUrl}/${thumbnailName})`,
+                                      backgroundImage: `url(${backendConfigData.imageUrl}/${data.thumbnailName})`,
                                   }
                                 : null
                         }

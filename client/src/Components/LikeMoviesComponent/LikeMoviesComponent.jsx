@@ -16,6 +16,7 @@ function LikeMoviesComponent() {
     useEffect(() => {
         if (userLikedVideos) {
             dispatch(getAllLikeMovies());
+            console.log(userLikedVideos);
         }
     }, []);
 
@@ -32,10 +33,8 @@ function LikeMoviesComponent() {
                 <HeadingComponent heading={"Movies"} />
 
                 <like.moviesShowDiv>
-                    {userLikedVideos !== null && userLikedVideos !== undefined && userLikedVideos.length > 0 && userLikedVideos[0] !== null
-                        ? userLikedVideos.map(({ ...otherProps }) => (
-                              <MoviesCardsComponent style_change={"style-two"} key={otherProps._id} {...otherProps} data={otherProps} />
-                          ))
+                    {userLikedVideos && userLikedVideos.length
+                        ? userLikedVideos.map((el) => <MoviesCardsComponent key={el._id} data={el.moviesId} />)
                         : null}
                     {loadingHistory ? (
                         <like.spnenrDiv>

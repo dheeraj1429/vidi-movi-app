@@ -17,6 +17,7 @@ import {
     videoViewsFunction,
     userPlayListVideo,
     getUserPlayListVideo,
+    setVideoCurrentTime,
 } from "../../Redux/Action/indexAction";
 import { Slider } from "antd";
 import { BiLike } from "@react-icons/all-files/bi/BiLike";
@@ -43,7 +44,6 @@ function MoviePlaySinglePage() {
         videoInPlaylist: false,
         isVideoInPlayList: false,
     });
-
     const [IsLike, setIsLike] = useState(false);
     const [video, setVideo] = useState();
     const playButton = useRef(null);
@@ -183,13 +183,14 @@ function MoviePlaySinglePage() {
 
     useEffect(() => {
         if (IsHistoryVideo && selectedMovie) {
-            const token = user.data.token;
-            if (!token) return;
-            dispatch(storeHistoryVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
+            const token = user?.data?.token;
+            if (token) {
+                dispatch(storeHistoryVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
+            }
             dispatch(videoViewsFunction({ id: selectedMovie._id, name: selectedMovie.name }));
         }
 
-        if (userAllVideoPlayList && selectedMovie) {
+        if (userAllVideoPlayList && selectedMovie && userAllVideoPlayList.userPlayLists) {
             userAllVideoPlayList.userPlayLists.find((el) => {
                 if (el._id === selectedMovie._id) {
                     setVideoHandler({ ...VideoHandler, isVideoInPlayList: true });
@@ -197,7 +198,7 @@ function MoviePlaySinglePage() {
             });
         }
 
-        if (selectedMovie && userLikedVideos !== null) {
+        if (selectedMovie && userLikedVideos !== null && userLikedVideos.success !== false) {
             userLikedVideos.find((el) => {
                 if (el._id === selectedMovie._id) {
                     setIsLike(true);
@@ -267,9 +268,11 @@ function MoviePlaySinglePage() {
     };
 
     const IsePlayHandler = function () {
-        const token = user.data.token;
-        setVideoHandler({ ...VideoHandler, isVideoInPlayList: false });
-        dispatch(userPlayListVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
+        const token = user?.data?.token;
+        if (token) {
+            setVideoHandler({ ...VideoHandler, isVideoInPlayList: false });
+            dispatch(userPlayListVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
+        }
     };
 
     useEffect(() => {
@@ -277,6 +280,15 @@ function MoviePlaySinglePage() {
             playMovieHandler();
             ChangePipHandler();
         }
+
+        return () => {
+            if (video) {
+                const getVideoCurrrentTime = video.currentTime;
+                const getVideoDuration = video.duration;
+                const timeWatch = (getVideoCurrrentTime / getVideoDuration) * 100;
+                dispatch(setVideoCurrentTime({ videoWatchTime: timeWatch, movie: selectedMovie._id }));
+            }
+        };
     }, [video]);
 
     return (
@@ -353,7 +365,7 @@ function MoviePlaySinglePage() {
                                         <BiFullscreen onClick={FullScreenHandler} />
                                         {(isPLayListSave !== null && isPLayListSave.success === true) || VideoHandler.isVideoInPlayList ? (
                                             <CgPlayListCheck onClick={IsePlayHandler} />
-                                        ) : CgPlayListCheck !== null && CgPlayListCheck.success === false ? (
+                                        ) : CgPlayListCheck && !CgPlayListCheck.success ? (
                                             <CgPlayList onClick={IsePlayHandler} />
                                         ) : (
                                             <CgPlayList onClick={IsePlayHandler} />

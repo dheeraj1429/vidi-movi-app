@@ -114,7 +114,8 @@ export const removeUserOneMovieHistory = function (data) {
     return async function (dispatch) {
         try {
             const removerHistoryRef = await axios.post("/index/remove-user-history", data, headers);
-            if (removerHistoryRef && removerHistoryRef.data) {
+
+            if (removerHistoryRef && removerHistoryRef.data.success) {
                 dispatch({
                     type: ACTION_TYPE.REMOVER_USER_ONE_HISTORY_MOVIE,
                     payload: data.movieSelectedId,
@@ -284,6 +285,16 @@ export const getUserPlayListVideo = function () {
                     payload: userPlayListRef.data,
                 });
             }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const setVideoCurrentTime = function (data) {
+    return async function (dispatch) {
+        try {
+            const videoCurrentTimeRef = await axios.post("/index/update-video-current-time", data, headers);
         } catch (err) {
             console.log(err);
         }

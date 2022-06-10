@@ -66,7 +66,7 @@ const indexReducer = function (state = INITAL_STATE, action) {
             };
 
         case ACTION_TYPE.REMOVER_USER_ONE_HISTORY_MOVIE:
-            const findHistory = state.userHistory.filter((el) => el._id !== action.payload);
+            const findHistory = state.userHistory.filter((el) => el.moviesId._id !== action.payload);
 
             return {
                 ...state,

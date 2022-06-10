@@ -55,6 +55,7 @@ function SignInComponent() {
     };
 
     const onFailure = function (response) {
+        console.log(response);
         dispatch(signInWithGoogle(response));
     };
 

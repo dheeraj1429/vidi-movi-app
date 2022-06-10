@@ -10,6 +10,9 @@ export const mainDiv = styled.div`
         width: 500px;
         margin-right: 1rem;
     }
+    .second_card_styled {
+        width: 280px;
+    }
 `;
 
 export const div = styled.div`
@@ -27,7 +30,7 @@ export const div = styled.div`
         transition: all 0.3s ease;
     }
     .Active-movie-card {
-        transform: scale(1.2) !important;
+        transform: scale(1.1) !important;
         z-index: 400;
     }
     video {
@@ -121,7 +124,7 @@ export const info = styled.div`
 
 export const moviDiv = styled.div`
     width: 100%;
-    height: 380px;
+    height: 280px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

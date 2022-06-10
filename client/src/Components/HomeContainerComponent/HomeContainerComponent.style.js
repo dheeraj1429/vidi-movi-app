@@ -4,8 +4,17 @@ export const div = styled.div`
     position: relative;
 `;
 
+export const spaceDiv = styled.div`
+    padding: 2rem 0;
+`;
+
 export const moviesShowDiv = styled.div`
-    display: grid;
+    width: 100%;
+    .slick-list {
+        padding: 1rem 0;
+    }
+
+    /* display: grid;
     grid-template-columns: repeat(6, 1fr);
     transition: all 0.3s ease;
 
@@ -20,5 +29,5 @@ export const moviesShowDiv = styled.div`
     }
     @media (max-width: 700px) {
         grid-template-columns: repeat(1, 1fr);
-    }
+    } */
 `;

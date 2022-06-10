@@ -16,9 +16,9 @@ export const bannerImage = styled.div`
     padding: 4rem;
     position: relative;
     margin-bottom: 1rem;
-    -webkit-box-reflect: below 5px linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.4));
+    /* -webkit-box-reflect: below 5px linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.4));
     -webkit-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease; */
     transition: all 0.5s ease;
     @media (max-width: 1000px) {
         height: 400px;
