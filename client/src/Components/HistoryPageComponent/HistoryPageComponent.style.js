@@ -23,6 +23,7 @@ export const filterDiv = styled.div`
 `;
 
 export const spaceDiv = styled.div`
+    width: 100%;
     padding: 2rem 0;
 `;
 

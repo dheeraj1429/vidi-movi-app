@@ -17,6 +17,12 @@ export const moveImageDiv = styled.div`
     height: 100px;
     background-position: center;
     background-size: cover;
+    position: relative;
+
+    &:hover .icons_holder {
+        visibility: visible;
+        opacity: 1;
+    }
 `;
 
 export const watchTimeLineDiv = styled.div`
@@ -41,7 +47,7 @@ export const movieContentDiv = styled.div`
     h5 {
         color: var(--main-cl);
         margin: 0;
-        font-size: 21px;
+        font-size: 18px;
     }
     p {
         margin: 0.3rem 0;

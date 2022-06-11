@@ -16,7 +16,6 @@ function LikeMoviesComponent() {
     useEffect(() => {
         if (userLikedVideos) {
             dispatch(getAllLikeMovies());
-            console.log(userLikedVideos);
         }
     }, []);
 

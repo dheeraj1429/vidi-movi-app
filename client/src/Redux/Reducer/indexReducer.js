@@ -17,6 +17,7 @@ const INITAL_STATE = {
     isPLayListSave: null,
     userAllVideoPlayList: null,
     MoviesIsLiked: null,
+    MovieLike: false,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -127,6 +128,7 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 MoviesIsLiked: action.payload,
+                MovieLike: action.payload.success,
             };
 
         default: {

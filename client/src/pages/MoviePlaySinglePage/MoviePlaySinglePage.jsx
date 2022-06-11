@@ -32,6 +32,7 @@ function MoviePlaySinglePage() {
     const isPLayListSave = useSelector((state) => state.index.isPLayListSave);
     const userAllVideoPlayList = useSelector((state) => state.index.userAllVideoPlayList);
     const MoviesIsLiked = useSelector((state) => state.index.MoviesIsLiked);
+    const MovieLike = useSelector((state) => state.index.MovieLike);
 
     const [ShowPlayButton, setShowPlayButton] = useState(true);
     const [IsHistoryVideo, setIsHistoryVideo] = useState(false);
@@ -198,9 +199,9 @@ function MoviePlaySinglePage() {
             });
         }
 
-        if (selectedMovie && userLikedVideos !== null && userLikedVideos.success !== false) {
+        if (selectedMovie && !!userLikedVideos) {
             userLikedVideos.find((el) => {
-                if (el._id === selectedMovie._id) {
+                if (el.moviesId._id === selectedMovie._id) {
                     setIsLike(true);
                 } else {
                     setIsLike(false);
@@ -252,10 +253,6 @@ function MoviePlaySinglePage() {
         }
     };
 
-    const LikeHandler = function () {
-        setIsLike(!IsLike);
-    };
-
     const ChangePipHandler = async function () {
         if (!video) return;
 
@@ -274,6 +271,12 @@ function MoviePlaySinglePage() {
             dispatch(userPlayListVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
         }
     };
+
+    useEffect(() => {
+        if (movieLike) {
+            setIsLike(MovieLike);
+        }
+    }, [MovieLike]);
 
     useEffect(() => {
         if (video) {
@@ -353,17 +356,14 @@ function MoviePlaySinglePage() {
                                     </div>
                                     <div className="inner-timer-options-div">
                                         <BiLike
-                                            className={
-                                                (MoviesIsLiked !== null && MoviesIsLiked.success === true) || IsLike ? "LikeMovie_button" : null
-                                            }
+                                            className={(!!MoviesIsLiked && MoviesIsLiked.success) || IsLike ? "LikeMovie_button" : null}
                                             onClick={() => {
                                                 MoviesLikeHandler({ id: selectedMovie._id, movieVideo: selectedMovie.movieVideo });
-                                                LikeHandler();
                                             }}
                                         />
                                         <CgMiniPlayer onClick={ChangePipHandler} />
                                         <BiFullscreen onClick={FullScreenHandler} />
-                                        {(isPLayListSave !== null && isPLayListSave.success === true) || VideoHandler.isVideoInPlayList ? (
+                                        {(isPLayListSave && isPLayListSave.success) || VideoHandler.isVideoInPlayList ? (
                                             <CgPlayListCheck onClick={IsePlayHandler} />
                                         ) : CgPlayListCheck && !CgPlayListCheck.success ? (
                                             <CgPlayList onClick={IsePlayHandler} />

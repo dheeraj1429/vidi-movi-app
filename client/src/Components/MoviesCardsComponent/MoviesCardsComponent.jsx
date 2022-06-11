@@ -1,36 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import * as card from "./MoviesCardsComponent.style";
 import { backendConfigData } from "../../Utils/backendData";
 import CardsPlayOptionComponent from "../CardsPlayOptionComponent/CardsPlayOptionComponent";
 
-function MoviesCardsComponent({ data, closeIcon, style_change }) {
-    const [IsEnter, setIsEnter] = useState(false);
-    const [ShowVideo, setShowVideo] = useState(false);
-
-    const MouseEnterHanlder = async function () {
-        setIsEnter(true);
-    };
-
-    const MouseLeaveHanlder = async function () {
-        setIsEnter(false);
-        setShowVideo(false);
-    };
-
+function MoviesCardsComponent({ data, closeIcon }) {
     return (
         <card.mainDiv>
-            <card.div className={style_change ? "second_card_styled" : null}>
-                <card.cartContentDiv className={IsEnter ? "Active-movie-card" : null}>
+            <card.div className="card_div_cl">
+                <card.cartContentDiv>
                     {closeIcon ? closeIcon : null}
                     <card.moviDiv
-                        style={
-                            !ShowVideo
-                                ? {
-                                      backgroundImage: `url(${backendConfigData.imageUrl}/${data.thumbnailName})`,
-                                  }
-                                : null
-                        }
+                        style={{
+                            backgroundImage: `url(${backendConfigData.imageUrl}/${data.thumbnailName})`,
+                        }}
                     >
-                        <CardsPlayOptionComponent onMouseEnter={MouseEnterHanlder} onMouseLeave={MouseLeaveHanlder} id={data._id} name={data.name} />
+                        <CardsPlayOptionComponent classCl={"icons_holder"} id={data._id} name={data.name} />
                         <card.progressPosDiv>
                             <card.progress>
                                 <card.progressInner />
@@ -38,14 +22,6 @@ function MoviesCardsComponent({ data, closeIcon, style_change }) {
                         </card.progressPosDiv>
                     </card.moviDiv>
                 </card.cartContentDiv>
-                {/* {style_change ? (
-                    <>
-                        <card.styledSecond>
-                            <h4>{name}</h4>
-                            <p>{description.slice(0, 200)}..</p>
-                        </card.styledSecond>
-                    </>
-                ) : null} */}
             </card.div>
         </card.mainDiv>
     );

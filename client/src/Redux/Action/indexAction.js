@@ -138,6 +138,7 @@ export const movieLike = function (data) {
     return async function (dispatch) {
         try {
             const userLikeRef = await axios.post("/index/like-movies", data, headers);
+
             if (userLikeRef) {
                 dispatch({
                     type: ACTION_TYPE.MOVIS_IS_LIKED,

@@ -23,7 +23,6 @@ const getAllMovies = async function (req, res, next) {
     }
 };
 
-// share the video with the stream data
 const stremVideo = function (req, res, next) {
     const param = req.params.name;
     const range = req.headers.range;
@@ -148,34 +147,10 @@ const getHistoryFunction = async function (collection, _id, name, req, res, targ
         return res.status(200).json({ success: true, message: returnData !== undefined && returnData.message ? returnData.message : "no history" });
     }
 
-    // const genrateName = () => (returnData !== undefined && returnData !== null && returnData.arrayName ? returnData.arrayName : "movieHistoryObject");
-    // const fildName = genrateName();
-
     return res.status(200).json({
         success: true,
         [`${returnData.arrayName}`]: userHistoryObjectRef.history,
     });
-
-    /*
-    // const MovieHistoryArry = [];
-    // const playListArray = [];
-
-    // if (userHistoryObjectRef) {
-    //     userHistoryObjectRef[`${target}`].map((el) => {
-    //         const movieObject = el.moviesId;
-    //         if (returnData !== undefined && returnData.arrayName !== null && returnData.arrayName) {
-    //             playListArray.unshift(movieObject);
-    //         } else {
-    //             MovieHistoryArry.unshift(movieObject);
-    //         }
-    //     });
-    // }
-
-    // return res.status(200).json({
-    //     success: true,
-    //     [`${fildName}`]: returnData !== null && returnData.arrayName ? playListArray : MovieHistoryArry,
-    // });
-    */
 };
 
 const userFindInCookie = async function (req, res, userToken) {
@@ -326,18 +301,6 @@ const likedMovieArrayFunction = async function (collection, _id, name, findTarge
         success: true,
         moviesLikedObject: findAllLikedMoviesInDb.favoriteMovies,
     });
-
-    // const likedMoviedArray = [];
-
-    // findAllLikedMoviesInDb[findTarget].map((el) => {
-    //     const movieObject = el.moviesId;
-    //     likedMoviedArray.unshift(movieObject);
-    // });
-
-    // return res.status(200).json({
-    //     success: true,
-    //     moviesLikedObject: likedMoviedArray,
-    // });
 };
 
 const getAllLikeMovies = async function (req, res, next) {

@@ -6,6 +6,12 @@ export const mainDiv = styled.div`
         align-items: center;
     }
 
+    &:hover .card_div_cl {
+        transform: scale(1.1);
+        z-index: 900;
+        position: relative;
+    }
+
     .flex_card_el {
         width: 500px;
         margin-right: 1rem;
@@ -134,6 +140,10 @@ export const moviDiv = styled.div`
     overflow: hidden;
     .movi-information-div {
         transition: all 0.3s ease;
+    }
+    &:hover .icons_holder {
+        visibility: visible;
+        opacity: 1;
     }
 
     &:hover .play-div {

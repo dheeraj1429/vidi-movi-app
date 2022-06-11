@@ -6,7 +6,7 @@ export const div = styled.div`
 
     svg {
         fill: var(--heading-cl);
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
     }
 
     svg:hover {

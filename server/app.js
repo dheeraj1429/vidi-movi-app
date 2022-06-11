@@ -10,9 +10,6 @@ const cart = require("./cart");
 const flash = require("connect-flash");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const numCPUs = require("node:os").cpus().length;
-const process = require("node:process");
-const cluster = require("node:cluster");
 
 const app = express();
 const port = cart.PORT || 7000;
@@ -58,24 +55,9 @@ app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
 app.use("/index", indexRouter);
 
-if (cluster.isPrimary) {
-    console.log(`Primary ${process.pid} is running`);
-
-    // Fork workers.
-    for (let i = 0; i < numCPUs; i++) {
-        cluster.fork();
-    }
-
-    cluster.on("exit", (worker, code, signal) => {
-        console.log(`worker ${worker.process.pid} died`);
+dataBaseConnectionFuntion(() => {
+    // server listening
+    app.listen(port, () => {
+        console.log(`server runing in port ${port}`);
     });
-} else {
-    dataBaseConnectionFuntion(() => {
-        // server listening
-        app.listen(port, () => {
-            console.log(`server runing in port ${port}`);
-        });
-    });
-
-    console.log(`Worker ${process.pid} started`);
-}
+});

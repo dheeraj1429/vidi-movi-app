@@ -6,13 +6,13 @@ import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import HeadingComponent from "../HeadingComponent/HeadingComponent";
 import NavbarComponent from "../NavbarComponent/NavbarComponent";
-import MoviesSmCardsComponent from "../MoviesSmCardsComponent/MoviesSmCardsComponent";
 import ContinueWatchingComponent from "../ContinueWatchingComponent/ContinueWatchingComponent";
 
 function HomeContainerComponent() {
     const all_movies = useSelector((state) => state.index.all_movies);
+
     var settings = {
-        dots: true,
+        dots: false,
         infinite: true,
         speed: 200,
         slidesToShow: 7,
@@ -20,16 +20,23 @@ function HomeContainerComponent() {
         arrows: false,
         responsive: [
             {
+                breakpoint: 1600,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 3,
+                    infinite: true,
+                },
+            },
+            {
                 breakpoint: 1024,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 3,
                     infinite: true,
-                    dots: true,
                 },
             },
             {
-                breakpoint: 600,
+                breakpoint: 700,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
