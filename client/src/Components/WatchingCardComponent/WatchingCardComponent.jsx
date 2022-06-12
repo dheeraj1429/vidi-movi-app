@@ -12,7 +12,7 @@ function WatchingCardComponent({ data }) {
                         backgroundImage: `url(${backendConfigData.imageUrl}/${data.moviesId.thumbnailName})`,
                     }}
                 >
-                    <CardsPlayOptionComponent classCl={"icons_holder"} id={data._id} name={data.moviesId.name} />
+                    <CardsPlayOptionComponent classCl={"icons_holder"} id={data.moviesId._id} name={data.moviesId.name} />
                 </watching.moveImageDiv>
                 <watching.movieContentDiv>
                     <h5>{data.moviesId.name.slice(0, 20)}..</h5>

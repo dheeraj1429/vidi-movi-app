@@ -5,7 +5,7 @@ import { userHistory } from "../../Redux/Action/indexAction.js";
 import { useSelector, useDispatch } from "react-redux";
 import Slider from "react-slick";
 
-function ContinueWatchingComponent({ data }) {
+function ContinueWatchingComponent() {
     const userHistoryObject = useSelector((state) => state.index.userHistory);
     const dispatch = useDispatch();
 

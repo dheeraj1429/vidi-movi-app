@@ -10,7 +10,7 @@ import ContinueWatchingComponent from "../ContinueWatchingComponent/ContinueWatc
 
 function HomeContainerComponent() {
     const all_movies = useSelector((state) => state.index.all_movies);
-
+    const user = useSelector((state) => state.auth.user);
     var settings = {
         dots: false,
         infinite: true,
@@ -64,17 +64,20 @@ function HomeContainerComponent() {
                 textContent={` Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
                             dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it`}
             />
-            <Home.spaceDiv>
-                <HeadingComponent heading={"Continue Watching"} />
-                <ContinueWatchingComponent />
-            </Home.spaceDiv>
+            {user ? (
+                <Home.spaceDiv>
+                    <HeadingComponent heading={"Continue Watching"} />
+                    <ContinueWatchingComponent />
+                </Home.spaceDiv>
+            ) : null}
+
             <Home.spaceDiv>
                 <HeadingComponent heading={"News Popular"} />
                 <Home.moviesShowDiv>
                     <Slider {...settings}>
                         {all_movies && all_movies.success && all_movies.allMoviesDataCollection.length
                             ? all_movies.allMoviesDataCollection
-                                  .filter((el) => el.views >= 3)
+                                  .filter((el) => el.views >= 5)
                                   .sort((a, b) => b.views - a.views)
                                   .map((el) => <MoviesCardsComponent key={el._id} data={el} />)
                             : null}
