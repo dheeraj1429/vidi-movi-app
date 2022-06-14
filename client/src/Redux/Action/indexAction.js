@@ -295,7 +295,7 @@ export const getUserPlayListVideo = function () {
 export const setVideoCurrentTime = function (data) {
     return async function (dispatch) {
         try {
-            const videoCurrentTimeRef = await axios.post("/index/update-video-current-time", data, headers);
+            await axios.post("/index/update-video-current-time", data, headers);
         } catch (err) {
             console.log(err);
         }

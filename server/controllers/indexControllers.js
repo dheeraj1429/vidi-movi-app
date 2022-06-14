@@ -83,24 +83,43 @@ const isMoviesPresent = async function (collection, userId, fildName, movieId) {
     return finMovieInDb;
 };
 
-const storeUserHistoryFunction = async function (collection, userId, userName, movieId) {
-    await collection.update(
-        { _id: userId, name: userName },
+const storeUserHistoryFunction = async function (collection, data) {
+    const storeRef = await collection.update(
+        { _id: data.userId, name: data.userName },
         {
             $push: {
                 history: [
                     {
-                        moviesId: movieId,
+                        moviesId: data.movieId,
+                        videoCurrentTime: data.videoWatchTime,
                     },
                 ],
             },
         }
     );
+
+    console.log(storeRef);
+};
+
+const updateTheUserVideoData = async function (collection, req, res, data) {
+    try {
+        // grab the video from the databse which is store into the user collection object. then update the targe video duration.
+        await collection.updateOne(
+            { _id: data.userId, name: data.userName, "history.moviesId": data.movieId },
+            {
+                $set: {
+                    "history.$.videoCurrentTime": data.videoWatchTime,
+                },
+            }
+        );
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 const storeHistoryVideo = async function (req, res, next) {
     try {
-        const { id, name, userToken } = req.body;
+        const { id, name, userToken, videoWatchTime } = req.body;
 
         // find the video into the database
         const findMovieInDatabase = await movieModel.findOne({ _id: id, name: name });
@@ -118,21 +137,28 @@ const storeHistoryVideo = async function (req, res, next) {
         const userName = userVarify.name;
         const provider = userVarify.provider;
 
+        const data = {
+            userId,
+            userName,
+            movieId,
+            videoWatchTime,
+        };
+
         if (provider === "google") {
             const goolgeUserMoviePresent = await isMoviesPresent(googleAuthUser, userId, "history", movieId);
 
-            if (goolgeUserMoviePresent.history.length > 0) {
-                console.log("movie is already present");
+            if (!!goolgeUserMoviePresent.history.length) {
+                updateTheUserVideoData(googleAuthUser, req, res, data);
             } else {
-                await storeUserHistoryFunction(googleAuthUser, userId, userName, movieId);
+                await storeUserHistoryFunction(googleAuthUser, data);
             }
         } else if (provider === "login") {
             const userFindInDb = await isMoviesPresent(userModel, userId, "history", movieId);
 
-            if (userFindInDb.history.length > 0) {
-                console.log("movie is already present");
+            if (!!userFindInDb.history.length) {
+                await updateTheUserVideoData(userModel, req, res, data);
             } else {
-                await storeUserHistoryFunction(userModel, userId, userName, movieId);
+                await storeUserHistoryFunction(userModel, data);
             }
         }
     } catch (err) {
@@ -407,43 +433,6 @@ const grabUserPlayList = async function (req, res, next) {
     }
 };
 
-const updateTheUserVideoData = async function (collection, req, res, data) {
-    try {
-        // grab the video from the databse which is store into the user collection object. then update the targe video duration.
-        await collection.updateOne(
-            { _id: data.id, name: data.name, "history.moviesId": data.movieId },
-            {
-                $set: {
-                    "history.$.videoCurrentTime": data.videoWatchTime,
-                },
-            }
-        );
-    } catch (err) {
-        console.log(err);
-    }
-};
-
-const updateVideoCurrentTime = async function (req, res, next) {
-    try {
-        const { videoWatchTime, movie } = req.body;
-        const userVarify = await userFindInCookie(req, res);
-        const { _id, name, provider } = userVarify;
-
-        const data = {
-            id: _id,
-            name: name,
-            movieId: movie,
-            videoWatchTime,
-        };
-
-        if (provider === "google") {
-            await updateTheUserVideoData(googleAuthUser, req, res, data);
-        }
-    } catch (err) {
-        console.log(err);
-    }
-};
-
 module.exports = {
     getAllMovies,
     stremVideo,
@@ -456,5 +445,4 @@ module.exports = {
     videoViewsFunction,
     userPlayListVideoFunction,
     grabUserPlayList,
-    updateVideoCurrentTime,
 };

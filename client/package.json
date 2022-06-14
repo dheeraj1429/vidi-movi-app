@@ -1,8 +1,8 @@
 {
     "name": "movi",
     "version": "0.1.0",
-    "private": true,
     "proxy": "http://localhost:7000",
+    "private": true,
     "dependencies": {
         "@chakra-ui/core": "^0.8.0",
         "@chakra-ui/react": "^2.1.2",

@@ -18,7 +18,6 @@ const port = cart.PORT || 7000;
 const adminRouter = require("./routes/adminRoute");
 const authRouter = require("./routes/authRoute");
 const indexRouter = require("./routes/indexRoute");
-const { cpus } = require("os");
 
 // middleware
 app.use(cors());

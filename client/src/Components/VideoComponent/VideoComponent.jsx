@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as single from "./VideoComponent.style";
 import { useSelector, useDispatch } from "react-redux";
 import { BsFillPlayFill } from "@react-icons/all-files/bs/BsFillPlayFill";
@@ -7,47 +7,27 @@ import { GiSoundOn } from "@react-icons/all-files/gi/GiSoundOn";
 import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
 import { backendConfigData } from "../../Utils/backendData";
 import { useLocation } from "react-router-dom";
-import {
-    fetchSelectedMovi,
-    movieLike,
-    storeHistoryVideo,
-    getAllLikeMovies,
-    selectedMovies,
-    videoViewsFunction,
-    userPlayListVideo,
-    getUserPlayListVideo,
-    setVideoCurrentTime,
-} from "../../Redux/Action/indexAction";
+import { fetchSelectedMovi, movieLike, storeHistoryVideo, getAllLikeMovies, selectedMovies } from "../../Redux/Action/indexAction";
 import { Slider } from "antd";
 import { BiLike } from "@react-icons/all-files/bi/BiLike";
 import { CgMiniPlayer } from "@react-icons/all-files/cg/CgMiniPlayer";
-import { CgPlayList } from "@react-icons/all-files/cg/CgPlayList";
-import { CgPlayListCheck } from "@react-icons/all-files/cg/CgPlayListCheck";
 
 function VideoComponent() {
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
     const user = useSelector((state) => state.auth.user);
     const userLikedVideos = useSelector((state) => state.index.userLikedVideos);
-    const isPLayListSave = useSelector((state) => state.index.isPLayListSave);
-    const userAllVideoPlayList = useSelector((state) => state.index.userAllVideoPlayList);
     const MoviesIsLiked = useSelector((state) => state.index.MoviesIsLiked);
-    const MovieLike = useSelector((state) => state.index.MovieLike);
-
-    const [IsHistoryVideo, setIsHistoryVideo] = useState(false);
 
     const [VideoHandler, setVideoHandler] = useState({
         showControlles: false,
         waitFrame: false,
         isPlay: false,
-        soundLow: false,
         videoInPlaylist: false,
         isVideoInPlayList: false,
     });
 
     const [IsLike, setIsLike] = useState(false);
-
-    const video = useRef();
-    const [VideoRef, setVideoRef] = useState(false);
+    const [VideoRef, setVideoRef] = useState();
     const ProgressValue = useRef(null);
     const playButton = useRef(null);
     const pauseButton = useRef(null);
@@ -86,18 +66,19 @@ function VideoComponent() {
     };
 
     const TimeUpdateHandler = function () {
-        if (!!video.current && video.current.buffered.length > 0) {
-            const videoBufferData = (video.current.buffered.end(0) / video.current.duration) * 100;
+        if (!!VideoRef && VideoRef.buffered.length > 0) {
+            const videoBufferData = (VideoRef.buffered.end(0) / VideoRef.duration) * 100;
             bufferElem.current.style.width = `${videoBufferData}%`;
         }
 
-        const duration = video.current.duration;
-        const currentTime = video.current.currentTime;
+        const duration = VideoRef.duration;
+        const currentTime = VideoRef.currentTime;
         const widthValue = (currentTime / duration) * 100;
 
-        if (currentTime > 5) {
-            setIsHistoryVideo(true);
-        }
+        // store the video in history object whne the user whatch almost 19 sec and when the user remove the component from the dom
+        // if (currentTime >= 5 && currentTime <= 6) {
+        //     setIsHistoryVideo(true);
+        // }
 
         ProgressValue.current.style.width = `${widthValue}%`;
 
@@ -116,34 +97,40 @@ function VideoComponent() {
         setVideoHandler({ ...VideoHandler, waitFrame: false });
     };
 
+    const PlayHandler = useCallback(
+        function () {
+            setVideoHandler({ ...VideoHandler, isPlay: true });
+            console.log("video is play");
+        },
+        [VideoHandler.isPlay]
+    );
+
+    const PauseHandler = useCallback(
+        function () {
+            setVideoHandler({ ...VideoHandler, isPlay: false });
+            console.log("video is pause");
+        },
+        [VideoHandler.isPlay]
+    );
+
     const PlayAndPauseHandler = async function () {
-        video.current.muted = false;
+        VideoRef.muted = false;
 
         if (!VideoHandler.isPlay) {
-            await video.current.play();
+            await VideoRef.play();
         } else {
-            await video.current.pause();
+            await VideoRef.pause();
         }
-    };
-
-    const PlayHandler = function () {
-        setVideoHandler({ ...VideoHandler, isPlay: true });
-        console.log("vide is play");
-    };
-
-    const PauseHandler = function () {
-        setVideoHandler({ ...VideoHandler, isPlay: false });
-        console.log("vide is pause");
     };
 
     const ChangeHandler = function (event) {
         const value = event;
         if (value === 100 || value > 99) {
-            video.current.volume = 1;
+            VideoRef.volume = 1;
         } else if (value < 10) {
-            video.current.volume = `.0${value}`;
+            VideoRef.volume = `.0${value}`;
         } else {
-            video.current.volume = `.${value}`;
+            VideoRef.volume = `.${value}`;
         }
     };
 
@@ -152,75 +139,40 @@ function VideoComponent() {
         const { offsetWidth } = e.nativeEvent.srcElement;
         // const progressBarClickValue = (offsetX / offsetWidth) * 100;
 
-        const time = (offsetX / offsetWidth) * video.current.duration;
-        video.current.currentTime = time;
+        const time = (offsetX / offsetWidth) * VideoRef.duration;
+        VideoRef.currentTime = time;
     };
 
     const FullScreenHandler = function () {
-        if (video.current.requestFullscreen) {
-            video.current.requestFullscreen();
-        } else if (video.current.webkitRequestFullscreen) {
+        if (VideoRef.requestFullscreen) {
+            VideoRef.requestFullscreen();
+        } else if (VideoRef.webkitRequestFullscreen) {
             /* Safari */
-            video.current.webkitRequestFullscreen();
-        } else if (video.current.msRequestFullscreen) {
+            VideoRef.webkitRequestFullscreen();
+        } else if (VideoRef.msRequestFullscreen) {
             /* IE11 */
-            video.current.msRequestFullscreen();
+            VideoRef.msRequestFullscreen();
         }
     };
 
-    useEffect(() => {
-        if (IsHistoryVideo && selectedMovie) {
-            const token = user?.data?.token;
-            if (token) {
-                dispatch(storeHistoryVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
-            }
-            dispatch(videoViewsFunction({ id: selectedMovie._id, name: selectedMovie.name }));
-        }
-
-        if (userAllVideoPlayList && selectedMovie && userAllVideoPlayList.userPlayLists) {
-            userAllVideoPlayList.userPlayLists.find((el) => {
-                if (el._id === selectedMovie._id) {
-                    setVideoHandler({ ...VideoHandler, isVideoInPlayList: true });
-                }
-            });
-        }
-
-        if (selectedMovie && !!userLikedVideos && user && userLikedVideos.length) {
-            userLikedVideos.find((el) => {
-                if (el.moviesId._id === selectedMovie._id) {
-                    setIsLike(true);
-                } else {
-                    setIsLike(false);
-                }
-            });
-        }
-    }, [IsHistoryVideo, selectedMovie, userLikedVideos, userAllVideoPlayList]);
-
-    useEffect(() => {
-        dispatch(fetchSelectedMovi(id));
-        dispatch(getAllLikeMovies());
-        dispatch(getUserPlayListVideo());
-
-        return () => {
-            dispatch(selectedMovies(null));
-        };
-    }, []);
-
-    const MoviesLikeHandler = function (data) {
-        dispatch(movieLike(data));
-    };
+    const videoRefFunction = useCallback(
+        function (el) {
+            setVideoRef(el);
+        },
+        [VideoRef]
+    );
 
     const playMovieHandler = function () {
-        video.current.load();
-        video.current.muted = true;
-        const promise = video.current.play();
+        VideoRef.load();
+        VideoRef.muted = true;
+        const promise = VideoRef.play();
         let autoPlayAllowed = true;
 
         if (promise instanceof Promise) {
             promise
                 .then(() => {
                     if (autoPlayAllowed) {
-                        video.current.muted = false;
+                        VideoRef.muted = false;
                     } else {
                         console.log("auto play is not allow");
                     }
@@ -239,45 +191,62 @@ function VideoComponent() {
         }
     };
 
+    useEffect(() => {
+        if (selectedMovie && !!userLikedVideos && user && userLikedVideos.length) {
+            userLikedVideos.find((el) => {
+                if (el.moviesId._id === selectedMovie._id) {
+                    setIsLike(true);
+                } else {
+                    setIsLike(false);
+                }
+            });
+        }
+
+        if (VideoRef) {
+            playMovieHandler();
+        }
+
+        return () => {
+            if (VideoRef) {
+                const token = user?.data?.token;
+                const getVideoCurrrentTime = VideoRef.currentTime;
+                const getVideoDuration = VideoRef.duration;
+                const timeWatch = (getVideoCurrrentTime / getVideoDuration) * 100;
+
+                if (!token) return;
+
+                if (getVideoCurrrentTime >= 5) {
+                    dispatch(storeHistoryVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token, videoWatchTime: timeWatch }));
+                }
+            }
+        };
+    }, [selectedMovie, userLikedVideos, VideoRef]);
+
+    useEffect(() => {
+        dispatch(fetchSelectedMovi(id));
+        dispatch(getAllLikeMovies());
+
+        return () => {
+            dispatch(selectedMovies(null));
+        };
+    }, []);
+
+    const MoviesLikeHandler = function (data) {
+        dispatch(movieLike(data));
+    };
+
     const ChangePipHandler = async function () {
-        if (!video.current) return;
-        video.current
-            .requestPictureInPicture()
+        if (!VideoRef) return;
+        VideoRef.requestPictureInPicture()
             .then((res) => {
                 console.log(res);
             })
             .catch((err) => console.log(err));
     };
 
-    const IsePlayHandler = function () {
-        const token = user?.data?.token;
-        if (token) {
-            setVideoHandler({ ...VideoHandler, isVideoInPlayList: false });
-            dispatch(userPlayListVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token }));
-        }
+    const ChangeVideoHandler = function () {
+        setIsLike(!IsLike);
     };
-
-    useEffect(() => {
-        if (movieLike) {
-            setIsLike(MovieLike);
-        }
-    }, [MovieLike]);
-
-    useEffect(() => {
-        if (!!VideoRef) {
-            playMovieHandler();
-            ChangePipHandler();
-        }
-
-        return () => {
-            if (VideoRef) {
-                const getVideoCurrrentTime = VideoRef.currentTime;
-                const getVideoDuration = VideoRef.duration;
-                const timeWatch = (getVideoCurrrentTime / getVideoDuration) * 100;
-                dispatch(setVideoCurrentTime({ videoWatchTime: timeWatch, movie: selectedMovie._id }));
-            }
-        };
-    }, [VideoRef]);
 
     return (
         <>
@@ -297,15 +266,12 @@ function VideoComponent() {
                             <video
                                 className="showVideo"
                                 src={`${backendConfigData.backendVideoUrl}/${selectedMovie.movieVideo}`}
-                                ref={(el) => {
-                                    video.current = el;
-                                    setVideoRef(el);
-                                }}
+                                ref={videoRefFunction}
                                 onTimeUpdate={TimeUpdateHandler}
                                 onPlay={PlayHandler}
                                 onPause={PauseHandler}
                                 onClick={() => {
-                                    if (video.current.webkitDisplayingFullscreen) return;
+                                    if (VideoRef.webkitDisplayingFullscreen) return;
                                     else PlayAndPauseHandler();
                                 }}
                                 onWaiting={WaitFunction}
@@ -358,17 +324,11 @@ function VideoComponent() {
                                             className={(!!MoviesIsLiked && MoviesIsLiked.success) || IsLike ? "LikeMovie_button" : null}
                                             onClick={() => {
                                                 MoviesLikeHandler({ id: selectedMovie._id, movieVideo: selectedMovie.movieVideo });
+                                                ChangeVideoHandler();
                                             }}
                                         />
                                         <CgMiniPlayer onClick={ChangePipHandler} />
                                         <BiFullscreen onClick={FullScreenHandler} />
-                                        {(isPLayListSave && isPLayListSave.success) || VideoHandler.isVideoInPlayList ? (
-                                            <CgPlayListCheck onClick={IsePlayHandler} />
-                                        ) : CgPlayListCheck && !CgPlayListCheck.success ? (
-                                            <CgPlayList onClick={IsePlayHandler} />
-                                        ) : (
-                                            <CgPlayList onClick={IsePlayHandler} />
-                                        )}
                                     </div>
                                 </single.timeDiv>
                             </single.controllDiv>
