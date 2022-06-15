@@ -18,6 +18,7 @@ const INITAL_STATE = {
     userAllVideoPlayList: null,
     MoviesIsLiked: null,
     MovieLike: false,
+    searchData: null,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -129,6 +130,12 @@ const indexReducer = function (state = INITAL_STATE, action) {
                 ...state,
                 MoviesIsLiked: action.payload,
                 MovieLike: action.payload.success,
+            };
+
+        case ACTION_TYPE.SEARCH_MOVIE_IN_DB:
+            return {
+                ...state,
+                searchData: action.payload,
             };
 
         default: {

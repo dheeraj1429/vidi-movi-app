@@ -301,3 +301,18 @@ export const setVideoCurrentTime = function (data) {
         }
     };
 };
+
+export const searchMovieName = function (data) {
+    return async function (dispatch) {
+        try {
+            const returnData = await axios.get(`/index/movies-name-search/${data.movieName}`, headers);
+
+            dispatch({
+                type: ACTION_TYPE.SEARCH_MOVIE_IN_DB,
+                payload: returnData.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};

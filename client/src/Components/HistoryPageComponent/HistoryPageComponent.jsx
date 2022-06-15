@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import * as history from "./HistoryPageComponent.style";
 import DateHadingComponent from "../DateHadingComponent/DateHadingComponent";
 import MoviesCardsComponent from "../MoviesCardsComponent/MoviesCardsComponent";
-import { userHistory as historyFunction } from "../../Redux/Action/indexAction";
 import { useSelector, useDispatch } from "react-redux";
 import SpnnerComponent from "../SpnnerComponent/SpnnerComponent";
 import { IoIosClose } from "@react-icons/all-files/io/IoIosClose";
@@ -15,10 +14,6 @@ function HistoryPageComponent() {
     const dispatch = useDispatch();
     const userHistoryObject = useSelector((state) => state.index.userHistory);
     const loadingHistory = useSelector((state) => state.index.loadingHistory);
-
-    useEffect(() => {
-        dispatch(historyFunction());
-    }, []);
 
     return (
         <history.div>
@@ -33,7 +28,7 @@ function HistoryPageComponent() {
             {/* <DateHadingComponent innerText={"Today"} /> */}
             <history.filterDiv>
                 <history.spaceDiv>
-                    <HeadingComponent heading={"Today"} />
+                    {/* <HeadingComponent heading={"Today"} /> */}
                     <history.moviesShowDiv>
                         {userHistoryObject && userHistoryObject.length
                             ? userHistoryObject.map((el) => (

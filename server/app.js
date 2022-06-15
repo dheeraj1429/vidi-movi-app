@@ -24,6 +24,8 @@ app.use(cors());
 app.use(flash());
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.use(
     bodyParser.json({
         limit: "50mb",

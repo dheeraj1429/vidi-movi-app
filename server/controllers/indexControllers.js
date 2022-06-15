@@ -34,7 +34,6 @@ const stremVideo = function (req, res, next) {
     const videoPath = path.join(path.dirname(__dirname), "uploads", "videos", param);
     const videoSize = fs.statSync(videoPath).size; // Parse Range
 
-    // Example: "bytes=32324-"
     const CHUNK_SIZE = 10 ** 6; // 1MB
     const start = Number(range.replace(/\D/g, ""));
     const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
@@ -433,6 +432,24 @@ const grabUserPlayList = async function (req, res, next) {
     }
 };
 
+const getSearchMovie = async function (req, res, next) {
+    try {
+        const movieName = req.params.name;
+        const findMoviesData = await movieModel.find({ name: { $regex: movieName } }, { name: 1 });
+
+        if (!findMoviesData) {
+            return res.status(500).json({
+                success: true,
+                message: "somthing worng",
+            });
+        }
+
+        return res.status(200).json({ findMoviesData });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMovies,
     stremVideo,
@@ -445,4 +462,5 @@ module.exports = {
     videoViewsFunction,
     userPlayListVideoFunction,
     grabUserPlayList,
+    getSearchMovie,
 };

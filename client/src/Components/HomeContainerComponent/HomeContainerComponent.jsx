@@ -58,7 +58,7 @@ function HomeContainerComponent() {
             <NavbarComponent />
             <BannerComponent
                 date={"2019"}
-                backgroundImage={"/images/popular.jpg"}
+                backgroundImage={"/images/3034049.jpg"}
                 heading={"GREEN BOOK"}
                 subHeading={"ADVENCE, FANTASY, MISTERY"}
                 textContent={` Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
@@ -66,7 +66,6 @@ function HomeContainerComponent() {
             />
             {user ? (
                 <Home.spaceDiv>
-                    <HeadingComponent heading={"Continue Watching"} />
                     <ContinueWatchingComponent />
                 </Home.spaceDiv>
             ) : null}

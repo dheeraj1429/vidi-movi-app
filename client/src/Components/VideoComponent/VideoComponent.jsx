@@ -100,7 +100,6 @@ function VideoComponent() {
     const PlayHandler = useCallback(
         function () {
             setVideoHandler({ ...VideoHandler, isPlay: true });
-            console.log("video is play");
         },
         [VideoHandler.isPlay]
     );
@@ -108,7 +107,6 @@ function VideoComponent() {
     const PauseHandler = useCallback(
         function () {
             setVideoHandler({ ...VideoHandler, isPlay: false });
-            console.log("video is pause");
         },
         [VideoHandler.isPlay]
     );
@@ -215,7 +213,7 @@ function VideoComponent() {
 
                 if (!token) return;
 
-                if (getVideoCurrrentTime >= 5) {
+                if (getVideoCurrrentTime >= 60) {
                     dispatch(storeHistoryVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token, videoWatchTime: timeWatch }));
                 }
             }
@@ -228,6 +226,7 @@ function VideoComponent() {
 
         return () => {
             dispatch(selectedMovies(null));
+            setVideoHandler({ ...VideoHandler, isPlay: false });
         };
     }, []);
 

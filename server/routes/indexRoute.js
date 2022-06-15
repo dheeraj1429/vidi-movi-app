@@ -13,6 +13,6 @@ router.get("/get-all-liked-moves", indexController.getAllLikeMovies);
 router.post("/video-views", indexController.videoViewsFunction);
 router.post("/user-play-list-video", indexController.userPlayListVideoFunction);
 router.get("/get-user-playlist", indexController.grabUserPlayList);
-// router.post("/update-video-current-time", indexController.updateVideoCurrentTime);
+router.get("/movies-name-search/:name", indexController.getSearchMovie);
 
 module.exports = router;
