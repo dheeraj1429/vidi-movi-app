@@ -44,6 +44,9 @@ export const searchBarDiv = styled.div`
     @media (max-width: 700px) {
         width: 300px;
     }
+    @media (max-width: 600px) {
+        width: 100px;
+    }
 `;
 
 export const searchCard = styled.div`

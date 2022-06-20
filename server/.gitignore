@@ -1,7 +1,9 @@
 /node_modules
-cart.js
 .env
 .env.example
 .env.local
 .env.staging
 /uploads
+/cart.js
+
+# production

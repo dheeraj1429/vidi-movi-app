@@ -1,6 +1,7 @@
 import ACTION_TYPE from "../ActionType/ActionType";
 import axios from "axios";
 import { headers } from "./headers";
+// axios.defaults.timeout = 2000;
 
 export const getAllMovies = function () {
     return async function (dispatch) {
@@ -9,7 +10,7 @@ export const getAllMovies = function () {
 
             dispatch({
                 type: ACTION_TYPE.GET_ALL_MOVIES,
-                payload: moviesRef.data,
+                payload: moviesRef && moviesRef.data,
             });
         } catch (err) {
             console.log(err);
@@ -17,46 +18,10 @@ export const getAllMovies = function () {
     };
 };
 
-export const overlayDiv = function (data) {
-    return {
-        type: ACTION_TYPE.OVER_LAY_DIV,
-        payload: data,
-    };
-};
-
-export const togglePopUp = function (data) {
-    return {
-        type: ACTION_TYPE.TOGGLE_POPUP,
-        payload: data,
-    };
-};
-
-export const showOptionPopup = function (data) {
-    return {
-        type: ACTION_TYPE.SHOW_OPTIONS_POPUP,
-        payload: data,
-    };
-};
-
-export const themChange = function (data) {
-    return {
-        type: ACTION_TYPE.CHANGE_THEME,
-        payload: data,
-    };
-};
-
-export const selectedMovies = function (data) {
-    return {
-        type: ACTION_TYPE.SELECTED_MOVIE,
-        payload: data,
-    };
-};
-
 export const stremVideo = function (data) {
     return async function (dispatch) {
         try {
-            const videoRef = await axios.get("/index/stremVideo/:name", data, headers);
-            console.log(videoRef);
+            await axios.get("/index/stremVideo/:name", data, headers);
         } catch (err) {
             console.log(err);
         }
@@ -66,11 +31,12 @@ export const stremVideo = function (data) {
 export const fetchSelectedMovi = function (id) {
     return async function (dispatch) {
         try {
-            const movieRef = await axios.get(`/index/get-one-movie/${id}`, headers);
+            const fetchMovieFromDb = await axios.get(`/index/get-one-movie/${id}`, headers);
+            console.log(fetchMovieFromDb);
 
             dispatch({
                 type: ACTION_TYPE.SELECTED_MOVIE,
-                payload: movieRef.data.data,
+                payload: fetchMovieFromDb && fetchMovieFromDb.data && fetchMovieFromDb.data,
             });
         } catch (err) {
             console.log(err);
@@ -91,17 +57,17 @@ export const storeHistoryVideo = function (data) {
 export const userHistory = function () {
     return async function (dispatch) {
         try {
-            const userHistoryRef = await axios.get("/index/user-history", headers);
+            const findUserHistory = await axios.get("/index/user-history", headers);
 
-            if (userHistoryRef && userHistoryRef.data.movieHistoryObject) {
+            if (findUserHistory && findUserHistory.data.movieHistoryObject) {
                 dispatch({
                     type: ACTION_TYPE.USER_HISTORY,
-                    payload: userHistoryRef.data.movieHistoryObject,
+                    payload: findUserHistory && findUserHistory.data && findUserHistory.data.movieHistoryObject,
                 });
             } else {
                 dispatch({
                     type: ACTION_TYPE.USER_HISTORY,
-                    payload: userHistoryRef.data,
+                    payload: findUserHistory && findUserHistory.data,
                 });
             }
         } catch (err) {
@@ -113,12 +79,12 @@ export const userHistory = function () {
 export const removeUserOneMovieHistory = function (data) {
     return async function (dispatch) {
         try {
-            const removerHistoryRef = await axios.post("/index/remove-user-history", data, headers);
+            const removeUserHistory = await axios.post("/index/remove-user-history", data, headers);
 
-            if (removerHistoryRef && removerHistoryRef.data.success) {
+            if (removeUserHistory && removeUserHistory.data.success) {
                 dispatch({
                     type: ACTION_TYPE.REMOVER_USER_ONE_HISTORY_MOVIE,
-                    payload: data.movieSelectedId,
+                    payload: data && data.movieSelectedId,
                 });
             }
         } catch (err) {
@@ -127,22 +93,15 @@ export const removeUserOneMovieHistory = function (data) {
     };
 };
 
-export const removeClientHistory = function (data) {
-    return {
-        type: ACTION_TYPE.REMOVER_CLIENT_HISTORY,
-        payload: data,
-    };
-};
-
 export const movieLike = function (data) {
     return async function (dispatch) {
         try {
-            const userLikeRef = await axios.post("/index/like-movies", data, headers);
+            const userLikeMovie = await axios.post("/index/like-movies", data, headers);
 
-            if (userLikeRef) {
+            if (userLikeMovie) {
                 dispatch({
                     type: ACTION_TYPE.MOVIS_IS_LIKED,
-                    payload: userLikeRef.data,
+                    payload: userLikeMovie && userLikeMovie.data,
                 });
             }
         } catch (err) {
@@ -154,91 +113,19 @@ export const movieLike = function (data) {
 export const getAllLikeMovies = function () {
     return async function (dispatch) {
         try {
-            const getLikedMoviesRef = await axios.get("/index/get-all-liked-moves", headers);
+            const getUserAllLikeMovies = await axios.get("/index/get-all-liked-movies", headers);
 
-            if (getLikedMoviesRef && getLikedMoviesRef.data.moviesLikedObject) {
+            if (getUserAllLikeMovies && getUserAllLikeMovies.data.moviesLikedObject) {
                 dispatch({
                     type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
-                    payload: getLikedMoviesRef.data.moviesLikedObject,
+                    payload: getUserAllLikeMovies && getUserAllLikeMovies.data && getUserAllLikeMovies.data.moviesLikedObject,
                 });
             } else {
                 dispatch({
                     type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
-                    payload: getLikedMoviesRef.data,
+                    payload: getUserAllLikeMovies && getUserAllLikeMovies.data,
                 });
             }
-        } catch (err) {
-            console.log(err);
-        }
-    };
-};
-
-export const removerLikeVideoFromClient = function (data) {
-    return {
-        type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
-        payload: data,
-    };
-};
-
-export const removeUserLikeVideo = function (data) {
-    return {
-        type: ACTION_TYPE.REMOVER_LIKE_VIDEO,
-        payload: data,
-    };
-};
-
-export const getAllUsers = function () {
-    return async function (dispatch) {
-        try {
-            const allUserRef = await axios.get("/admin/get-all-users", headers);
-
-            dispatch({
-                type: ACTION_TYPE.GET_ALL_USERS,
-                payload: allUserRef.data,
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    };
-};
-
-export const profileSelected = function (data) {
-    return {
-        type: ACTION_TYPE.USER_PROFILE_SELECTED,
-        payload: data,
-    };
-};
-
-export const userProfilePupup = function (data) {
-    return {
-        type: ACTION_TYPE.USER_PROFILE_POPUP,
-        payload: data,
-    };
-};
-
-export const updateUserProfile = function (data) {
-    return async function (dispatch) {
-        try {
-            const userRef = await axios.post("/admin/update-user-profile", data, headers);
-
-            dispatch({
-                type: ACTION_TYPE.GET_ALL_USERS,
-                payload: userRef.data,
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    };
-};
-
-export const deleteAccount = function (data) {
-    return async function (dispatch) {
-        try {
-            const delteAccountRef = await axios.post("/admin/delete-account", data, headers);
-            dispatch({
-                type: ACTION_TYPE.GET_ALL_USERS,
-                payload: delteAccountRef.data,
-            });
         } catch (err) {
             console.log(err);
         }
@@ -248,7 +135,7 @@ export const deleteAccount = function (data) {
 export const videoViewsFunction = function (data) {
     return async function (dispatch) {
         try {
-            await axios.post("/index/video-views", data, headers);
+            await axios.patch("/index/video-views", data, headers);
         } catch (err) {
             console.log(err);
         }
@@ -258,11 +145,11 @@ export const videoViewsFunction = function (data) {
 export const userPlayListVideo = function (data) {
     return async function (dispatch) {
         try {
-            const playListRef = await axios.post("/index/user-play-list-video", data, headers);
-            if (playListRef) {
+            const storeUserPlayList = await axios.post("/index/user-play-list-video", data, headers);
+            if (storeUserPlayList) {
                 dispatch({
                     type: ACTION_TYPE.USER_VIDEO_IN_PLAYLIST,
-                    payload: playListRef.data,
+                    payload: storeUserPlayList && storeUserPlayList.data,
                 });
             }
         } catch (err) {
@@ -274,16 +161,16 @@ export const userPlayListVideo = function (data) {
 export const getUserPlayListVideo = function () {
     return async function (dispatch) {
         try {
-            const userPlayListRef = await axios.get("/index/get-user-playlist", headers);
-            if (userPlayListRef && userPlayListRef.data.playListArray) {
+            const getUserPLayListMovies = await axios.get("/index/get-user-playlist", headers);
+            if (getUserPLayListMovies && getUserPLayListMovies.data.playListArray) {
                 dispatch({
                     type: ACTION_TYPE.USER_ALL_VIDEO_PLAYLIST,
-                    payload: userPlayListRef.data.playListArray,
+                    payload: getUserPLayListMovies && getUserPLayListMovies.data.playListArray,
                 });
             } else {
                 dispatch({
                     type: ACTION_TYPE.USER_ALL_VIDEO_PLAYLIST,
-                    payload: userPlayListRef.data,
+                    payload: getUserPLayListMovies && getUserPLayListMovies.data,
                 });
             }
         } catch (err) {
@@ -305,12 +192,65 @@ export const setVideoCurrentTime = function (data) {
 export const searchMovieName = function (data) {
     return async function (dispatch) {
         try {
-            const returnData = await axios.get(`/index/movies-name-search/${data.movieName}`, headers);
+            const searchData = await axios.get(`/index/movies-name-search/${data.movieName}`, headers);
 
             dispatch({
                 type: ACTION_TYPE.SEARCH_MOVIE_IN_DB,
-                payload: returnData.data,
+                payload: searchData && searchData.data,
             });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const getAllSearchMovies = function (data) {
+    return async function (dispatch) {
+        try {
+            const searchMovies = await axios.get(`/index/get-all-search-movies/${data.searchQuery}`, headers);
+
+            dispatch({
+                type: ACTION_TYPE.GET_ALL_SEARCH_MOVIES,
+                payload: searchMovies && searchMovies.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const deleteLikeVideo = function (data) {
+    return async function (dispatch) {
+        try {
+            const likeVideoDeleteRef = await axios.patch("/index/delete-like-video", data, headers);
+
+            if (likeVideoDeleteRef && likeVideoDeleteRef.data.moviesLikedObject) {
+                dispatch({
+                    type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
+                    payload: likeVideoDeleteRef.data.moviesLikedObject,
+                });
+            } else {
+                dispatch({
+                    type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
+                    payload: likeVideoDeleteRef && likeVideoDeleteRef.data,
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const removeUserAllHistory = function (data) {
+    return async function (dispatch) {
+        try {
+            const userHistory = await axios.patch("/index/delete-user-all-history", headers);
+            if (userHistory.data.success) {
+                dispatch({
+                    type: ACTION_TYPE.DELETE_ALL_USER_HISTORY,
+                    payload: data,
+                });
+            }
         } catch (err) {
             console.log(err);
         }

@@ -19,7 +19,7 @@ const useNav = function (data) {
             const str = path.charAt(0).toUpperCase() + path.slice(1);
             setActiveBar(str);
         }
-    });
+    }, []);
 
     return ActiveBar;
 };

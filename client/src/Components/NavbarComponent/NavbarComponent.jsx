@@ -8,9 +8,6 @@ import SearchBarComponent from "../SearchBarComponent/SearchBarComponent";
 function NavbarComponent() {
     return (
         <Navbar.div>
-            {/* <Navbar.imageDiv>
-                <BsList />
-            </Navbar.imageDiv> */}
             <div>
                 <SearchBarComponent />
             </div>

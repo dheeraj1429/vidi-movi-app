@@ -1,6 +1,6 @@
 export const backendConfigData = {
-    url: "http://localhost/7000/",
+    url: "http://localhost/9005/",
     imageUrl: "/thumbnail",
     videoUrl: "/videos",
-    backendVideoUrl: "http://localhost:7000/index/stream-video",
+    backendVideoUrl: "http://localhost:9005/index/stream-video",
 };

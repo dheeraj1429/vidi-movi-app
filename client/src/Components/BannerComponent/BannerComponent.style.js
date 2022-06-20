@@ -21,7 +21,7 @@ export const bannerImage = styled.div`
     -o-transition: all 0.5s ease; */
     transition: all 0.5s ease;
     @media (max-width: 1000px) {
-        height: 400px;
+        height: 600px;
     }
     @media (max-width: 700px) {
         height: auto;

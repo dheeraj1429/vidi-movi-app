@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import { setUserCookieData } from "./Redux/Action/authAction";
 import { useDispatch } from "react-redux";
 import useLoad from "./Hooks/useLoad";
-import { getAllMovies, getAllLikeMovies, userHistory } from "./Redux/Action/indexAction";
+import { getAllMovies, getAllLikeMovies } from "./Redux/Action/indexAction";
 
 // components
 import SignInComponent from "./Components/SignInComponent/SignInComponent";
@@ -19,6 +19,8 @@ import HistoryPageComponent from "./Components/HistoryPageComponent/HistoryPageC
 import UserComponent from "./DashboardComponents/UserComponent/UserComponent";
 import DashboardLandingComponent from "./DashboardComponents/DashboardLandingComponent/DashboardLandingComponent";
 import MoviesPlayListComponent from "./Components/MoviesPlayListComponent/MoviesPlayListComponent";
+// import ErrorComponent from "./Components/404ErrorComponent/404ErrorComponent";
+import SearchMoviesComponent from "./Components/SearchMoviesComponent/SearchMoviesComponent";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage";
@@ -32,12 +34,10 @@ function App() {
     const loadFunction = useLoad();
 
     useEffect(() => {
-        if (Object.keys(cookies).length > 0) {
+        if (Object.keys(cookies).length) {
             dispatch(setUserCookieData(cookies.user));
         }
         dispatch(getAllMovies());
-        dispatch(getAllLikeMovies());
-        dispatch(userHistory());
         loadFunction("client:auth2");
     }, []);
 
@@ -50,6 +50,7 @@ function App() {
                     <Route path="/movie/play/:name/:id" element={<MoviePlaySinglePage />} />
                     <Route path="/history" element={<HistoryPageComponent />} />
                     <Route path="/playlist" element={<MoviesPlayListComponent />} />
+                    <Route path="/movies-search/:name" element={<SearchMoviesComponent />} />
                 </Route>
                 <Route path="/auth" element={<SignInAndLogInPage />}>
                     <Route path="user-signIn" element={<SignInComponent />} />

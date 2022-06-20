@@ -7,15 +7,17 @@ import { GiSoundOn } from "@react-icons/all-files/gi/GiSoundOn";
 import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
 import { backendConfigData } from "../../Utils/backendData";
 import { useLocation } from "react-router-dom";
-import { fetchSelectedMovi, movieLike, storeHistoryVideo, getAllLikeMovies, selectedMovies } from "../../Redux/Action/indexAction";
+import { fetchSelectedMovi, movieLike, storeHistoryVideo, videoViewsFunction } from "../../Redux/Action/indexAction";
+import { selectedMovies } from "../../Redux/Action/appAction";
 import { Slider } from "antd";
 import { BiLike } from "@react-icons/all-files/bi/BiLike";
 import { CgMiniPlayer } from "@react-icons/all-files/cg/CgMiniPlayer";
+import { useLayoutEffect } from "react";
 
 function VideoComponent() {
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
     const user = useSelector((state) => state.auth.user);
-    const userLikedVideos = useSelector((state) => state.index.userLikedVideos);
+    // const userLikedVideos = useSelector((state) => state.index.userLikedVideos);
     const MoviesIsLiked = useSelector((state) => state.index.MoviesIsLiked);
 
     const [VideoHandler, setVideoHandler] = useState({
@@ -40,12 +42,6 @@ function VideoComponent() {
 
     const path = loaction.pathname;
     const id = path.split("/").slice(-1).join("");
-
-    // const ButtonHandler = async function () {
-    //     PlayAndPauseHandler();
-    //     setVideoHandler({ ...VideoHandler, isPlay: true });
-    //     setVideoHandler({ ...VideoHandler, showControlles: !VideoHandler.showControlles });
-    // };
 
     const musicInfoData = function (duraction) {
         let currentHours = Math.floor(duraction / 3600);
@@ -74,12 +70,6 @@ function VideoComponent() {
         const duration = VideoRef.duration;
         const currentTime = VideoRef.currentTime;
         const widthValue = (currentTime / duration) * 100;
-
-        // store the video in history object whne the user whatch almost 19 sec and when the user remove the component from the dom
-        // if (currentTime >= 5 && currentTime <= 6) {
-        //     setIsHistoryVideo(true);
-        // }
-
         ProgressValue.current.style.width = `${widthValue}%`;
 
         const currentTimeValue = musicInfoData(currentTime);
@@ -190,16 +180,6 @@ function VideoComponent() {
     };
 
     useEffect(() => {
-        if (selectedMovie && !!userLikedVideos && user && userLikedVideos.length) {
-            userLikedVideos.find((el) => {
-                if (el.moviesId._id === selectedMovie._id) {
-                    setIsLike(true);
-                } else {
-                    setIsLike(false);
-                }
-            });
-        }
-
         if (VideoRef) {
             playMovieHandler();
         }
@@ -214,16 +194,26 @@ function VideoComponent() {
                 if (!token) return;
 
                 if (getVideoCurrrentTime >= 60) {
-                    dispatch(storeHistoryVideo({ id: selectedMovie._id, name: selectedMovie.name, userToken: token, videoWatchTime: timeWatch }));
+                    dispatch(
+                        storeHistoryVideo({ id: selectedMovie.data._id, name: selectedMovie.data.name, userToken: token, videoWatchTime: timeWatch })
+                    );
+                    dispatch(videoViewsFunction({ id: selectedMovie.data._id, name: selectedMovie.data.name }));
                 }
             }
         };
-    }, [selectedMovie, userLikedVideos, VideoRef]);
+    }, [selectedMovie, VideoRef]);
+
+    useLayoutEffect(() => {
+        if (selectedMovie) {
+            setIsLike(selectedMovie.isMovieLiked);
+        }
+    }, [selectedMovie]);
+
+    useLayoutEffect(() => {
+        dispatch(fetchSelectedMovi(id));
+    }, []);
 
     useEffect(() => {
-        dispatch(fetchSelectedMovi(id));
-        dispatch(getAllLikeMovies());
-
         return () => {
             dispatch(selectedMovies(null));
             setVideoHandler({ ...VideoHandler, isPlay: false });
@@ -249,7 +239,7 @@ function VideoComponent() {
 
     return (
         <>
-            {selectedMovie !== null && Object.keys(selectedMovie).length > 0 ? (
+            {selectedMovie !== null && !!Object.keys(selectedMovie.data).length ? (
                 <>
                     <single.div>
                         <single.movieDiv>
@@ -264,7 +254,7 @@ function VideoComponent() {
                             </single.bufferLoadingDiv>
                             <video
                                 className="showVideo"
-                                src={`${backendConfigData.backendVideoUrl}/${selectedMovie.movieVideo}`}
+                                src={!!selectedMovie ? `${backendConfigData.backendVideoUrl}/${selectedMovie.data.movieVideo}` : null}
                                 ref={videoRefFunction}
                                 onTimeUpdate={TimeUpdateHandler}
                                 onPlay={PlayHandler}
@@ -322,7 +312,7 @@ function VideoComponent() {
                                         <BiLike
                                             className={(!!MoviesIsLiked && MoviesIsLiked.success) || IsLike ? "LikeMovie_button" : null}
                                             onClick={() => {
-                                                MoviesLikeHandler({ id: selectedMovie._id, movieVideo: selectedMovie.movieVideo });
+                                                MoviesLikeHandler({ id: selectedMovie.data._id, movieVideo: selectedMovie.data.movieVideo });
                                                 ChangeVideoHandler();
                                             }}
                                         />

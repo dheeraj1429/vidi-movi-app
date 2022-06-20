@@ -19,6 +19,9 @@ const INITAL_STATE = {
     MoviesIsLiked: null,
     MovieLike: false,
     searchData: null,
+    allSearchMoviesData: null,
+    loadingMovies: true,
+    movieIsLiked: false,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -136,6 +139,25 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 searchData: action.payload,
+            };
+
+        case ACTION_TYPE.GET_ALL_SEARCH_MOVIES:
+            return {
+                ...state,
+                allSearchMoviesData: action.payload,
+                loadingMovies: false,
+            };
+
+        case ACTION_TYPE.LOADING_SEARCH_MOVIES:
+            return {
+                ...state,
+                loadingMovies: action.payload,
+            };
+
+        case ACTION_TYPE.DELETE_ALL_USER_HISTORY:
+            return {
+                ...state,
+                userHistory: action.payload,
             };
 
         default: {

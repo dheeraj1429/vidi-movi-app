@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const div = styled.div`
     width: 100%;
-    height: auto;
 
     svg {
         fill: var(--heading-cl);
@@ -21,8 +20,9 @@ export const div = styled.div`
 `;
 
 export const movieDiv = styled.div`
-    width: 100%;
-    height: 900px;
+    width: 59%;
+    height: 530px;
+
     position: relative;
     display: flex;
     justify-content: center;
@@ -61,6 +61,10 @@ export const movieDiv = styled.div`
 
     @media (max-width: 1700px) {
         height: auto;
+    }
+
+    @media (max-width: 1660px) {
+        width: 100%;
     }
 
     video {

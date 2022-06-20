@@ -3,7 +3,7 @@ import * as profile from "./UserProfileComponentstyle";
 import CustomButtonComponent from "../CustomButtonComponent/CustomButtonComponent";
 import { AiOutlineUser } from "@react-icons/all-files/ai/AiOutlineUser";
 import { useSelector, useDispatch } from "react-redux";
-import { showOptionPopup } from "../../Redux/Action/indexAction";
+import { showOptionPopup } from "../../Redux/Action/appAction";
 import OptionsDropDownComponent from "../OptionsDropDownComponent/OptionsDropDownComponent";
 
 function UserProfileComponent({ optionsShows }) {
