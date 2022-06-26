@@ -3,7 +3,6 @@ import * as single from "./VideoComponent.style";
 import { useSelector, useDispatch } from "react-redux";
 import { BsFillPlayFill } from "@react-icons/all-files/bs/BsFillPlayFill";
 import { BiPause } from "@react-icons/all-files/bi/BiPause";
-import { GiSoundOn } from "@react-icons/all-files/gi/GiSoundOn";
 import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
 import { backendConfigData } from "../../Utils/backendData";
 import { useLocation } from "react-router-dom";
@@ -15,13 +14,11 @@ import { useLayoutEffect } from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
-import VolumeDown from "@mui/icons-material/VolumeDown";
 import VolumeUp from "@mui/icons-material/VolumeUp";
 
 function VideoComponent() {
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
     const user = useSelector((state) => state.auth.user);
-    // const userLikedVideos = useSelector((state) => state.index.userLikedVideos);
     const MoviesIsLiked = useSelector((state) => state.index.MoviesIsLiked);
 
     const [VideoHandler, setVideoHandler] = useState({
@@ -129,8 +126,6 @@ function VideoComponent() {
     const SickBarHandler = function (e) {
         const { offsetX } = e.nativeEvent;
         const { offsetWidth } = e.nativeEvent.srcElement;
-        // const progressBarClickValue = (offsetX / offsetWidth) * 100;
-
         const time = (offsetX / offsetWidth) * VideoRef.duration;
         VideoRef.currentTime = time;
     };

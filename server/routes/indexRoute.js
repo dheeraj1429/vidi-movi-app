@@ -15,5 +15,6 @@ router.get("/movies-name-search/:name", indexController.getSearchMovie);
 router.get("/get-all-search-movies/:searchQuery", indexController.getAllSearchMovies);
 router.patch("/delete-like-video", indexController.deleteLikeVideoFromDB);
 router.patch("/delete-user-all-history", indexController.deleteUserAllHistory);
+router.patch("/delete-all-selected-history", indexController.removeAllSelectedMovies);
 
 module.exports = router;

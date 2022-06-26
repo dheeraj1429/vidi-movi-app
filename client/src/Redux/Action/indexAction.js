@@ -256,3 +256,20 @@ export const removeUserAllHistory = function (data) {
         }
     };
 };
+
+export const removeALlSelectedMovies = function (data) {
+    return async function (dispatch) {
+        try {
+            const removeSelectedMovies = await axios.patch("/index/delete-all-selected-history", data, headers);
+
+            if (removeSelectedMovies.data.success) {
+                dispatch({
+                    type: ACTION_TYPE.REMOVE_ALL_SELECTED_MOVIES_FROM_HISTORY,
+                    payload: data.moviesId,
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};

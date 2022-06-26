@@ -20,9 +20,6 @@ export const div = styled.div`
 `;
 
 export const movieDiv = styled.div`
-    width: 59%;
-    height: 530px;
-
     position: relative;
     display: flex;
     justify-content: center;
@@ -59,14 +56,6 @@ export const movieDiv = styled.div`
         opacity: 1;
     }
 
-    @media (max-width: 1700px) {
-        height: auto;
-    }
-
-    @media (max-width: 1660px) {
-        width: 100%;
-    }
-
     video {
         position: relative;
     }
@@ -78,6 +67,10 @@ export const movieDiv = styled.div`
 
     .ant-slider-track {
         background-color: var(--progress-cl);
+    }
+
+    @media (max-width: 1200px) {
+        display: block;
     }
 `;
 
@@ -149,6 +142,11 @@ export const controllDiv = styled.div`
     display: none;
     /* opacity: 0; */
     transition: all 0.5s ease;
+
+    .css-1qx01vb-MuiStack-root {
+        margin-bottom: 0;
+    }
+
     svg {
         fill: white;
         font-size: 20px;
@@ -163,6 +161,11 @@ export const controllDiv = styled.div`
 
     &:hover {
         opacity: 1;
+    }
+
+    @media (max-width: 1200px) {
+        position: relative;
+        padding: 0;
     }
 `;
 
@@ -212,6 +215,7 @@ export const timeDiv = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    flex-wrap: wrap;
 
     .inner-timer-options-div {
         display: flex;

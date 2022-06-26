@@ -39,6 +39,7 @@ function HistoryPageComponent() {
                                               key={el._id}
                                               data={el.moviesId}
                                               componentStyle={"style_tow"}
+                                              checkBox={true}
                                               closeIcon={
                                                   <IoIosClose
                                                       className="close_icons"

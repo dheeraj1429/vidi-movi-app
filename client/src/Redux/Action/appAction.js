@@ -1,5 +1,4 @@
 import ACTION_TYPE from "../ActionType/ActionType";
-import { headers } from "./headers";
 
 export const overlayDiv = function (data) {
     return {
@@ -74,6 +73,27 @@ export const userProfilePupup = function (data) {
 export const loadingSearchMovies = function (data) {
     return {
         type: ACTION_TYPE.LOADING_SEARCH_MOVIES,
+        payload: data,
+    };
+};
+
+export const showSelectedOptions = function (data) {
+    return {
+        type: ACTION_TYPE.SHOW_SELECTE_OPTIONS,
+        payload: data,
+    };
+};
+
+export const storeSelectedMoviesId = function (data) {
+    return {
+        type: ACTION_TYPE.STORE_SELECTED_MOVIES_ID,
+        payload: data,
+    };
+};
+
+export const removeSelectedMoviesId = function (data) {
+    return {
+        type: ACTION_TYPE.REMOVE_SELECTED_MOVIES_ID,
         payload: data,
     };
 };

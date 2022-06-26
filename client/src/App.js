@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import { setUserCookieData } from "./Redux/Action/authAction";
 import { useDispatch } from "react-redux";
 import useLoad from "./Hooks/useLoad";
-import { getAllMovies, getAllLikeMovies } from "./Redux/Action/indexAction";
+import { getAllMovies } from "./Redux/Action/indexAction";
 
 // components
 import SignInComponent from "./Components/SignInComponent/SignInComponent";
@@ -19,7 +19,6 @@ import HistoryPageComponent from "./Components/HistoryPageComponent/HistoryPageC
 import UserComponent from "./DashboardComponents/UserComponent/UserComponent";
 import DashboardLandingComponent from "./DashboardComponents/DashboardLandingComponent/DashboardLandingComponent";
 import MoviesPlayListComponent from "./Components/MoviesPlayListComponent/MoviesPlayListComponent";
-// import ErrorComponent from "./Components/404ErrorComponent/404ErrorComponent";
 import SearchMoviesComponent from "./Components/SearchMoviesComponent/SearchMoviesComponent";
 
 // pages

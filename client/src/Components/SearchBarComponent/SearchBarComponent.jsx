@@ -59,13 +59,6 @@ function SearchBarComponent() {
         }
     }, [Search]);
 
-    const handler = useCallback(
-        debounce(function () {
-            console.log("fetch the data from the");
-        }, 2000),
-        []
-    );
-
     const SearchHandler = function () {
         // setShowSearchList(false);
         if (Search.length) {

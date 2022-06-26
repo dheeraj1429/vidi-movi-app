@@ -22,6 +22,8 @@ const INITAL_STATE = {
     allSearchMoviesData: null,
     loadingMovies: true,
     movieIsLiked: false,
+    showSelectedOptions: false,
+    storeSelectedMoviesId: [],
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -158,6 +160,31 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 userHistory: action.payload,
+            };
+
+        case ACTION_TYPE.SHOW_SELECTE_OPTIONS:
+            return {
+                ...state,
+                showSelectedOptions: action.payload,
+            };
+
+        case ACTION_TYPE.STORE_SELECTED_MOVIES_ID:
+            return {
+                ...state,
+                storeSelectedMoviesId: state.storeSelectedMoviesId.concat(action.payload),
+            };
+
+        case ACTION_TYPE.REMOVE_SELECTED_MOVIES_ID:
+            return {
+                ...state,
+                storeSelectedMoviesId: state.storeSelectedMoviesId.filter((el) => el !== action.payload),
+            };
+
+        case ACTION_TYPE.REMOVE_ALL_SELECTED_MOVIES_FROM_HISTORY:
+            const set = new Set(action.payload);
+            return {
+                ...state,
+                userHistory: state.userHistory.filter((el) => (el.moviesId._id = !set.has(el.moviesId._id))),
             };
 
         default: {

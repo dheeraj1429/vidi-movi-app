@@ -561,6 +561,60 @@ const deleteUserAllHistory = async function (req, res, next) {
     }
 };
 
+/**
+ *
+ * @param { googleAuthUser, userModel } collection
+ * @param { Object } data
+ */
+const removeVideosFromHistory = async function (collection, data) {
+    let userHistoryFind;
+
+    /**
+     * @for loop over the user selected id and then remove all the movies from this history object
+     * @return { boolean } success
+     */
+    for (let i = 0; i < data.moviesId.length; i++) {
+        userHistoryFind = await collection.updateOne({ _id: data._id }, { $pull: { history: { moviesId: data.moviesId[i] } } });
+    }
+
+    if (userHistoryFind.modifiedCount) {
+        data.res.status(200).json({
+            success: true,
+        });
+    }
+};
+
+const removeAllSelectedMovies = async function (req, res, next) {
+    try {
+        const { moviesId, token } = req.body;
+
+        if (token) {
+            const varifyUser = await jwt.verify(token, JWT_TOKEN);
+            const { _id, provider } = varifyUser;
+
+            const data = {
+                moviesId,
+                res,
+                _id,
+            };
+
+            if (provider === "google") {
+                await removeVideosFromHistory(googleAuthUser, data);
+            }
+
+            if (provider === "login") {
+                await removeVideosFromHistory(userModel, data);
+            }
+        } else {
+            return res.status(200).json({
+                message: "user must login ",
+            });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMovies,
     streamVideo,
@@ -575,4 +629,5 @@ module.exports = {
     getAllSearchMovies,
     deleteLikeVideoFromDB,
     deleteUserAllHistory,
+    removeAllSelectedMovies,
 };
