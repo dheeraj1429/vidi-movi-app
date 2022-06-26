@@ -2,11 +2,11 @@ import React from "react";
 import * as card from "./CardsPlayOptionComponent.style";
 import { Link } from "react-router-dom";
 
-function CardsPlayOptionComponent({ onMouseEnter, onMouseLeave, id, name }) {
+function CardsPlayOptionComponent({ id, name, classCl }) {
     return (
         <Link to={`/movie/play/${name}/${id}`}>
-            <card.playDiv className="play-div">
-                <a class="glightbox_video" onMouseEnter={onMouseEnter ? onMouseEnter : null} onMouseLeave={onMouseLeave ? onMouseLeave : null}>
+            <card.playDiv className={classCl ? `play-div ${classCl}` : "play-div"}>
+                <a class="glightbox_video">
                     <svg width="131" height="131" viewBox="0 0 131 131" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             class="inner-circle"

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import * as user from "./UserComponent.style";
-import { getAllUsers } from "../../Redux/Action/indexAction";
+import { getAllUsers } from "../../Redux/Action/adminAction";
 import { useSelector, useDispatch } from "react-redux";
 import DashboardBannerComponent from "../DashboardBannerComponent/DashboardBannerComponent";
 import UserAuthenticationComponent from "../UserAuthenticationComponent/UserAuthenticationComponent";

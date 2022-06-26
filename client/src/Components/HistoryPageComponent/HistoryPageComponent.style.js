@@ -22,24 +22,22 @@ export const filterDiv = styled.div`
     display: flex;
 `;
 
-export const moviesShowDiv = styled.div`
+export const spaceDiv = styled.div`
     width: 100%;
-    padding: 1rem;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    transition: all 0.3s ease;
-    position: relative;
+    padding: 2rem 0;
+`;
 
-    @media (max-width: 1600px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    @media (max-width: 1300px) {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    @media (max-width: 850px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 700px) {
-        grid-template-columns: repeat(1, 1fr);
-    }
+export const relativeDiv = styled.div`
+    position: relative;
+    width: 100%;
+`;
+
+export const innerDiv = styled.div`
+    width: 100%;
+    padding: 1rem 0;
+    position: relative;
+`;
+
+export const flexDiv = styled.div`
+    display: flex;
 `;

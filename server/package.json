@@ -3,9 +3,10 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "node ./bin/www",
+        "start": "node app.js",
         "dev": "nodemon app.js -e ejs,js,css",
-        "pm2": "pm2 start app.js"
+        "pm2": "pm2 start app.js",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install"
     },
     "dependencies": {
         "bcryptjs": "^2.4.3",

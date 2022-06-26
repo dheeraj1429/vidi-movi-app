@@ -4,7 +4,9 @@ import * as head from "./HeadingComponent.style";
 function HeadingComponent({ heading }) {
     return (
         <head.Popular>
-            <h1>{heading}</h1>
+            <head.innerDiv>
+                <h1>{heading}</h1>
+            </head.innerDiv>
         </head.Popular>
     );
 }

@@ -6,10 +6,10 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch } from "react-redux";
-import { profileSelected, userProfilePupup } from "../../Redux/Action/indexAction";
+import { profileSelected, userProfilePupup } from "../../Redux/Action/appAction";
 import { MdDeleteForever } from "@react-icons/all-files/md/MdDeleteForever";
 import { Popconfirm } from "antd";
-import { deleteAccount } from "../../Redux/Action/indexAction";
+import { deleteAccount } from "../../Redux/Action/adminAction";
 
 const options = ["Edit"];
 const ITEM_HEIGHT = 48;

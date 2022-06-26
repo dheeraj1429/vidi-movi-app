@@ -23,3 +23,47 @@ export const loadingAction = function (data) {
         payload: data,
     };
 };
+
+export const updateUserProfile = function (data) {
+    return async function (dispatch) {
+        try {
+            const userRef = await axios.put("/admin/update-user-profile", data, headers);
+
+            dispatch({
+                type: ACTION_TYPE.GET_ALL_USERS,
+                payload: userRef.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const deleteAccount = function (data) {
+    return async function (dispatch) {
+        try {
+            const delteAccountRef = await axios.post("/admin/delete-account", data, headers);
+            dispatch({
+                type: ACTION_TYPE.GET_ALL_USERS,
+                payload: delteAccountRef.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const getAllUsers = function () {
+    return async function (dispatch) {
+        try {
+            const getAllUserFromDb = await axios.get("/admin/get-all-users", headers);
+
+            dispatch({
+                type: ACTION_TYPE.GET_ALL_USERS,
+                payload: getAllUserFromDb.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};

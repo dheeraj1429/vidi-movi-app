@@ -19,6 +19,8 @@ import HistoryPageComponent from "./Components/HistoryPageComponent/HistoryPageC
 import UserComponent from "./DashboardComponents/UserComponent/UserComponent";
 import DashboardLandingComponent from "./DashboardComponents/DashboardLandingComponent/DashboardLandingComponent";
 import MoviesPlayListComponent from "./Components/MoviesPlayListComponent/MoviesPlayListComponent";
+// import ErrorComponent from "./Components/404ErrorComponent/404ErrorComponent";
+import SearchMoviesComponent from "./Components/SearchMoviesComponent/SearchMoviesComponent";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage";
@@ -27,16 +29,15 @@ import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import MoviePlaySinglePage from "./pages/MoviePlaySinglePage/MoviePlaySinglePage";
 
 function App() {
-    const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+    const [cookies] = useCookies(["user"]);
     const dispatch = useDispatch();
     const loadFunction = useLoad();
 
     useEffect(() => {
-        if (Object.keys(cookies).length > 0) {
+        if (Object.keys(cookies).length) {
             dispatch(setUserCookieData(cookies.user));
         }
         dispatch(getAllMovies());
-        dispatch(getAllLikeMovies());
         loadFunction("client:auth2");
     }, []);
 
@@ -49,6 +50,7 @@ function App() {
                     <Route path="/movie/play/:name/:id" element={<MoviePlaySinglePage />} />
                     <Route path="/history" element={<HistoryPageComponent />} />
                     <Route path="/playlist" element={<MoviesPlayListComponent />} />
+                    <Route path="/movies-search/:name" element={<SearchMoviesComponent />} />
                 </Route>
                 <Route path="/auth" element={<SignInAndLogInPage />}>
                     <Route path="user-signIn" element={<SignInComponent />} />

@@ -195,6 +195,11 @@ const googleLogin = async function (req, res, next) {
     try {
         const { userObject } = req.body;
 
+        if (!userObject)
+            return res.status(200).json({
+                message: "somthing worng",
+            });
+
         const findUserInDb = await googleAuthUser.findOne({
             googleId: userObject.googleId,
             email: userObject.email,

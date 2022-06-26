@@ -5,8 +5,8 @@ import { useLocation } from "react-router-dom";
 import ProfileInnerOptionComponent from "../ProfileInnerOptionComponent/ProfileInnerOptionComponent";
 import { BiMoon } from "@react-icons/all-files/bi/BiMoon";
 import { BiSun } from "@react-icons/all-files/bi/BiSun";
-import { themChange, showOptionPopup } from "../../Redux/Action/indexAction";
 import { useDispatch } from "react-redux";
+import { themChange, showOptionPopup } from "../../Redux/Action/appAction";
 
 function SideBarOptionComponent({ icon, innerText, event, activeBar, onClick, width, innerOptions }) {
     const [ShowInnerOptions, setShowInnerOptions] = useState(false);

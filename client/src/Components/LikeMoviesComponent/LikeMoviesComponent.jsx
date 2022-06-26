@@ -14,35 +14,28 @@ function LikeMoviesComponent() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (userLikedVideos) {
-            dispatch(getAllLikeMovies());
-        }
+        dispatch(getAllLikeMovies());
     }, []);
 
     return (
         <like.div>
             <like.innerDiv>
                 <NavbarComponent />
-                <BannerComponent
-                    backgroundImage={"/images/fal-1.jpg"}
-                    heading={"LIKE MOVIES"}
-                    textContent={` Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-                            dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it`}
-                />
-                <HeadingComponent heading={"Movies"} />
 
-                <like.moviesShowDiv>
-                    {userLikedVideos !== null && userLikedVideos !== undefined && userLikedVideos.length > 0 && userLikedVideos[0] !== null
-                        ? userLikedVideos.map(({ ...otherProps }) => (
-                              <MoviesCardsComponent style_change={"style-two"} key={otherProps._id} {...otherProps} data={otherProps} />
-                          ))
-                        : null}
-                    {loadingHistory ? (
-                        <like.spnenrDiv>
-                            <SpnnerComponent />
-                        </like.spnenrDiv>
-                    ) : null}
-                </like.moviesShowDiv>
+                <like.spaceDiv>
+                    <like.innerDiv>
+                        {userLikedVideos && userLikedVideos.length
+                            ? userLikedVideos.map((el) => (
+                                  <MoviesCardsComponent componentStyle={"style_tow"} key={el._id} data={el.moviesId} optionsIcon={true} />
+                              ))
+                            : null}
+                        {loadingHistory ? (
+                            <like.spnenrDiv>
+                                <SpnnerComponent />
+                            </like.spnenrDiv>
+                        ) : null}
+                    </like.innerDiv>
+                </like.spaceDiv>
             </like.innerDiv>
         </like.div>
     );

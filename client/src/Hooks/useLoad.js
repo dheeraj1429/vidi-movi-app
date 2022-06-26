@@ -1,11 +1,10 @@
 import { gapi } from "gapi-script";
-import { clientId, userClientScret } from "../Utils/VarifyFunction";
+import { clientId } from "../Utils/VarifyFunction";
 
 const useLoad = function () {
     return function (auth) {
         gapi.load(auth, function () {
-            gapi.client.init({
-                apiKey: userClientScret,
+            gapi.auth2.init({
                 clientId: clientId,
                 scope: "",
             });

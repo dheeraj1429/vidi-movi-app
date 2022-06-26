@@ -7,8 +7,10 @@ import SideBarOptionComponent from "../SideBarOptionComponent/SideBarOptionCompo
 import useNav from "../../Hooks/useNav";
 import { useLocation } from "react-router";
 import { RiPlayList2Fill } from "@react-icons/all-files/ri/RiPlayList2Fill";
+import { useCookies } from "react-cookie";
 
 function SideBarComponent() {
+    const [cookies] = useCookies(["user"]);
     const [ActiveBar, setActiveBar] = useState("Home");
     const nav = useNav();
     const location = useLocation();
@@ -31,9 +33,13 @@ function SideBarComponent() {
         <sideBar.mainDiv>
             <sideBar.innerDiv>
                 <SideBarOptionComponent icon={<VscHome />} innerText={"Home"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                <SideBarOptionComponent icon={<VscHeart />} innerText={"Like"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                <SideBarOptionComponent icon={<VscSync />} innerText={"History"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                <SideBarOptionComponent icon={<RiPlayList2Fill />} innerText={"Playlist"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                {cookies && cookies?.user ? (
+                    <>
+                        <SideBarOptionComponent icon={<VscHeart />} innerText={"Like"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                        <SideBarOptionComponent icon={<VscSync />} innerText={"History"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                        {/* <SideBarOptionComponent icon={<RiPlayList2Fill />} innerText={"Playlist"} event={ActiveBarHandler} activeBar={ActiveBar} /> */}
+                    </>
+                ) : null}
             </sideBar.innerDiv>
         </sideBar.mainDiv>
     );

@@ -12,7 +12,8 @@
         "client": "npm start --prefix client",
         "server": "npm run dev --prefix server",
         "server-pm2": "npm run pm2 --prefix server",
-        "watch": "npm run server & npm run client"
+        "watch": "npm run server & npm run client",
+        "build": "npm run build --prefix client"
     },
     "author": "",
     "license": "ISC"

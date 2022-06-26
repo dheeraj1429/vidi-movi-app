@@ -11,7 +11,7 @@ import { FcViewDetails } from "@react-icons/all-files/fc/FcViewDetails";
 import { FcSupport } from "@react-icons/all-files/fc/FcSupport";
 import { FcSms } from "@react-icons/all-files/fc/FcSms";
 import { useSelector, useDispatch } from "react-redux";
-import { showOptionPopup } from "../../Redux/Action/indexAction";
+import { showOptionPopup } from "../../Redux/Action/appAction";
 import UserProfileComponent from "../../Components/UserProfileComponent/UserProfileComponent";
 
 function DashboardNavbarComponent() {

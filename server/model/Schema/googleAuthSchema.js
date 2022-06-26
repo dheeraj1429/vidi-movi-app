@@ -17,7 +17,13 @@ const authUserSchema = new Schema({
     provider: { type: String },
     createdAt: { type: Date, default: Date.now },
     favoriteMovies: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie" }, likeTime: { type: Date, default: Date.now } }],
-    history: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie" }, watchTime: { type: Date, default: Date.now } }],
+    history: [
+        {
+            moviesId: { type: mongoose.Types.ObjectId, ref: "movie" },
+            watchTime: { type: Date, default: Date.now },
+            videoCurrentTime: { type: Number, default: 0 },
+        },
+    ],
     watchLater: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie" } }],
     moviesPlayList: [{ moviesId: { type: String, ref: "movie" }, storeDate: { type: Date, default: Date.now } }],
 });

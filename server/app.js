@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
@@ -10,24 +11,25 @@ const cart = require("./cart");
 const flash = require("connect-flash");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const cluster = require("node:cluster");
 const numCPUs = require("node:os").cpus().length;
 const process = require("node:process");
-const cluster = require("node:cluster");
 
 const app = express();
-const port = cart.PORT || 7000;
+const port = process.env.PORT || 9005;
 
 // routes files
 const adminRouter = require("./routes/adminRoute");
 const authRouter = require("./routes/authRoute");
 const indexRouter = require("./routes/indexRoute");
-const { cpus } = require("os");
 
 // middleware
 app.use(cors());
 app.use(flash());
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.use(
     bodyParser.json({
         limit: "50mb",
@@ -70,6 +72,8 @@ if (cluster.isPrimary) {
         console.log(`worker ${worker.process.pid} died`);
     });
 } else {
+    // Workers can share any TCP connection
+    // In this case it is an HTTP server
     dataBaseConnectionFuntion(() => {
         // server listening
         app.listen(port, () => {

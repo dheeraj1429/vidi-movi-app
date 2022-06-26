@@ -95,13 +95,14 @@ const updateUserProfile = async function (req, res, next) {
 
 const userDeleteFunction = async function (req, res, next, collection, id) {
     const deleteAccountRef = await collection.deleteOne({ _id: id });
-    if (deleteAccountRef.deletedCount === 1) {
+    if (deleteAccountRef.deletedCount) {
         getAllUser(req, res, next);
     }
 };
 
 const deleteAccount = async function (req, res, next) {
     try {
+        console.log("delete account");
         const { id, provider } = req.body;
         if (provider === "google") {
             userDeleteFunction(req, res, next, googleAuthUser, id);

@@ -7,7 +7,8 @@ import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import CustomButtonComponent from "../../Components/CustomButtonComponent/CustomButtonComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { userProfilePupup, updateUserProfile } from "../../Redux/Action/indexAction";
+import { userProfilePupup } from "../../Redux/Action/appAction";
+import { updateUserProfile } from "../../Redux/Action/adminAction";
 
 const adminOptions = [
     {

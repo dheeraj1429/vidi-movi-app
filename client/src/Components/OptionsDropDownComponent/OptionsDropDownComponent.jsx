@@ -9,7 +9,7 @@ import { AiOutlineAccountBook } from "@react-icons/all-files/ai/AiOutlineAccount
 import { BiMessageDots } from "@react-icons/all-files/bi/BiMessageDots";
 import { AiOutlineUsergroupAdd } from "@react-icons/all-files/ai/AiOutlineUsergroupAdd";
 import { BiMoon } from "@react-icons/all-files/bi/BiMoon";
-import { removeClientHistory, removerLikeVideoFromClient } from "../../Redux/Action/indexAction";
+import { removeClientHistory, removerLikeVideoFromClient } from "../../Redux/Action/appAction";
 
 function OptionsDropDownComponent({ isShow, imageUrl, name, email, optionsShows }) {
     const [cookies, setCookie, removeCookie] = useCookies(["user"]);

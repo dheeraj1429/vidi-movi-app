@@ -6,9 +6,62 @@ export const mainDiv = styled.div`
         align-items: center;
     }
 
+    &:hover .card_div_cl {
+        transform: scale(1.1);
+        z-index: 900;
+        position: relative;
+    }
+
     .flex_card_el {
         width: 500px;
         margin-right: 1rem;
+    }
+    .second_card_styled {
+        width: 280px;
+    }
+
+    .style_tow {
+        display: flex;
+        padding: 1rem 0;
+        width: 95%;
+        margin: auto;
+
+        .card_inner_div {
+            width: 30%;
+        }
+
+        .movie_show_card_div {
+            height: 180px;
+            cursor: pointer;
+        }
+
+        p {
+            color: var(--color-text-primary-offset);
+            margin-top: 0.8rem;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1200px) {
+            width: 100%;
+        }
+
+        @media (max-width: 1000px) {
+            p {
+                font-size: 12px;
+            }
+
+            .movie_show_card_div {
+                height: 150px;
+            }
+
+            .card_inner_div {
+                width: 50%;
+            }
+        }
+    }
+
+    &:hover .style_tow {
+        transform: scale(1);
     }
 `;
 
@@ -27,7 +80,7 @@ export const div = styled.div`
         transition: all 0.3s ease;
     }
     .Active-movie-card {
-        transform: scale(1.2) !important;
+        transform: scale(1.1) !important;
         z-index: 400;
     }
     video {
@@ -121,7 +174,7 @@ export const info = styled.div`
 
 export const moviDiv = styled.div`
     width: 100%;
-    height: 380px;
+    height: 280px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -131,6 +184,10 @@ export const moviDiv = styled.div`
     overflow: hidden;
     .movi-information-div {
         transition: all 0.3s ease;
+    }
+    &:hover .icons_holder {
+        visibility: visible;
+        opacity: 1;
     }
 
     &:hover .play-div {
@@ -186,5 +243,45 @@ export const styledSecond = styled.div`
         color: var(--main-cl);
         font-size: 22px;
         font-weight: 400;
+    }
+`;
+
+export const contentDiv = styled.div`
+    width: 100%;
+    padding: 1rem;
+    position: relative;
+
+    [type="button"]:not(:disabled),
+    [type="reset"]:not(:disabled),
+    [type="submit"]:not(:disabled),
+    button:not(:disabled) {
+        position: absolute;
+        right: 0;
+        top: 0;
+        cursor: pointer;
+    }
+
+    h5 {
+        color: var(--main-cl);
+        font-size: 19px;
+        margin-bottom: 0.8rem;
+    }
+
+    span {
+        color: var(--smooht-gray-spec-cl);
+    }
+
+    svg {
+        fill: var(--main-cl);
+    }
+
+    .Options_icon {
+        font-size: 15px;
+    }
+
+    @media (max-width: 1000px) {
+        h5 {
+            font-size: 15px;
+        }
     }
 `;

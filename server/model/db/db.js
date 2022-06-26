@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-const cart = require("../../cart");
 
 const dataBaseConnectionFuntion = function (callBack) {
     mongoose
-        .connect(cart.URL)
+        .connect(process.env.URL)
         .then((result) => {
             console.log("database connected");
             callBack();
