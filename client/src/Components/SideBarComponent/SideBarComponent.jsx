@@ -6,10 +6,10 @@ import { VscSync } from "@react-icons/all-files/vsc/VscSync";
 import SideBarOptionComponent from "../SideBarOptionComponent/SideBarOptionComponent";
 import useNav from "../../Hooks/useNav";
 import { useLocation } from "react-router";
-import { useCookies } from "react-cookie";
+// import { MdLibraryBooks } from "@react-icons/all-files/md/MdLibraryBooks";
+import { DiHackernews } from "@react-icons/all-files/di/DiHackernews";
 
 function SideBarComponent() {
-    const [cookies] = useCookies(["user"]);
     const [ActiveBar, setActiveBar] = useState("Home");
     const nav = useNav();
     const location = useLocation();
@@ -32,12 +32,10 @@ function SideBarComponent() {
         <sideBar.mainDiv>
             <sideBar.innerDiv>
                 <SideBarOptionComponent icon={<VscHome />} innerText={"Home"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                {cookies && cookies?.user ? (
-                    <>
-                        <SideBarOptionComponent icon={<VscHeart />} innerText={"Like"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                        <SideBarOptionComponent icon={<VscSync />} innerText={"History"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                    </>
-                ) : null}
+                <SideBarOptionComponent icon={<VscHeart />} innerText={"Like"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                <SideBarOptionComponent icon={<VscSync />} innerText={"History"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                <SideBarOptionComponent icon={<DiHackernews />} innerText={"Tranding"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                {/* <SideBarOptionComponent icon={<MdLibraryBooks />} innerText={"Library"} event={ActiveBarHandler} activeBar={ActiveBar} /> */}
             </sideBar.innerDiv>
         </sideBar.mainDiv>
     );

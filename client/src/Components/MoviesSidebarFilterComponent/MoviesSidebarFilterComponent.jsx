@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import * as movie from "./MoviesSidebarFilterComponent.style";
-import MoviesSearchBarFilterComponent from "../MoviesSearchBarFilterComponent/MoviesSearchBarFilterComponent";
+// import MoviesSearchBarFilterComponent from "../MoviesSearchBarFilterComponent/MoviesSearchBarFilterComponent";
 import MoviesFilterListComponent from "../MoviesFilterListComponent/MoviesFilterListComponent";
 import { AiOutlineDelete } from "@react-icons/all-files/ai/AiOutlineDelete";
 import { removeUserAllHistory, removeALlSelectedMovies } from "../../Redux/Action/indexAction";
@@ -38,7 +38,7 @@ function MoviesSidebarFilterComponent() {
 
     return (
         <movie.div>
-            <MoviesSearchBarFilterComponent />
+            {/* <MoviesSearchBarFilterComponent /> */}
             <MoviesFilterListComponent icon={<AiOutlineDelete />} innertext={"CLEAR ALL WATCH HISTORY"} onClick={DeleteHistoryHandler} />
             <MoviesFilterListComponent icon={<BiSelectMultiple />} innertext={"Delete Selected Movies"} onClick={DeleteSelectedHandler} />
             {!!storeSelectedMoviesId.length ? (

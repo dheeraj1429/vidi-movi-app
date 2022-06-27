@@ -584,6 +584,13 @@ const removeVideosFromHistory = async function (collection, data) {
     }
 };
 
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns finding the movie inside the user document and the remove the selected movie..
+ */
 const removeAllSelectedMovies = async function (req, res, next) {
     try {
         const { moviesId, token } = req.body;

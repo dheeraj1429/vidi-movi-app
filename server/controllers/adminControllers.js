@@ -1,6 +1,8 @@
 const movieModel = require("../model/Schema/MoviesSchema");
 const userModel = require("../model/Schema/userSchema");
 const googleAuthUser = require("../model/Schema/googleAuthSchema");
+const path = require("path");
+const sharp = require("sharp");
 
 const moviesUpload = async function (req, res, next) {
     try {
@@ -11,6 +13,11 @@ const moviesUpload = async function (req, res, next) {
         const videoPath = file[0].path;
         const thumbnailFileName = file[1].filename;
         const thumbnailpath = file[1].path;
+
+        await sharp(thumbnailpath)
+            .resize(200, 200)
+            .jpeg({ quality: 90 })
+            .toFile(path.join(__dirname, "..", "uploads", "compressImages", thumbnailFileName));
 
         const findMovieInDb = await movieModel.findOne({
             movieVideo: videoFileName,

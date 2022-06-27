@@ -309,7 +309,7 @@ function VideoComponent() {
                                                     <Slider
                                                         aria-label="Volume"
                                                         onChange={(e) => ChangeHandler(e)}
-                                                        defaultValue={30}
+                                                        defaultValue={100}
                                                         className="sound-controlle-div"
                                                     />
                                                 </Stack>

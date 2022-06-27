@@ -273,3 +273,14 @@ export const removeALlSelectedMovies = function (data) {
         }
     };
 };
+
+export const searchHistoryMovies = function (data) {
+    return async function (dispatch) {
+        try {
+            const searchHistory = await axios.get(`/index/search-history-movies/${data}`, headers);
+            console.log(searchHistory);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};

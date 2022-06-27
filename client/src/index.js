@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import "slick-carousel/slick/slick.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick-theme.css";
 import "antd/dist/antd.css";
 

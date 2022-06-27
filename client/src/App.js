@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Router } from "react-router";
 import { useCookies } from "react-cookie";
 import { setUserCookieData } from "./Redux/Action/authAction";
 import { useDispatch } from "react-redux";
@@ -20,6 +20,7 @@ import UserComponent from "./DashboardComponents/UserComponent/UserComponent";
 import DashboardLandingComponent from "./DashboardComponents/DashboardLandingComponent/DashboardLandingComponent";
 import MoviesPlayListComponent from "./Components/MoviesPlayListComponent/MoviesPlayListComponent";
 import SearchMoviesComponent from "./Components/SearchMoviesComponent/SearchMoviesComponent";
+import TrandingMoviesComponent from "./Components/TrandingMoviesComponent/TrandingMoviesComponent";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage";
@@ -50,6 +51,7 @@ function App() {
                     <Route path="/history" element={<HistoryPageComponent />} />
                     <Route path="/playlist" element={<MoviesPlayListComponent />} />
                     <Route path="/movies-search/:name" element={<SearchMoviesComponent />} />
+                    <Route path="/tranding" element={<TrandingMoviesComponent />} />
                 </Route>
                 <Route path="/auth" element={<SignInAndLogInPage />}>
                     <Route path="user-signIn" element={<SignInComponent />} />
