@@ -177,6 +177,11 @@ export const progressBar = styled.div`
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        height: 8px;
+    }
 `;
 
 export const progressEvetDiv = styled.div`

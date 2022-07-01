@@ -16,8 +16,8 @@ function UserProfileComponent({ optionsShows }) {
     };
 
     return (
-        <profile.div>
-            {user !== null && user !== undefined && Object.keys(user.data).length > 0 && user.data ? (
+        <>
+            {!!user && !!Object.keys(user.data).length && user.data ? (
                 <div className="user-login-div">
                     <div id="profile_div">
                         <profile.profileDiv
@@ -38,7 +38,7 @@ function UserProfileComponent({ optionsShows }) {
             ) : (
                 <CustomButtonComponent innteText={"Sign In"} pathUrl={"/auth/user-signIn"} />
             )}
-        </profile.div>
+        </>
     );
 }
 

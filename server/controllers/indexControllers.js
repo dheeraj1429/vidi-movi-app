@@ -85,8 +85,6 @@ const streamVideo = function (req, res, next) {
 const checkMovieIsLikedByUser = async function (collection, _id, param, findMoviInDb, res) {
     const findUserLikeVideo = await collection.findOne({ _id }, { favoriteMovies: { $elemMatch: { moviesId: param } } });
 
-    console.log("responsive send with user");
-
     if (!!findUserLikeVideo.favoriteMovies.length) {
         return res.status(200).json({
             success: true,

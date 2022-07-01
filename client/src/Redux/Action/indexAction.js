@@ -1,16 +1,16 @@
 import ACTION_TYPE from "../ActionType/ActionType";
 import axios from "axios";
 import { headers } from "./headers";
-// axios.defaults.timeout = 2000;
+axios.defaults.timeout = 2000;
 
 export const getAllMovies = function () {
     return async function (dispatch) {
         try {
-            const moviesRef = await axios.get("/index/get-all-movies", headers);
+            const getMovie = await axios.get("/index/get-all-movies", headers);
 
             dispatch({
                 type: ACTION_TYPE.GET_ALL_MOVIES,
-                payload: moviesRef && moviesRef.data,
+                payload: getMovie && getMovie.data,
             });
         } catch (err) {
             console.log(err);
@@ -222,17 +222,17 @@ export const getAllSearchMovies = function (data) {
 export const deleteLikeVideo = function (data) {
     return async function (dispatch) {
         try {
-            const likeVideoDeleteRef = await axios.patch("/index/delete-like-video", data, headers);
+            const userLiveVideoDelete = await axios.patch("/index/delete-like-video", data, headers);
 
-            if (likeVideoDeleteRef && likeVideoDeleteRef.data.moviesLikedObject) {
+            if (userLiveVideoDelete && userLiveVideoDelete.data.moviesLikedObject) {
                 dispatch({
                     type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
-                    payload: likeVideoDeleteRef.data.moviesLikedObject,
+                    payload: userLiveVideoDelete.data.moviesLikedObject,
                 });
             } else {
                 dispatch({
                     type: ACTION_TYPE.GET_ALL_LIKE_MOVIES,
-                    payload: likeVideoDeleteRef && likeVideoDeleteRef.data,
+                    payload: userLiveVideoDelete && userLiveVideoDelete.data,
                 });
             }
         } catch (err) {

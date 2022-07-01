@@ -1,39 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import * as chat from "./ChatBoxComponent.style";
 import { BsSearch } from "@react-icons/all-files/bs/BsSearch";
-import UserChatMessages from "../UserChatMessages/UserChatMessages";
 import ChatBoxControllesComponent from "../ChatBoxControllesComponent/ChatBoxControllesComponent";
-import { backendConfigData } from "../../Utils/backendData";
-import io from "socket.io-client";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { userComments } from "../../Redux/Action/indexAction";
+import socketIOClient from "socket.io-client";
+import { useParams } from "react-router";
+const ENDPOINT = `ws://localhost:9005`;
 
 function ChatBoxComponent() {
+    const socket = socketIOClient(ENDPOINT);
     const params = useParams().id;
-    const socket = io.connect(backendConfigData.socketIoUrl);
-    const dispatch = useDispatch();
-    const movieComments = useSelector((state) => state.index.movieComments);
 
-    const joinFuntion = async function () {
-        console.log(params);
-        await socket.emit("join_room", params);
-    };
+    useEffect(() => {}, [socket]);
 
     useEffect(() => {
-        dispatch(userComments(params));
-
-        joinFuntion();
-        socket.on("user_joined", (data) => {
-            console.log(data);
+        socket.emit("JOIN_ROOM", {
+            id: params,
         });
     }, []);
-
-    useEffect(() => {
-        socket.on("receive_message", (data) => {
-            console.log(data);
-        });
-    }, [socket]);
 
     return (
         <chat.div>

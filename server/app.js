@@ -1,29 +1,37 @@
 require("dotenv").config();
-const express = require("express");
-const morgan = require("morgan");
-const path = require("path");
-const cors = require("cors");
-const dataBaseConnectionFuntion = require("./model/db/db");
-const cookieSession = require("cookie-session");
-const helmet = require("helmet");
-const ejs = require("ejs");
-const cart = require("./cart");
-const flash = require("connect-flash");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const cluster = require("node:cluster");
-const numCPUs = require("node:os").cpus().length;
-const process = require("node:process");
+const express = require("express"),
+    morgan = require("morgan"),
+    path = require("path"),
+    cors = require("cors"),
+    dataBaseConnectionFuntion = require("./model/db/db"),
+    cookieSession = require("cookie-session"),
+    helmet = require("helmet"),
+    ejs = require("ejs"),
+    cart = require("./cart"),
+    flash = require("connect-flash"),
+    bodyParser = require("body-parser"),
+    cookieParser = require("cookie-parser"),
+    cluster = require("node:cluster"),
+    numCPUs = require("node:os").cpus().length,
+    process = require("node:process"),
+    app = express(),
+    port = process.env.PORT || 9005,
+    http = require("http").createServer(app),
+    io = require("socket.io")(http, {
+        cors: {
+            origin: "*",
+            methods: ["GET", "POST"],
+            allowedHeaders: ["my-custom-header"],
+            credentials: true,
+        },
+    });
 
-const app = express();
-const port = process.env.PORT || 9005;
+/* ---------------------------------------- route files----------------------------------------- */
+const adminRouter = require("./routes/adminRoute"),
+    authRouter = require("./routes/authRoute"),
+    indexRouter = require("./routes/indexRoute");
 
-// routes files
-const adminRouter = require("./routes/adminRoute");
-const authRouter = require("./routes/authRoute");
-const indexRouter = require("./routes/indexRoute");
-
-// middleware
+/* ---------------------------------------- middleware ----------------------------------------- */
 app.use(cors());
 app.use(flash());
 app.use(express.json());
@@ -60,6 +68,7 @@ app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
 app.use("/index", indexRouter);
 
+/* ------------------------------------- Cluster ---------------------------------- */
 if (cluster.isPrimary) {
     console.log(`Primary ${process.pid} is running`);
 
@@ -76,10 +85,31 @@ if (cluster.isPrimary) {
     // In this case it is an HTTP server
     dataBaseConnectionFuntion(() => {
         // server listening
-        app.listen(port, () => {
+        http.listen(port, () => {
             console.log(`server runing in port ${port}`);
         });
     });
 
     console.log(`Worker ${process.pid} started`);
 }
+
+/* ---------------------------------- socket io ------------------------------ */
+io.on("connection", (socket) => {
+    console.log("sokect user connected" + socket.id);
+
+    socket.on("connect_error", (err) => {
+        console.log(`connect_error due to ${err.message}`);
+    });
+
+    // socket.on("JOIN_ROOM", (data) => {
+    //     socket.join(data.id);
+    // });
+
+    socket.on("userComment", (data) => {
+        console.log(data);
+    });
+
+    socket.on("disconnect", () => {
+        console.log(`user ${socket.id} disconnected`); // undefined
+    });
+});

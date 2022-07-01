@@ -7,7 +7,6 @@ import { useCallback } from "react";
 
 function ChatBoxControllesComponent({ socket }) {
     const [Message, setMessage] = useState("");
-    const params = useParams().id;
     const [cookies] = useCookies(["user"]);
 
     const UserMessage = useCallback(
@@ -18,18 +17,11 @@ function ChatBoxControllesComponent({ socket }) {
         [Message]
     );
 
-    const SendMessageHandler = async function () {
-        const date = new Date();
-
-        if (cookies.user && !!Message && cookies.user.data) {
-            const sendData = {
-                token: cookies.user.data.token,
-                message: Message,
-                time: date.getFullYear() + ":" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
-                room: params,
-            };
-
-            await socket.emit("message", sendData);
+    const SendMessageHandler = function () {
+        if (!!Message.length) {
+            socket.emit("userComment", {
+                comment: Message,
+            });
         }
     };
 

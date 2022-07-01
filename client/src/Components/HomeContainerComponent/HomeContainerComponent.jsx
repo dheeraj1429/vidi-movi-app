@@ -15,24 +15,19 @@ function HomeContainerComponent() {
             <NavbarComponent />
             <BannerComponent
                 date={"2019"}
-                backgroundImage={"/images/3034049.jpg"}
+                backgroundImage={"/images/home-bg.jpg"}
                 heading={"GREEN BOOK"}
                 subHeading={"ADVENCE, FANTASY, MISTERY"}
                 textContent={` Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
                             dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it`}
             />
+
             {user ? (
                 <Home.spaceDiv>
                     <ContinueWatchingComponent />
                 </Home.spaceDiv>
             ) : null}
 
-            {/* <Home.spaceDiv>
-                <HeadingComponent heading={"News Popular"} />
-                <Home.moviesShowDiv>
-                    <MoviesSliderComponent filterByViews={true} />
-                </Home.moviesShowDiv>
-            </Home.spaceDiv> */}
             <Home.spaceDiv>
                 <HeadingComponent heading={"New"} />
                 <Home.moviesShowDiv>

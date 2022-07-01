@@ -28,6 +28,19 @@ export const div = styled.div`
         fill: var(--main-cl);
         margin-right: 0.5rem;
     }
+
+    @media (max-width: 1000px) {
+        h2 {
+            font-size: 22px;
+            font-weight: 400;
+        }
+    }
+
+    @media (max-width: 600px) {
+        h2 {
+            font-size: 17px;
+        }
+    }
 `;
 
 export const flexDiv = styled.div`
