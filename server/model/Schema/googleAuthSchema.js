@@ -30,9 +30,13 @@ const authUserSchema = new Schema({
 
 authUserSchema.methods.genrateUserToken = async function () {
     try {
-        const token = await jwt.sign({ _id: this._id.toString(), name: this.name, email: this.email, provider: this.provider }, JWT_TOKEN, {
-            expiresIn: "30d",
-        });
+        const token = await jwt.sign(
+            { _id: this._id.toString(), name: this.name, email: this.email, imageUrl: this.imageUrl, provider: this.provider },
+            JWT_TOKEN,
+            {
+                expiresIn: "30d",
+            }
+        );
         this.tokens = this.tokens.concat({ token });
         this.save();
         return token;

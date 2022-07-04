@@ -1,27 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as chat from "./ChatBoxControllesComponent.style";
 import { RiSendPlaneLine } from "@react-icons/all-files/ri/RiSendPlaneLine";
 import { useCookies } from "react-cookie";
-import { useParams } from "react-router-dom";
-import { useCallback } from "react";
 
-function ChatBoxControllesComponent({ socket }) {
+function ChatBoxControllesComponent({ socket, room }) {
     const [Message, setMessage] = useState("");
     const [cookies] = useCookies(["user"]);
 
-    const UserMessage = useCallback(
-        function (e) {
-            const value = e.target.value;
-            setMessage(value);
-        },
-        [Message]
-    );
+    const UserMessage = function (e) {
+        const value = e.target.value;
+        setMessage(value);
+    };
 
     const SendMessageHandler = function () {
-        if (!!Message.length) {
-            socket.emit("userComment", {
-                comment: Message,
-            });
+        if (!!Message.length && !!cookies.user) {
+            socket.emit("send_comment", { Message, user: cookies.user.data.token, room });
         }
     };
 

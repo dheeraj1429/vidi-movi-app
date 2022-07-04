@@ -32,7 +32,6 @@ export const fetchSelectedMovi = function (id) {
     return async function (dispatch) {
         try {
             const fetchMovieFromDb = await axios.get(`/index/get-one-movie/${id}`, headers);
-            console.log(fetchMovieFromDb);
 
             dispatch({
                 type: ACTION_TYPE.SELECTED_MOVIE,
@@ -279,6 +278,21 @@ export const searchHistoryMovies = function (data) {
         try {
             const searchHistory = await axios.get(`/index/search-history-movies/${data}`, headers);
             console.log(searchHistory);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const getMoviesComments = function (data) {
+    return async function (dispatch) {
+        try {
+            const comments = await axios.get(`/index/get-movies-comments/${data}`, headers);
+
+            dispatch({
+                type: ACTION_TYPE.GET_MOVIES_COMMENTS,
+                payload: comments && comments.data && comments.data.userComments && comments.data.userComments.comments,
+            });
         } catch (err) {
             console.log(err);
         }

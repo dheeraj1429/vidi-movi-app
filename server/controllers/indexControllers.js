@@ -620,6 +620,23 @@ const removeAllSelectedMovies = async function (req, res, next) {
     }
 };
 
+const getMoivesComments = async function (req, res, next) {
+    try {
+        const { id: movieId } = req.params;
+
+        const userComments = await movieModel
+            .findOne({ _id: movieId })
+            .populate("comments.googleUserId", { name: 1, email: 1, imageUrl: 1 })
+            .populate("comments.logInUserId", { name: 1, email: 1 });
+
+        res.status(200).json({
+            userComments,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMovies,
     streamVideo,
@@ -635,4 +652,5 @@ module.exports = {
     deleteLikeVideoFromDB,
     deleteUserAllHistory,
     removeAllSelectedMovies,
+    getMoivesComments,
 };

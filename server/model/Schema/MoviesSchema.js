@@ -15,11 +15,13 @@ const moviesSchema = new mongoose.Schema({
     activity: [{ like: { type: String }, dislike: { type: String } }],
     views: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },
-    rating: [
+    comments: [
         {
-            review: { type: String, default: 0 },
-            user: { type: mongoose.Types.ObjectId, required: [true, "user is required"] },
-            comment: { type: String },
+            googleUserId: { type: mongoose.Types.ObjectId, ref: "authUser" },
+            logInUserId: { type: mongoose.Types.ObjectId, ref: "user" },
+            comment: { type: String, required: [true, "user comment is required"] },
+            commentUId: { type: String, required: [true, "plase enter the uid"] },
+            commentTime: { type: String },
         },
     ],
 });

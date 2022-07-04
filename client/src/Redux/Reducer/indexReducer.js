@@ -24,6 +24,7 @@ const INITAL_STATE = {
     movieIsLiked: false,
     showSelectedOptions: false,
     storeSelectedMoviesId: [],
+    movieComments: null,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -185,6 +186,12 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 userHistory: state.userHistory.filter((el) => (el.moviesId._id = !set.has(el.moviesId._id))),
+            };
+
+        case ACTION_TYPE.GET_MOVIES_COMMENTS:
+            return {
+                ...state,
+                movieComments: action.payload,
             };
 
         default: {

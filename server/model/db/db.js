@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 
 const dataBaseConnectionFuntion = function (callBack) {
     mongoose
-        .connect(process.env.URL)
+        .connect(process.env.URL, {
+            useUnifiedTopology: true,
+        })
         .then((result) => {
             console.log("database connected");
             callBack();

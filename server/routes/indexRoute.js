@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const indexController = require("../controllers/indexControllers");
+const { route } = require("./adminRoute");
 
 router.get("/get-all-movies", indexController.getAllMovies);
 router.get("/stream-video/:name", indexController.streamVideo);
@@ -16,5 +17,6 @@ router.get("/get-all-search-movies/:searchQuery", indexController.getAllSearchMo
 router.patch("/delete-like-video", indexController.deleteLikeVideoFromDB);
 router.patch("/delete-user-all-history", indexController.deleteUserAllHistory);
 router.patch("/delete-all-selected-history", indexController.removeAllSelectedMovies);
+router.get("/get-movies-comments/:id", indexController.getMoivesComments);
 
 module.exports = router;

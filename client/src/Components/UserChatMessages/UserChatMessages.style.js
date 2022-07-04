@@ -14,6 +14,14 @@ export const userProfile = styled.div`
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+        margin: 0;
+        color: var(--main-cl);
+    }
 `;
 
 export const arrowDiv = styled.div`
@@ -39,6 +47,7 @@ export const userMessage = styled.div`
     p {
         font-size: 11px;
         width: 80%;
+        margin: 0;
     }
 
     span {
