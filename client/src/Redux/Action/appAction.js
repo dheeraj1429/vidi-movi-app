@@ -97,3 +97,10 @@ export const removeSelectedMoviesId = function (data) {
         payload: data,
     };
 };
+
+export const removeMoviesAllComments = function (data) {
+    return {
+        type: ACTION_TYPE.REMOVE_ALL_COMMENTS,
+        payload: data,
+    };
+};

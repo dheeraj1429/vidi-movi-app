@@ -12,10 +12,11 @@ export const div = styled.div`
     }
 
     p {
-        color: var(--spec-icon-inactive);
+        color: var(--smooht-gray-cl);
         font-size: 13px;
         margin-top: 1rem;
         margin-bottom: 0.5rem;
+        transition: all 0.2s ease;
     }
 
     span {
@@ -27,6 +28,11 @@ export const div = styled.div`
     svg {
         fill: var(--main-cl);
         margin-right: 0.5rem;
+    }
+
+    .ShowAndLessShow {
+        width: fit-content;
+        cursor: pointer;
     }
 
     @media (max-width: 1000px) {
@@ -41,6 +47,10 @@ export const div = styled.div`
             font-size: 17px;
         }
     }
+`;
+
+export const showLessDiv = styled.div`
+    width: 100%;
 `;
 
 export const flexDiv = styled.div`

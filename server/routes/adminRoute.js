@@ -9,6 +9,7 @@ const storage = multer.diskStorage({
             callback(null, "./uploads/thumbnail");
         } else if (
             file.mimetype === "video/mp4" ||
+            file.mimetype === "video/webm" ||
             file.mimetype === "video/3gpp" ||
             file.mimetype === "video/quicktime" ||
             file.mimetype === "video/x-msvideo" ||

@@ -7,8 +7,8 @@ export const div = styled.div`
 `;
 
 export const userProfile = styled.div`
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     margin-right: 0.5rem;
     background-position: center;
@@ -27,14 +27,14 @@ export const userProfile = styled.div`
 export const arrowDiv = styled.div`
     width: 0;
     height: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-
-    border-right: 5px solid var(--main-cl);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-right: 4px solid var(--main-cl);
 `;
 
 export const userMessage = styled.div`
-    width: calc(20% + 200px);
+    /* width: calc(20% + 200px); */
+    width: 90%;
     padding: 0.2rem 1.4rem;
     /* background-color: var(--main-cl); */
     border-bottom: 1px solid var(--spec-elevated-background);

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, Router } from "react-router";
+import { Routes, Route } from "react-router";
 import { useCookies } from "react-cookie";
 import { setUserCookieData } from "./Redux/Action/authAction";
 import { useDispatch } from "react-redux";

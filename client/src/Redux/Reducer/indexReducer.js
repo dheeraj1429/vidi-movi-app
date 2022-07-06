@@ -25,6 +25,7 @@ const INITAL_STATE = {
     showSelectedOptions: false,
     storeSelectedMoviesId: [],
     movieComments: null,
+    currentMovieComment: [],
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -192,6 +193,18 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 movieComments: action.payload,
+            };
+
+        case ACTION_TYPE.REMOVE_ALL_COMMENTS:
+            return {
+                ...state,
+                movieComments: action.payload,
+            };
+
+        case ACTION_TYPE.SEND_MOVIE_COMMENTS:
+            return {
+                ...state,
+                currentMovieComment: [action.payload, ...state.currentMovieComment],
             };
 
         default: {

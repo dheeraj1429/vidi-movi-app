@@ -1,11 +1,22 @@
 import React, { useState } from "react";
 import * as chat from "./ChatBoxControllesComponent.style";
 import { RiSendPlaneLine } from "@react-icons/all-files/ri/RiSendPlaneLine";
-import { useCookies } from "react-cookie";
+import Picker from "emoji-picker-react";
+import { HiOutlineEmojiHappy } from "@react-icons/all-files/hi/HiOutlineEmojiHappy";
+import { useDispatch } from "react-redux";
+import { sendMovieComment } from "../../Redux/Action/indexAction";
+import { useParams } from "react-router";
 
-function ChatBoxControllesComponent({ socket, room }) {
+function ChatBoxControllesComponent({ cookies }) {
     const [Message, setMessage] = useState("");
-    const [cookies] = useCookies(["user"]);
+    const [ShowPicker, setShowPicker] = useState(false);
+    const dispatch = useDispatch();
+    const params = useParams();
+    const { id, name } = params;
+
+    const onEmojiClick = (event, emojiObject) => {
+        setMessage((PrevState) => [...PrevState, emojiObject.emoji].join(""));
+    };
 
     const UserMessage = function (e) {
         const value = e.target.value;
@@ -14,13 +25,29 @@ function ChatBoxControllesComponent({ socket, room }) {
 
     const SendMessageHandler = function () {
         if (!!Message.length && !!cookies.user) {
-            socket.emit("send_comment", { Message, user: cookies.user.data.token, room });
+            dispatch(sendMovieComment({ id, name, user: cookies.user, comment: Message }));
+            // socket.emit("send_comment", { Message, user: cookies.user.data.token, room });
+            setMessage("");
+            setShowPicker(false);
         }
     };
 
     return (
         <chat.chatBottomConterollDiv>
+            <Picker
+                onEmojiClick={onEmojiClick}
+                pickerStyle={{
+                    width: "300px",
+                    position: "absolute",
+                    top: "85px",
+                    left: "0px",
+                    visibility: `${ShowPicker ? "visible" : "hidden"}`,
+                    opacity: `${ShowPicker ? "1" : 0}`,
+                    transition: "all .2s ease",
+                }}
+            />
             <chat.chatInputBox>
+                <HiOutlineEmojiHappy onClick={() => setShowPicker(!ShowPicker)} />
                 <input type="text" placeholder="Aa" onChange={UserMessage} value={Message} />
                 <RiSendPlaneLine onClick={SendMessageHandler} />
             </chat.chatInputBox>

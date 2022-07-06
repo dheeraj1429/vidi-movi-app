@@ -15,7 +15,7 @@ function HomeContainerComponent() {
             <NavbarComponent />
             <BannerComponent
                 date={"2019"}
-                backgroundImage={"/images/home-bg.jpg"}
+                backgroundImage={"/images/popular.jpg"}
                 heading={"GREEN BOOK"}
                 subHeading={"ADVENCE, FANTASY, MISTERY"}
                 textContent={` Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard

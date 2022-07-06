@@ -620,10 +620,48 @@ const removeAllSelectedMovies = async function (req, res, next) {
     }
 };
 
+const inertNewMovieComment = async function (req, res, next) {
+    try {
+        const { id, name, user, comment } = req.body;
+
+        const varifyUser = await jwt.verify(user, JWT_TOKEN);
+        const { _id, provider } = varifyUser;
+
+        const uId =
+            new Date().getTime().toString() +
+            new Date().getYear().toString() +
+            new Date().getSeconds().toString() +
+            Math.random().toString(32).slice(2);
+
+        const commentTime = new Date().toLocaleString();
+
+        const movieCommentInsert = await movieModel.updateOne(
+            { _id: id, name },
+            {
+                $push: {
+                    comments: { [`${provider === "google" ? "googleUserId" : "logInUserId"}`]: _id, comment: comment, commentUId: uId, commentTime },
+                },
+            }
+        );
+
+        if (!!movieCommentInsert.modifiedCount) {
+            return res.status(200).json({
+                success: true,
+            });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 const getMoivesComments = async function (req, res, next) {
     try {
         const { id: movieId } = req.params;
 
+        /**
+         * @userComments first find the movie from the database and the get all the comments.
+         * @return { Object } comments object
+         */
         const userComments = await movieModel
             .findOne({ _id: movieId })
             .populate("comments.googleUserId", { name: 1, email: 1, imageUrl: 1 })
@@ -652,5 +690,6 @@ module.exports = {
     deleteLikeVideoFromDB,
     deleteUserAllHistory,
     removeAllSelectedMovies,
+    inertNewMovieComment,
     getMoivesComments,
 };

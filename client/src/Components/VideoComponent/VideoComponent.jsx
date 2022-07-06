@@ -179,9 +179,9 @@ function VideoComponent() {
     };
 
     useEffect(() => {
-        // if (VideoRef) {
-        //     playMovieHandler();
-        // }
+        if (VideoRef) {
+            playMovieHandler();
+        }
 
         return () => {
             if (VideoRef) {

@@ -298,3 +298,33 @@ export const getMoviesComments = function (data) {
         }
     };
 };
+
+export const sendMovieComment = function (data) {
+    const obj = {
+        comment: data.comment,
+        id: data.id,
+        name: data.name,
+        user: data.user.data.token,
+    };
+
+    return async function (dispatch) {
+        try {
+            const snedUserComment = await axios.post("/index/insert-new-movie-comment", obj, headers);
+
+            if (!!snedUserComment.data.success) {
+                dispatch({
+                    type: ACTION_TYPE.SEND_MOVIE_COMMENTS,
+                    payload: {
+                        comment: data.comment,
+                        id: data.id,
+                        name: data.name,
+                        user: data.user.data,
+                        commentTime: new Date().toLocaleString(),
+                    },
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};

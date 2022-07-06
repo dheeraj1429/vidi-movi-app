@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as chat from "./ChatBoxComponent.style";
 import { BsSearch } from "@react-icons/all-files/bs/BsSearch";
 import ChatBoxControllesComponent from "../ChatBoxControllesComponent/ChatBoxControllesComponent";
 import socketIOClient from "socket.io-client";
 import { useParams } from "react-router";
 import { getMoviesComments } from "../../Redux/Action/indexAction";
+import { removeMoviesAllComments } from "../../Redux/Action/appAction";
 import { useSelector, useDispatch } from "react-redux";
 import UserChatMessages from "../UserChatMessages/UserChatMessages";
+import { useCookies } from "react-cookie";
 const ENDPOINT = `ws://localhost:9005`;
 
 function ChatBoxComponent() {
@@ -15,6 +17,8 @@ function ChatBoxComponent() {
     const [UserComments, setUserComments] = useState([]);
     const dispatch = useDispatch();
     const movieComments = useSelector((state) => state.index.movieComments);
+    const ChatScreeen = useRef(null);
+    const [cookies] = useCookies(["user"]);
 
     useEffect(() => {
         socket.emit("JOIN_ROOM", { roomId: params });
@@ -27,6 +31,7 @@ function ChatBoxComponent() {
 
         return () => {
             socket.emit("forceDisconnect");
+            dispatch(removeMoviesAllComments(null));
         };
     }, []);
 
@@ -36,12 +41,9 @@ function ChatBoxComponent() {
         });
 
         socket.on("receve_comment", (receve) => {
-            console.log(receve);
             setUserComments((PrevState) => [...PrevState, receve]);
         });
     }, [socket]);
-
-    console.log(UserComments);
 
     return (
         <chat.div>
@@ -49,20 +51,20 @@ function ChatBoxComponent() {
                 <chat.chatHeading>
                     <chat.flexDiv>
                         <div>
-                            <h1>Comments</h1>
+                            <h1>Live Comments</h1>
                         </div>
                         <div>
                             <BsSearch />
                         </div>
                     </chat.flexDiv>
                 </chat.chatHeading>
-                <chat.chatScreen>
+                <chat.chatScreen ref={(el) => (ChatScreeen.current = el)}>
                     {movieComments && !!movieComments.length
                         ? movieComments.map((el) => <UserChatMessages key={el._id} data={el} fetch_comments={true} />)
                         : null}
                     {UserComments && !!UserComments.length ? UserComments.map((el) => <UserChatMessages key={el.uId} data={el} />) : null}
                 </chat.chatScreen>
-                <ChatBoxControllesComponent socket={socket} room={params} />
+                {!!cookies.user ? <ChatBoxControllesComponent socket={socket} room={params} cookies={cookies} /> : null}
             </chat.innerDiv>
         </chat.div>
     );

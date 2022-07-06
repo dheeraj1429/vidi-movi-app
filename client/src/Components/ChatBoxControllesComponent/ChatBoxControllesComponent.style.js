@@ -3,7 +3,13 @@ import styled from "styled-components";
 export const chatBottomConterollDiv = styled.div`
     width: 100%;
     border-top: 1px solid var(--spec-elevated-background);
-    padding: 1rem 2rem;
+    padding: 1rem 0;
+    position: relative;
+
+    svg {
+        fill: var(--main-cl);
+        cursor: pointer;
+    }
 `;
 
 export const chatInputBox = styled.div`

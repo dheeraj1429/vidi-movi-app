@@ -17,6 +17,7 @@ router.get("/get-all-search-movies/:searchQuery", indexController.getAllSearchMo
 router.patch("/delete-like-video", indexController.deleteLikeVideoFromDB);
 router.patch("/delete-user-all-history", indexController.deleteUserAllHistory);
 router.patch("/delete-all-selected-history", indexController.removeAllSelectedMovies);
+router.post("/insert-new-movie-comment", indexController.inertNewMovieComment);
 router.get("/get-movies-comments/:id", indexController.getMoivesComments);
 
 module.exports = router;

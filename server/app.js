@@ -70,54 +70,54 @@ app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
 app.use("/index", indexRouter);
 
-io.on("connection", (socket) => {
-    console.log(`socket user ${socket.id} is connected`);
+// io.on("connection", (socket) => {
+//     console.log(`socket user ${socket.id} is connected`);
 
-    socket.on("JOIN_ROOM", (data) => {
-        socket.join(data.roomId);
-        socket.emit("user_join", {
-            userJoin: `user is join in ${data.roomId}`,
-        });
-    });
+//     socket.on("JOIN_ROOM", (data) => {
+//         socket.join(data.roomId);
+//         socket.emit("user_join", {
+//             userJoin: `user is join in ${data.roomId}`,
+//         });
+//     });
 
-    socket.on("send_comment", async (data) => {
-        const { user, Message, room } = data;
-        const varifyUser = await jwt.verify(user, JWT_TOKEN);
-        const { _id, name, provider } = varifyUser;
+//     socket.on("send_comment", async (data) => {
+//         const { user, Message, room } = data;
+//         const varifyUser = await jwt.verify(user, JWT_TOKEN);
+//         const { _id, name, provider } = varifyUser;
 
-        const uId =
-            new Date().getTime().toString() +
-            new Date().getYear().toString() +
-            new Date().getSeconds().toString() +
-            Math.random().toString(32).slice(2);
+//         const uId =
+//             new Date().getTime().toString() +
+//             new Date().getYear().toString() +
+//             new Date().getSeconds().toString() +
+//             Math.random().toString(32).slice(2);
 
-        const commentTime = new Date().toLocaleString();
+//         const commentTime = new Date().toLocaleString();
 
-        const movieCommentInsert = await movieModel.updateOne(
-            { _id: room },
-            {
-                $push: {
-                    comments: { [`${provider === "google" ? "googleUserId" : "logInUserId"}`]: _id, comment: Message, commentUId: uId, commentTime },
-                },
-            }
-        );
+//         const movieCommentInsert = await movieModel.updateOne(
+//             { _id: room },
+//             {
+//                 $push: {
+//                     comments: { [`${provider === "google" ? "googleUserId" : "logInUserId"}`]: _id, comment: Message, commentUId: uId, commentTime },
+//                 },
+//             }
+//         );
 
-        if (!!movieCommentInsert.modifiedCount) {
-            socket.broadcast.to(data.room).emit("receve_comment", {
-                name,
-                comment: Message,
-                imageUrl: varifyUser.imageUrl ? varifyUser.imageUrl : null,
-                commentUId: uId,
-                commentTime: commentTime,
-            });
-        }
-    });
+//         if (!!movieCommentInsert.modifiedCount) {
+//             socket.broadcast.to(data.room).emit("receve_comment", {
+//                 name,
+//                 comment: Message,
+//                 imageUrl: varifyUser.imageUrl ? varifyUser.imageUrl : null,
+//                 commentUId: uId,
+//                 commentTime: commentTime,
+//             });
+//         }
+//     });
 
-    socket.on("forceDisconnect", function () {
-        socket.disconnect();
-        console.log(`socket user ${socket.id} is disconnected`);
-    });
-});
+//     socket.on("forceDisconnect", function () {
+//         socket.disconnect();
+//         console.log(`socket user ${socket.id} is disconnected`);
+//     });
+// });
 
 // server
 if (cluster.isPrimary) {

@@ -17,7 +17,7 @@ function WatchingCardComponent({ data }) {
                 <watching.movieContentDiv>
                     <h5>{data.moviesId.name.slice(0, 20)}..</h5>
                     <p>{data.moviesId.genra}</p>
-                    <span>{data.moviesId.description.slice(0, 70)}...</span>
+                    <span>{data.moviesId.description.slice(0, 30)}...</span>
                 </watching.movieContentDiv>
                 <watching.watchTimeLineDiv>
                     <watching.watchTimer
