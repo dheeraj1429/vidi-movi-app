@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { RiSearchLine } from "@react-icons/all-files/ri/RiSearchLine";
 import * as search from "./SearchBarComponent.style";
 import SearchInnerComponent from "../SearchInnerComponent/SearchInnerComponent";
@@ -13,6 +13,7 @@ function SearchBarComponent() {
     const [Search, setSearch] = useState("");
     const [dbValue, saveToDb] = useState("");
     const [ShowSearchList, setShowSearchList] = useState(false);
+    const input = useRef(null);
 
     let searchData = useSelector((state) => state.index.searchData);
     const dispatch = useDispatch();
@@ -75,7 +76,15 @@ function SearchBarComponent() {
                     <RiSearchLine onClick={SearchHandler} />
                 </Link>
                 <search.searchBarDiv className={ShowSearchList ? "active_search_bar" : null}>
-                    <input type="text" name="search" value={Search} onChange={handleChange} placeholder="Search.." autoComplete="off" />
+                    <input
+                        type="text"
+                        name="search"
+                        value={Search}
+                        onChange={handleChange}
+                        placeholder="Search.."
+                        autoComplete="off"
+                        ref={(el) => (input.current = el)}
+                    />
                     <search.searchCard>
                         {searchData && !!searchData.findMoviesData.length
                             ? searchData.findMoviesData.map((el) => <SearchInnerComponent innerText={el.name} key={el._id} id={el._id} />)

@@ -21,8 +21,6 @@ function UserCommentsComponent() {
         };
     }, []);
 
-    console.log(currentMovieComment);
-
     return (
         <comment.div>
             <comment.commentScreen>

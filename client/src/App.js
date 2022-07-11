@@ -5,6 +5,7 @@ import { setUserCookieData } from "./Redux/Action/authAction";
 import { useDispatch } from "react-redux";
 import useLoad from "./Hooks/useLoad";
 import { getAllMovies } from "./Redux/Action/indexAction";
+import { useNavigate } from "react-router";
 
 // components
 import SignInComponent from "./Components/SignInComponent/SignInComponent";
@@ -32,12 +33,21 @@ function App() {
     const [cookies] = useCookies(["user"]);
     const dispatch = useDispatch();
     const loadFunction = useLoad();
+    const navigation = useNavigate();
 
     useEffect(() => {
+        dispatch(getAllMovies());
+
         if (Object.keys(cookies).length) {
             dispatch(setUserCookieData(cookies.user));
         }
-        dispatch(getAllMovies());
+
+        if (!!cookies.user && !!cookies.user.data) {
+            return;
+        } else {
+            navigation("/auth/user-signIn");
+        }
+
         loadFunction("client:auth2");
     }, []);
 

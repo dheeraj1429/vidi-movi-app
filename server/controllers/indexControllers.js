@@ -418,7 +418,6 @@ const getAllLikeMovies = async function (req, res, next) {
 const videoViewsFunction = async function (req, res, next) {
     try {
         const { id, name } = req.body;
-        console.log(id, name);
 
         /**
          * @result increse the video views
@@ -624,6 +623,12 @@ const inertNewMovieComment = async function (req, res, next) {
     try {
         const { id, name, user, comment } = req.body;
 
+        /**
+         * @varifyUser varify the user is login or not
+         * @uid genrate the id for the current insented comment
+         * @movieCommentInsert insert the data into the datbase
+         * @return if the data is insterted then return back the succes message
+         */
         const varifyUser = await jwt.verify(user, JWT_TOKEN);
         const { _id, provider } = varifyUser;
 

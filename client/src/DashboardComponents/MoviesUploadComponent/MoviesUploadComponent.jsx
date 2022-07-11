@@ -7,6 +7,7 @@ import FileUploadComponent from "../FileUploadComponent/FileUploadComponent";
 import { useSelector, useDispatch } from "react-redux";
 import { movieUpload, loadingAction } from "../../Redux/Action/adminAction";
 import CustomButtonComponent from "../../Components/CustomButtonComponent/CustomButtonComponent";
+import MovieUploadProgressComponent from "../MovieUploadProgressComponent/MovieUploadProgressComponent";
 
 const genresData = [
     { value: "Action", label: "Action" },
@@ -165,6 +166,7 @@ function MoviesUploadComponent() {
                         spnnerImage={"/images/spnner-black.svg"}
                     />
                 </Movies.endDiv>
+                <MovieUploadProgressComponent />
             </Movies.formGroup>
         </Movies.div>
     );

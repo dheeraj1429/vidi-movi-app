@@ -10,14 +10,18 @@ import { removeUserOneMovieHistory, userHistory } from "../../Redux/Action/index
 import NavbarComponent from "../NavbarComponent/NavbarComponent";
 import HeadingComponent from "../HeadingComponent/HeadingComponent";
 import MoviesSidebarFilterComponent from "../MoviesSidebarFilterComponent/MoviesSidebarFilterComponent";
+import { useCookies } from "react-cookie";
 
 function HistoryPageComponent() {
     const dispatch = useDispatch();
     const userHistoryObject = useSelector((state) => state.index.userHistory);
     const loadingHistory = useSelector((state) => state.index.loadingHistory);
+    const [cookies] = useCookies(["user"]);
 
     useEffect(() => {
-        dispatch(userHistory());
+        if (cookies.user) {
+            dispatch(userHistory());
+        }
     }, []);
 
     return (

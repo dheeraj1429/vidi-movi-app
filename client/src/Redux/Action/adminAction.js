@@ -5,7 +5,17 @@ import { headers } from "./headers";
 export const movieUpload = function (data) {
     return async function (dispatch) {
         try {
-            const movieRef = await axios.post("/admin/movie-upload", data, headers);
+            const config = {
+                onUploadProgress: function (progressEvent) {
+                    const percentCompleted = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                    dispatch({
+                        type: ACTION_TYPE.UPLOAD_PROGRESSS,
+                        payload: percentCompleted,
+                    });
+                },
+            };
+
+            const movieRef = await axios.post("/admin/movie-upload", data, config, headers);
 
             dispatch({
                 type: ACTION_TYPE.MOVIE_UPLOAD,

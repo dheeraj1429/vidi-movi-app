@@ -53,7 +53,7 @@ app.use(
         crossOriginResourcePolicy: false,
     })
 );
-app.use(express.static(path.join(path.resolve(__dirname), "public")));
+// app.use(express.static(path.join(path.resolve(__dirname), "public")));
 app.use(express.static(path.join(path.resolve(__dirname), "build")));
 app.use(express.static(path.join(path.resolve(__dirname), "uploads")));
 app.use(express.urlencoded({ extended: false }));
@@ -69,6 +69,9 @@ app.use(
 app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
 app.use("/index", indexRouter);
+app.get("*", (req, res) => {
+    res.sendFile(path.join(path.resolve(__dirname), "build", "index.html"));
+});
 
 // io.on("connection", (socket) => {
 //     console.log(`socket user ${socket.id} is connected`);

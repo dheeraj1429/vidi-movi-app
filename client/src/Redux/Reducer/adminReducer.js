@@ -3,6 +3,7 @@ import ACTION_TYPE from "../ActionType/ActionType";
 const INITAL_STATE = {
     movie_status: null,
     loading: false,
+    movieUploadProgress: 0,
 };
 
 const movieReducer = function (state = INITAL_STATE, action) {
@@ -18,6 +19,12 @@ const movieReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 loading: action.payload,
+            };
+
+        case ACTION_TYPE.UPLOAD_PROGRESSS:
+            return {
+                ...state,
+                movieUploadProgress: action.payload,
             };
 
         default:

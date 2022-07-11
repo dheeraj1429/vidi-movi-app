@@ -15,12 +15,12 @@ function MoviePlaySinglePage() {
             <single.flexDiv>
                 <single.moviDiv>
                     <VideoComponent />
-                    <UserCommentsComponent />
-                </single.moviDiv>
-                <single.contentDiv>
                     <SingelVideoContentComponent />
                     {/* <ChatBoxComponent /> */}
                     {!!cookies.user ? <ChatBoxControllesComponent cookies={cookies} /> : null}
+                </single.moviDiv>
+                <single.contentDiv>
+                    <UserCommentsComponent />
                 </single.contentDiv>
             </single.flexDiv>
         </single.div>

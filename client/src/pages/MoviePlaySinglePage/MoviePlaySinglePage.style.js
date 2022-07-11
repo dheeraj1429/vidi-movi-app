@@ -8,29 +8,29 @@ export const div = styled.div`
 export const flexDiv = styled.div`
     display: flex;
 
-    @media (max-width: 1600px) {
+    @media (max-width: 1200px) {
         display: block;
     }
 `;
 
 export const moviDiv = styled.div`
-    width: 59%;
+    width: 70%;
     height: 530px;
 
     @media (max-width: 1700px) {
         height: auto;
     }
 
-    @media (max-width: 1660px) {
+    @media (max-width: 1200px) {
         width: 100%;
     }
 `;
 
 export const contentDiv = styled.div`
-    width: 40%;
+    width: 30%;
     padding: 1rem;
 
-    @media (max-width: 1600px) {
+    @media (max-width: 1200px) {
         width: 100%;
     }
 `;

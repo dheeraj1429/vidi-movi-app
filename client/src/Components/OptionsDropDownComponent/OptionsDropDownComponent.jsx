@@ -10,17 +10,20 @@ import { BiMessageDots } from "@react-icons/all-files/bi/BiMessageDots";
 import { AiOutlineUsergroupAdd } from "@react-icons/all-files/ai/AiOutlineUsergroupAdd";
 import { BiMoon } from "@react-icons/all-files/bi/BiMoon";
 import { removeClientHistory, removerLikeVideoFromClient } from "../../Redux/Action/appAction";
+import { useNavigate } from "react-router";
 
 function OptionsDropDownComponent({ isShow, imageUrl, name, email, optionsShows }) {
     const [cookies, setCookie, removeCookie] = useCookies(["user"]);
     const dispatch = useDispatch();
     const themeSelector = useSelector((state) => state.index.changeTheme);
+    const navigation = useNavigate();
 
     const removeUser = function () {
         dispatch(setUserCookieData(null));
         removeCookie("user");
         dispatch(removeClientHistory(null));
         dispatch(removerLikeVideoFromClient(null));
+        navigation("/auth/user-signIn");
     };
 
     useEffect(() => {

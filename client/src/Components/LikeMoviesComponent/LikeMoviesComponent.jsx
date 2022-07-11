@@ -7,14 +7,18 @@ import { useSelector, useDispatch } from "react-redux";
 import MoviesCardsComponent from "../MoviesCardsComponent/MoviesCardsComponent";
 import SpnnerComponent from "../SpnnerComponent/SpnnerComponent";
 import { getAllLikeMovies } from "../../Redux/Action/indexAction";
+import { useCookies } from "react-cookie";
 
 function LikeMoviesComponent() {
     const userLikedVideos = useSelector((state) => state.index.userLikedVideos);
     const loadingHistory = useSelector((state) => state.index.loadingHistory);
     const dispatch = useDispatch();
+    const [cookies] = useCookies(["user"]);
 
     useEffect(() => {
-        dispatch(getAllLikeMovies());
+        if (cookies.user) {
+            dispatch(getAllLikeMovies());
+        }
     }, []);
 
     return (

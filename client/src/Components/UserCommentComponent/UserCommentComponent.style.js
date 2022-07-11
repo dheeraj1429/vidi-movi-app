@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const div = styled.div`
     width: 100%;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
 
     svg {
         fill: var(--main-cl);
@@ -25,8 +25,8 @@ export const widthDiv = styled.div`
 `;
 
 export const userImage = styled.div`
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-position: center;
     background-size: cover;
@@ -46,7 +46,7 @@ export const commentDiv = styled.div`
 
     h5 {
         font-size: 13px;
-        margin-bottom: 0.4rem;
+        margin-bottom: 0;
         color: var(--main-cl);
     }
 
