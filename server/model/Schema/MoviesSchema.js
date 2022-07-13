@@ -22,6 +22,10 @@ const moviesSchema = new mongoose.Schema({
             comment: { type: String, required: [true, "user comment is required"] },
             commentUId: { type: String, required: [true, "plase enter the uid"] },
             commentTime: { type: String },
+            likeCount: { type: Number, default: 0 },
+            likedUsers: [
+                { googleUserId: { type: mongoose.Types.ObjectId, ref: "authUser" }, logInUserId: { type: mongoose.Types.ObjectId, ref: "user" } },
+            ],
         },
     ],
 });

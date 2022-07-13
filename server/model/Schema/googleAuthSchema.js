@@ -26,6 +26,14 @@ const authUserSchema = new Schema({
     ],
     watchLater: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie" } }],
     moviesPlayList: [{ moviesId: { type: String, ref: "movie" }, storeDate: { type: Date, default: Date.now } }],
+    likeComments: [
+        {
+            movie: { type: mongoose.Types.ObjectId, ref: "movie" },
+            googleUserCommnetId: { type: mongoose.Types.ObjectId, ref: "authUser" },
+            loginUserCommnetId: { type: mongoose.Types.ObjectId, ref: "user" },
+            likeTime: { type: Date, default: Date.now },
+        },
+    ],
 });
 
 authUserSchema.methods.genrateUserToken = async function () {

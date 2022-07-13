@@ -72,8 +72,6 @@ const logInUser = async function (req, res, next) {
 
         const varifyUser = await bcryptjs.compare(password, findDbUser.password);
 
-        console.log(findDbUser);
-
         // Genrate the user token
         const token = await findDbUser.genrateUserToken();
 
@@ -210,6 +208,7 @@ const googleLogin = async function (req, res, next) {
             const findUserToken = await findUserInDb.genrateUserToken();
 
             const userConfig = {
+                _id: findUserInDb._id,
                 googleId: findUserInDb.googleId,
                 imageUrl: findUserInDb.imageUrl,
                 email: findUserInDb.email,
@@ -243,6 +242,7 @@ const googleLogin = async function (req, res, next) {
 
             if (googleUserRef) {
                 const userConfig = {
+                    _id: googleUserRef._id,
                     googleId: googleUserRef.googleId,
                     imageUrl: googleUserRef.imageUrl,
                     email: googleUserRef.email,

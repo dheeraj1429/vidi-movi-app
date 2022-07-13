@@ -680,6 +680,91 @@ const getMoivesComments = async function (req, res, next) {
     }
 };
 
+/**
+ *
+ * @param { googleAuthUser, userModel } collection
+ * @param { Object } res
+ * @param { Object } data
+ * when the user clike one the like button we want to get the all information about user like user token user id, we also want current movie id and the comment id to find which comment we are liked. and which comment like button we are click. once we get the all data. we want to check if user already liked the comment. if user already like the comment then decress the like count -1 if not +1. we also check the comment is exist in the user collection ( googleLoginUser document collection , loginUser document collection ), if the comment if aready exist into the user document collection then we want to remove the document from the user likedComment collection. 1 - wen the user click the like button store the data information into the movie comment document, in future we want to check which user is liked the comment, and find the user from database. also we want to store the user comment data into the user document ( login document ) for checking which comment user is liked. 2 - if the comment is exist and user click on the like button again then remove the comment from the user document,  alos we want to decress the comment count - 1 and remove the user from the movie comment document.....
+ * @returns { Object } include message 'remove / added'
+ */
+
+const updateMovieCollectionComment = async function (data, event) {
+    await movieModel.updateOne(
+        { _id: data.movieId, "comments._id": data.commentId },
+        { [`$${event}`]: { "comments.$.likedUsers": { [data.userIdentity === "google" ? "googleUserId" : "logInUserId"]: data._id } } }
+    );
+};
+
+const updateUserCollectionCommnet = async function (data, collection, event) {
+    await collection.updateOne(
+        { _id: data._id },
+        {
+            [`$${event}`]: {
+                likeComments: {
+                    [data.userIdentity === "google" ? "googleUserCommnetId" : "loginUserCommnetId"]: data.commentId,
+                },
+            },
+        }
+    );
+};
+
+const likeAndUnlikeUserCommnets = async function (collection, res, data) {
+    try {
+        /**
+         * @insertCommentIntoTheUserCollection check the comment is exist in user collection liked comment document or not
+         * @updateUserCollectionCommnet inser and remove selected comment from the user collection.
+         * @updateMovieCollectionComment insert and remove selected comment from the movie colelctions.
+         */
+        const insertCommentIntoTheUserCollection = await collection.findOne(
+            { _id: data._id },
+            { likeComments: { $elemMatch: { [data.userIdentity === "google" ? "googleUserCommnetId" : "loginUserCommnetId"]: data.commentId } } }
+        );
+
+        if (!!insertCommentIntoTheUserCollection.likeComments.length) {
+            updateUserCollectionCommnet(data, collection, "pull");
+            updateMovieCollectionComment(data, "pull");
+
+            return res.status(200).json({
+                message: "remove",
+            });
+        } else {
+            updateUserCollectionCommnet(data, collection, "push");
+            updateMovieCollectionComment(data, "push");
+
+            return res.status(200).json({
+                message: "added",
+            });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const userLikeMovieComments = async function (req, res, next) {
+    try {
+        const { userToken, movieId, commentId, userIdentity } = req.body;
+
+        const varifyUser = await jwt.verify(userToken, JWT_TOKEN);
+        const { _id, provider } = varifyUser;
+
+        data = {
+            movieId,
+            commentId,
+            userIdentity,
+            _id,
+        };
+
+        if (provider === "google") {
+            await likeAndUnlikeUserCommnets(googleAuthUser, res, data);
+        } else {
+            await likeAndUnlikeUserCommnets(userModel, res, data);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 module.exports = {
     getAllMovies,
     streamVideo,
@@ -697,4 +782,5 @@ module.exports = {
     removeAllSelectedMovies,
     inertNewMovieComment,
     getMoivesComments,
+    userLikeMovieComments,
 };

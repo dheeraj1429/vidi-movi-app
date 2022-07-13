@@ -6,9 +6,13 @@ export const div = styled.div`
 
     svg {
         fill: var(--main-cl);
-        margin-right: 1.5rem;
+        /* margin-right: 1.5rem; */
         cursor: pointer;
         font-size: 18px;
+    }
+
+    .active_button {
+        fill: var(--button-cl);
     }
 `;
 

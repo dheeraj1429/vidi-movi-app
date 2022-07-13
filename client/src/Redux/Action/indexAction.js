@@ -328,3 +328,13 @@ export const sendMovieComment = function (data) {
         }
     };
 };
+
+export const userLikeCurrentMovieCommnets = function (data) {
+    return async function (dispatch) {
+        try {
+            await axios.post("/index/user-like-movies-comments", data, headers);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
