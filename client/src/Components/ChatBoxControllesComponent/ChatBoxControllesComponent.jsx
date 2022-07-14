@@ -3,13 +3,16 @@ import * as chat from "./ChatBoxControllesComponent.style";
 import { RiSendPlaneLine } from "@react-icons/all-files/ri/RiSendPlaneLine";
 import Picker from "emoji-picker-react";
 import { HiOutlineEmojiHappy } from "@react-icons/all-files/hi/HiOutlineEmojiHappy";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendMovieComment } from "../../Redux/Action/indexAction";
+import { insertCommentLoading } from "../../Redux/Action/appAction";
 import { useParams } from "react-router";
+import { Spin } from "antd";
 
 function ChatBoxControllesComponent({ cookies }) {
     const [Message, setMessage] = useState("");
     const [ShowPicker, setShowPicker] = useState(false);
+    const loadingCommentSendButton = useSelector((state) => state.index.loadingCommentSendButton);
     const dispatch = useDispatch();
     const params = useParams();
     const { id, name } = params;
@@ -29,6 +32,7 @@ function ChatBoxControllesComponent({ cookies }) {
             // socket.emit("send_comment", { Message, user: cookies.user.data.token, room });
             setMessage("");
             setShowPicker(false);
+            dispatch(insertCommentLoading(true));
         }
     };
 
@@ -49,7 +53,7 @@ function ChatBoxControllesComponent({ cookies }) {
             <chat.chatInputBox>
                 <HiOutlineEmojiHappy onClick={() => setShowPicker(!ShowPicker)} />
                 <input type="text" placeholder="Aa" onChange={UserMessage} value={Message} />
-                <RiSendPlaneLine onClick={SendMessageHandler} />
+                {loadingCommentSendButton ? <Spin /> : <RiSendPlaneLine onClick={SendMessageHandler} />}
             </chat.chatInputBox>
         </chat.chatBottomConterollDiv>
     );

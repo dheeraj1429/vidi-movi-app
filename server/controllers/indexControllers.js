@@ -711,6 +711,8 @@ const updateUserCollectionCommnet = async function (data, collection, event) {
 
 const likeAndUnlikeUserCommnets = async function (collection, res, data) {
     try {
+        console.log(data);
+
         /**
          * @insertCommentIntoTheUserCollection check the comment is exist in user collection liked comment document or not
          * @updateUserCollectionCommnet inser and remove selected comment from the user collection.
@@ -743,6 +745,13 @@ const likeAndUnlikeUserCommnets = async function (collection, res, data) {
 
 const userLikeMovieComments = async function (req, res, next) {
     try {
+        /**
+         * @userToken user login access token
+         * @moviId Id
+         * @commentId id
+         * @userIdentity user is login with google or login with name gmail and password
+         * @likeAndUnlikeUserCommnets find the movie comment and then insert the new document
+         */
         const { userToken, movieId, commentId, userIdentity } = req.body;
 
         const varifyUser = await jwt.verify(userToken, JWT_TOKEN);
@@ -759,6 +768,48 @@ const userLikeMovieComments = async function (req, res, next) {
             await likeAndUnlikeUserCommnets(googleAuthUser, res, data);
         } else {
             await likeAndUnlikeUserCommnets(userModel, res, data);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const movieCommentReport = async function (req, res, next) {
+    try {
+        const { selectedData, report, userReportId, userReportProvider } = req.body;
+
+        /**
+         * @findeMovieCommentReportDocument check the user is already report
+         * @insertUserRequestReport insert the user report request if the user is already report then user is not allow to report after 24hours user can report any commnet..
+         */
+        const findeMovieCommentReportDocument = await movieModel.findOne(
+            { _id: selectedData.currentMovieId, name: selectedData.movieName },
+            { commentReports: { $elemMatch: { [userReportProvider === "google" ? "googleUserReportId" : "loginUserReportId"]: userReportId } } }
+        );
+
+        if (findeMovieCommentReportDocument.commentReports.length === 0) {
+            const insertUserRequestReport = await movieModel.updateOne(
+                { _id: selectedData.currentMovieId, name: selectedData.movieName },
+                {
+                    $push: {
+                        commentReports: {
+                            [userReportProvider === "google" ? "googleUserReportId" : "loginUserReportId"]: userReportId,
+                            report: report,
+                            reportCommentId: selectedData.commentId,
+                        },
+                    },
+                }
+            );
+
+            if (!!insertUserRequestReport.modifiedCount) {
+                return res.status(200).json({
+                    message: "your report is submited!!",
+                });
+            }
+        } else {
+            return res.status(200).json({
+                message: "you can report after 24hours..",
+            });
         }
     } catch (err) {
         console.log(err);
@@ -783,4 +834,5 @@ module.exports = {
     inertNewMovieComment,
     getMoivesComments,
     userLikeMovieComments,
+    movieCommentReport,
 };

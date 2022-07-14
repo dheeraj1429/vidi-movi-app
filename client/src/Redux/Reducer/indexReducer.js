@@ -25,7 +25,11 @@ const INITAL_STATE = {
     showSelectedOptions: false,
     storeSelectedMoviesId: [],
     movieComments: null,
+    loadingCommentSendButton: false,
     currentMovieComment: [],
+    showReportComponent: null,
+    commentReport: null,
+    commentReportLoading: false,
 };
 
 const indexReducer = function (state = INITAL_STATE, action) {
@@ -205,6 +209,38 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 currentMovieComment: [action.payload, ...state.currentMovieComment],
+                loadingCommentSendButton: false,
+            };
+
+        case ACTION_TYPE.SEND_LOADING_COMMENT_BUTTON:
+            return {
+                ...state,
+                loadingCommentSendButton: action.payload,
+            };
+
+        case ACTION_TYPE.SHOW_REPORT_COMPONENT:
+            return {
+                ...state,
+                showReportComponent: action.payload,
+            };
+
+        case ACTION_TYPE.MOVIE_COMMENT_REPORT:
+            return {
+                ...state,
+                commentReport: action.payload,
+                commentReportLoading: false,
+            };
+
+        case ACTION_TYPE.REPORT_LOADING_COMMENT:
+            return {
+                ...state,
+                commentReportLoading: action.payload,
+            };
+
+        case ACTION_TYPE.REMOVE_REPORT_MESSAGE:
+            return {
+                ...state,
+                commentReport: action.payload,
             };
 
         default: {

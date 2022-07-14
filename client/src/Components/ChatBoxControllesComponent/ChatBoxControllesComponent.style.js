@@ -19,6 +19,11 @@ export const chatInputBox = styled.div`
     border: 1px solid var(--spec-elevated-background);
     align-items: center;
 
+    .ant-spin-spinning {
+        transform: scale(0.8);
+        margin-right: 1rem;
+    }
+
     input {
         width: 100%;
         height: 40px;

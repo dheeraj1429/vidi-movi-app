@@ -28,6 +28,14 @@ const moviesSchema = new mongoose.Schema({
             ],
         },
     ],
+    commentReports: [
+        {
+            googleUserReportId: { type: mongoose.Types.ObjectId, ref: "authUser" },
+            loginUserReportId: { type: mongoose.Types.ObjectId, ref: "user" },
+            report: { type: Array },
+            reportCommentId: { type: mongoose.Types.ObjectId, ref: "movie" },
+        },
+    ],
 });
 
 const movieModel = new mongoose.model("movie", moviesSchema);

@@ -40,6 +40,7 @@ const signInUser = async function (req, res, next) {
                 name,
                 email,
                 admin: user.isAdmin,
+                _id: user._id,
                 token,
                 provider: "login",
             };
@@ -80,6 +81,7 @@ const logInUser = async function (req, res, next) {
                 name: findDbUser.name,
                 email: findDbUser.email,
                 admin: findDbUser.isAdmin,
+                _id: findDbUser._id,
                 token: token,
                 provider: "login",
             };

@@ -1,7 +1,7 @@
 import ACTION_TYPE from "../ActionType/ActionType";
 import axios from "axios";
 import { headers } from "./headers";
-axios.defaults.timeout = 2000;
+// axios.defaults.timeout = 2000;
 
 export const getAllMovies = function () {
     return async function (dispatch) {
@@ -333,6 +333,21 @@ export const userLikeCurrentMovieCommnets = function (data) {
     return async function (dispatch) {
         try {
             await axios.post("/index/user-like-movies-comments", data, headers);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const bugReport = function (data) {
+    return async function (dispatch) {
+        try {
+            const bug = await axios.post("/index/user-movies-comments-report", data, headers);
+
+            dispatch({
+                type: ACTION_TYPE.MOVIE_COMMENT_REPORT,
+                payload: bug && bug.data && bug.data.message,
+            });
         } catch (err) {
             console.log(err);
         }

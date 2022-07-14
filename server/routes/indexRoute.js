@@ -20,5 +20,6 @@ router.patch("/delete-all-selected-history", indexController.removeAllSelectedMo
 router.post("/insert-new-movie-comment", indexController.inertNewMovieComment);
 router.get("/get-movies-comments/:id", indexController.getMoivesComments);
 router.post("/user-like-movies-comments", indexController.userLikeMovieComments);
+router.post("/user-movies-comments-report", indexController.movieCommentReport);
 
 module.exports = router;

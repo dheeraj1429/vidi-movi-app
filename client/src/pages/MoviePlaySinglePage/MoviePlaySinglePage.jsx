@@ -6,12 +6,14 @@ import SingelVideoContentComponent from "../../Components/SingelVideoContentComp
 import UserCommentsComponent from "../../Components/UserCommentsComponent/UserCommentsComponent";
 import ChatBoxControllesComponent from "../../Components/ChatBoxControllesComponent/ChatBoxControllesComponent";
 import { useCookies } from "react-cookie";
+import ReportConatianerComponent from "../../Components/ReportConatianerComponent/ReportConatianerComponent";
 
 function MoviePlaySinglePage() {
     const [cookies] = useCookies(["user"]);
 
     return (
         <single.div>
+            <ReportConatianerComponent />
             <single.flexDiv>
                 <single.moviDiv>
                     <VideoComponent />

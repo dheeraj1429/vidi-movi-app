@@ -25,6 +25,15 @@ export const div = styled.div`
     .upload-button {
         background-color: var(--google-button-cl);
     }
+    .report-button {
+        background-color: var(--spec-base-background);
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: var(--watch-cl);
+        }
+    }
 `;
 
 export const button = styled.button`

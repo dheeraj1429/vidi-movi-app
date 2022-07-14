@@ -1,28 +1,40 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import * as comment from "./UserCommentComponent.style";
 import { AiOutlineLike } from "@react-icons/all-files/ai/AiOutlineLike";
 import { VscReport } from "@react-icons/all-files/vsc/VscReport";
-import { BiDislike } from "@react-icons/all-files/bi/BiDislike";
 import { userLikeCurrentMovieCommnets } from "../../Redux/Action/indexAction";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Badge from "@mui/material/Badge";
-import { useCookies } from "react-cookie";
+import { showRepoertComponent } from "../../Redux/Action/appAction";
+import { useParams } from "react-router";
 
 function UserCommentComponent({ data, fetch_comments, user, currentMovie }) {
     const dispatch = useDispatch();
-    const [cookies] = useCookies(["user"]);
     const [LikeCount, setLikeCount] = useState(data?.likedUsers?.length || 0);
     const [UserLikedComment, setUserLikedComment] = useState(false);
+    const params = useParams();
+
+    const movieName = params.name;
+    const currentMovieId = params.id;
+
+    const commentReportHandler = function () {
+        const reportObj = {
+            commentId: data._id,
+            movieName,
+            currentMovieId,
+        };
+        dispatch(showRepoertComponent(reportObj));
+    };
 
     const UserCommentLikeHandler = function () {
-        if (data && cookies.user && cookies.user.data) {
+        if (data && user && user.user.data) {
             dispatch(
                 userLikeCurrentMovieCommnets({
                     userToken: user.user.data.token,
                     movieId: currentMovie,
                     commentId: data._id,
-                    userIdentity: data.logInUserId ? "login" : "google",
+                    userIdentity: user.user.data.googleId ? "google" : "login",
                 })
             );
 
@@ -37,9 +49,12 @@ function UserCommentComponent({ data, fetch_comments, user, currentMovie }) {
     };
 
     useLayoutEffect(() => {
-        if (cookies?.user?.data && data && data?.likedUsers) {
-            data.likedUsers.forEach((el) => {
-                if (el[`${cookies.user.data.provider === "google" ? "googleUserId" : "logInUserId"}`] === cookies.user.data._id) {
+        if (user?.user?.data && data && data?.likedUsers) {
+            const id = user.user.data._id;
+            const provider = user.user.data.provider;
+
+            data.likedUsers.filter((el) => {
+                if (el[`${provider === "google" ? "googleUserId" : "logInUserId"}`] === id) {
                     setUserLikedComment(true);
                 }
             });
@@ -113,7 +128,7 @@ function UserCommentComponent({ data, fetch_comments, user, currentMovie }) {
                                     </Badge>
                                 </Box>
                                 <Box>
-                                    <VscReport />
+                                    <VscReport onClick={commentReportHandler} />
                                 </Box>
                             </comment.flexDiv>
                         </comment.mr>

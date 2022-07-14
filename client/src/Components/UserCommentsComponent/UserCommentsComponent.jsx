@@ -7,10 +7,11 @@ import { getMoviesComments } from "../../Redux/Action/indexAction";
 import { removeMoviesAllComments } from "../../Redux/Action/appAction";
 import { useCookies } from "react-cookie";
 
-function UserCommentsComponent({ user }) {
+function UserCommentsComponent() {
     const movieComments = useSelector((state) => state.index.movieComments);
     const currentMovieComment = useSelector((state) => state.index.currentMovieComment);
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
+
     const id = selectedMovie?.data?._id;
     const [cookies] = useCookies(["user"]);
 

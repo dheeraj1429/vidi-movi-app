@@ -104,3 +104,31 @@ export const removeMoviesAllComments = function (data) {
         payload: data,
     };
 };
+
+export const insertCommentLoading = function (data) {
+    return {
+        type: ACTION_TYPE.SEND_LOADING_COMMENT_BUTTON,
+        payload: data,
+    };
+};
+
+export const showRepoertComponent = function (data) {
+    return {
+        type: ACTION_TYPE.SHOW_REPORT_COMPONENT,
+        payload: data,
+    };
+};
+
+export const reportLoadingButton = function (data) {
+    return {
+        type: ACTION_TYPE.REPORT_LOADING_COMMENT,
+        payload: data,
+    };
+};
+
+export const removeReportMessage = function (data) {
+    return {
+        type: ACTION_TYPE.REMOVE_REPORT_MESSAGE,
+        payload: data,
+    };
+};
