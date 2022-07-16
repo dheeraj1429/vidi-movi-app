@@ -1,0 +1,20 @@
+{
+    "name": "vidi",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "client-dep": "npm install --prefix client",
+        "server-dep": "npm install --prefix server",
+        "client-remove-dep": "npm uninstall --prefix client",
+        "server-remove-dep": "npm uninstall --prefix server",
+        "client": "npm start --prefix client",
+        "server": "npm run dev --prefix server",
+        "server-pm2": "npm run pm2 --prefix server",
+        "watch": "npm run server & npm run client",
+        "build": "npm run build --prefix client"
+    },
+    "author": "",
+    "license": "ISC"
+}
