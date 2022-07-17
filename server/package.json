@@ -1,0 +1,35 @@
+{
+    "name": "server",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon app.js -e ejs,js,css,html",
+        "pm2": "pm2 start app.js",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install"
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.20.0",
+        "connect-flash": "^0.1.1",
+        "cookie-parser": "^1.4.6",
+        "cookie-session": "^2.0.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.1",
+        "ejs": "^3.1.8",
+        "express": "~4.16.1",
+        "hbs": "^4.2.0",
+        "helmet": "^5.1.0",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^6.3.3",
+        "morgan": "~1.9.1",
+        "multer": "^1.4.4",
+        "nodemailer": "^6.7.5",
+        "passport": "^0.5.3",
+        "passport-google-oauth20": "^2.0.0",
+        "pm2": "^5.2.0",
+        "sharp": "^0.30.7",
+        "socket.io": "^4.5.1",
+        "vidi": "file:.."
+    }
+}
