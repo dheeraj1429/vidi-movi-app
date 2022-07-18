@@ -5,11 +5,11 @@ import SingelVideoContentComponent from "../../Components/SingelVideoContentComp
 // import ChatBoxComponent from "../../Components/ChatBoxComponent/ChatBoxComponent";
 import UserCommentsComponent from "../../Components/UserCommentsComponent/UserCommentsComponent";
 import ChatBoxControllesComponent from "../../Components/ChatBoxControllesComponent/ChatBoxControllesComponent";
-import { useCookies } from "react-cookie";
 import ReportConatianerComponent from "../../Components/ReportConatianerComponent/ReportConatianerComponent";
+import { useSelector } from "react-redux";
 
 function MoviePlaySinglePage() {
-    const [cookies] = useCookies(["user"]);
+    const user = useSelector((state) => state.auth.user);
 
     return (
         <single.div>
@@ -19,9 +19,9 @@ function MoviePlaySinglePage() {
                     <VideoComponent />
                     <SingelVideoContentComponent />
                     {/* <ChatBoxComponent /> */}
-                    {!!cookies.user ? <ChatBoxControllesComponent cookies={cookies} /> : null}
                 </single.moviDiv>
                 <single.contentDiv>
+                    {!!user && user.data ? <ChatBoxControllesComponent user={user} /> : null}
                     <UserCommentsComponent />
                 </single.contentDiv>
             </single.flexDiv>

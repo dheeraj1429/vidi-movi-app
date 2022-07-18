@@ -672,8 +672,8 @@ const getMoivesComments = async function (req, res, next) {
          */
         const userComments = await movieModel
             .findOne({ _id: movieId })
-            .populate("comments.googleUserId", { name: 1, email: 1, imageUrl: 1 })
-            .populate("comments.logInUserId", { name: 1, email: 1 });
+            .populate("comments.googleUserId", { name: 1, email: 1, imageUrl: 1, uploadCustomProfileImage: 1 })
+            .populate("comments.logInUserId", { name: 1, email: 1, imageUrl: 1, uploadCustomProfileImage: 1 });
 
         res.status(200).json({
             userComments,
@@ -889,6 +889,7 @@ const updateUserProfileInformation = async function (collection, res, data) {
          * @updateUserProfileObject object if the user update the profile then add the profile image file into the object else update only name bio and the user name fildes..
          */
         updateUserProfileObject.imageUrl = data.profileImageName;
+        updateUserProfileObject.uploadCustomProfileImage = true;
         await updateUserProfileFunction(collection, res, updateUserProfileObject, id);
     } else {
         await updateUserProfileFunction(collection, res, updateUserProfileObject, id);

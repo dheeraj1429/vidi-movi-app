@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const div = styled.div`
     margin-top: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid var(--button-cl);
+    /* border-bottom: 2px solid var(--button-cl); */
 
     h2 {
         color: var(--main-cl);

@@ -304,7 +304,7 @@ export const sendMovieComment = function (data) {
         comment: data.comment,
         id: data.id,
         name: data.name,
-        user: data.user.data.token,
+        user: data.token,
     };
 
     return async function (dispatch) {
@@ -317,8 +317,8 @@ export const sendMovieComment = function (data) {
                     payload: {
                         comment: data.comment,
                         id: data.id,
-                        name: data.name,
-                        user: data.user.data,
+                        name: data.user.name,
+                        user: data.user,
                         commentTime: new Date().toLocaleString(),
                     },
                 });

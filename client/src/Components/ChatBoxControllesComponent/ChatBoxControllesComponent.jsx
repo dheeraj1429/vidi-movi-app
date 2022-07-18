@@ -8,16 +8,19 @@ import { sendMovieComment } from "../../Redux/Action/indexAction";
 import { insertCommentLoading } from "../../Redux/Action/appAction";
 import { useParams } from "react-router";
 import { Spin } from "antd";
+import { useCookies } from "react-cookie";
 
-function ChatBoxControllesComponent({ cookies }) {
+function ChatBoxControllesComponent({ user }) {
     const [Message, setMessage] = useState("");
     const [ShowPicker, setShowPicker] = useState(false);
     const loadingCommentSendButton = useSelector((state) => state.index.loadingCommentSendButton);
+    const [cookie] = useCookies(["user"]);
+
     const dispatch = useDispatch();
     const params = useParams();
     const { id, name } = params;
 
-    const onEmojiClick = (event, emojiObject) => {
+    const onEmojiClick = (emojiObject) => {
         setMessage((PrevState) => [...PrevState, emojiObject.emoji].join(""));
     };
 
@@ -27,8 +30,8 @@ function ChatBoxControllesComponent({ cookies }) {
     };
 
     const SendMessageHandler = function () {
-        if (!!Message.length && !!cookies.user) {
-            dispatch(sendMovieComment({ id, name, user: cookies.user, comment: Message }));
+        if (!!Message.length && !!user && user?.data) {
+            dispatch(sendMovieComment({ id, name, user: user.data, token: cookie.user.data.token, comment: Message }));
             // socket.emit("send_comment", { Message, user: cookies.user.data.token, room });
             setMessage("");
             setShowPicker(false);
@@ -49,8 +52,8 @@ function ChatBoxControllesComponent({ cookies }) {
                 pickerStyle={{
                     width: "300px",
                     position: "absolute",
-                    bottom: "85px",
-                    left: "0px",
+                    top: "85px",
+                    left: "-100px",
                     visibility: `${ShowPicker ? "visible" : "hidden"}`,
                     opacity: `${ShowPicker ? "1" : 0}`,
                     transition: "all .2s ease",

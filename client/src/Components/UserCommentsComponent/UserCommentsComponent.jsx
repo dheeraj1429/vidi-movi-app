@@ -11,9 +11,10 @@ function UserCommentsComponent() {
     const movieComments = useSelector((state) => state.index.movieComments);
     const currentMovieComment = useSelector((state) => state.index.currentMovieComment);
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
+    const user = useSelector((state) => state.auth.user);
+    const [cookie] = useCookies(["user"]);
 
     const id = selectedMovie?.data?._id;
-    const [cookies] = useCookies(["user"]);
 
     const params = useParams().id;
     const dispatch = useDispatch();
@@ -32,12 +33,12 @@ function UserCommentsComponent() {
                 <h4 className="comments_heding">Comments</h4>
                 {currentMovieComment && !!currentMovieComment.length
                     ? currentMovieComment.map((el) => (
-                          <UserCommentComponent fetch_comments={true} key={el.id} currentMovie={id} data={el} user={cookies} />
+                          <UserCommentComponent fetch_comments={true} key={el.id} currentMovie={id} data={el} userCookie={cookie} user={user} />
                       ))
                     : null}
                 {movieComments && !!movieComments.length
                     ? movieComments.map((el) => (
-                          <UserCommentComponent fetch_comments={true} key={el._id} currentMovie={id} data={el} user={cookies} />
+                          <UserCommentComponent fetch_comments={true} key={el._id} currentMovie={id} userCookie={cookie} data={el} user={user} />
                       ))
                     : null}
             </comment.commentScreen>

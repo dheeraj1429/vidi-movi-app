@@ -9,7 +9,7 @@ import Badge from "@mui/material/Badge";
 import { showRepoertComponent } from "../../Redux/Action/appAction";
 import { useParams } from "react-router";
 
-function UserCommentComponent({ data, fetch_comments, user, currentMovie }) {
+function UserCommentComponent({ data, fetch_comments, user, currentMovie, userCookie }) {
     const dispatch = useDispatch();
     const [LikeCount, setLikeCount] = useState(data?.likedUsers?.length || 0);
     const [UserLikedComment, setUserLikedComment] = useState(false);
@@ -28,13 +28,13 @@ function UserCommentComponent({ data, fetch_comments, user, currentMovie }) {
     };
 
     const UserCommentLikeHandler = function () {
-        if (data && user && user.user.data) {
+        if (data && user && user.data && userCookie && userCookie.user && userCookie.user.data) {
             dispatch(
                 userLikeCurrentMovieCommnets({
-                    userToken: user.user.data.token,
+                    userToken: userCookie.user.data.token,
                     movieId: currentMovie,
                     commentId: data._id,
-                    userIdentity: user.user.data.googleId ? "google" : "login",
+                    userIdentity: userCookie.user.data.googleId ? "google" : "login",
                 })
             );
 
@@ -49,9 +49,9 @@ function UserCommentComponent({ data, fetch_comments, user, currentMovie }) {
     };
 
     useLayoutEffect(() => {
-        if (user?.user?.data && data && data?.likedUsers) {
-            const id = user.user.data._id;
-            const provider = user.user.data.provider;
+        if (userCookie?.user?.data && data && data?.likedUsers) {
+            const id = userCookie.user.data._id;
+            const provider = userCookie.user.data.provider;
 
             data.likedUsers.filter((el) => {
                 if (el[`${provider === "google" ? "googleUserId" : "logInUserId"}`] === id) {
@@ -70,47 +70,35 @@ function UserCommentComponent({ data, fetch_comments, user, currentMovie }) {
                             style={
                                 fetch_comments
                                     ? (() => {
-                                          if (data.googleUserId) {
+                                          if (data.googleUserId && !data.googleUserId.uploadCustomProfileImage) {
                                               return {
                                                   backgroundImage: `url(${data.googleUserId.imageUrl})`,
                                               };
-                                          } else if (data.logInUserId) {
+                                          } else if (data.googleUserId && data.googleUserId.uploadCustomProfileImage) {
                                               return {
-                                                  background: "var(--google-button-cl)",
+                                                  backgroundImage: `url(/compressUserProfileImages/${data.googleUserId.imageUrl})`,
                                               };
-                                          } else if (data.user.imageUrl) {
+                                          } else if (data.logInUserId && data.logInUserId.uploadCustomProfileImage) {
                                               return {
-                                                  backgroundImage: `url(${data.user.imageUrl})`,
+                                                  backgroundImage: `url(/compressUserProfileImages/${data.logInUserId.imageUrl})`,
                                               };
-                                          } else {
+                                          } else if (data.logInUserId && data.logInUserId.uploadCustomProfileImage) {
                                               return {
-                                                  background: "var(--google-button-cl)",
+                                                  backgroundImage: `url(${data.logInUserId.imageUrl})`,
+                                              };
+                                          } else if (user.data.imageUrl && !user.data.uploadCustomProfileImage) {
+                                              return {
+                                                  backgroundImage: `url(${user.data.imageUrl})`,
+                                              };
+                                          } else if (data.user.imageUrl && data.user.uploadCustomProfileImage) {
+                                              return {
+                                                  backgroundImage: `url(/compressUserProfileImages/${data.user.imageUrl})`,
                                               };
                                           }
                                       })()
-                                    : data.imageUrl
-                                    ? {
-                                          backgroundImage: `url(${data.imageUrl})`,
-                                      }
-                                    : {
-                                          background: "var(--google-button-cl)",
-                                      }
+                                    : null
                             }
-                        >
-                            {fetch_comments ? (
-                                (() => {
-                                    if (data.logInUserId) {
-                                        return <p>{data.logInUserId.name.toUpperCase().slice(0, 1)}</p>;
-                                    } else if (data?.user?.imageUrl) {
-                                        return <p></p>;
-                                    } else if (data.user) {
-                                        return <p>{data.user.name.toUpperCase().slice(0, 1)}</p>;
-                                    }
-                                })()
-                            ) : data.imageUrl ? null : (
-                                <p>{data.name.toUpperCase().slice(0, 1)}</p>
-                            )}
-                        </comment.userImage>
+                        />
                     </comment.widthDiv>
                     <comment.commentDiv>
                         <h5>
@@ -128,7 +116,7 @@ function UserCommentComponent({ data, fetch_comments, user, currentMovie }) {
                         </h5>
                         <span>{data.commentTime}</span>
                         <p>{data.comment}</p>
-                        {user && user.user && !!user.user.data ? (
+                        {user && user.data && !!user.data ? (
                             <comment.mr>
                                 <comment.flexDiv>
                                     <Box sx={{ color: "action.active", marginRight: "1.5rem" }}>

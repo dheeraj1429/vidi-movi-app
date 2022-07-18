@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const chatBottomConterollDiv = styled.div`
     width: 100%;
-    border-top: 1px solid var(--spec-elevated-background);
+    /* border-top: 1px solid var(--spec-elevated-background); */
     padding: 1rem 0;
     position: relative;
 

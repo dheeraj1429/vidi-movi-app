@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { Routes, Route } from "react-router";
 import { useCookies } from "react-cookie";
 import { setUserCookieData } from "./Redux/Action/authAction";
@@ -42,11 +42,13 @@ function App() {
             dispatch(setUserCookieData(cookies.user));
         }
 
+        loadFunction("client:auth2");
+    }, []);
+
+    useLayoutEffect(() => {
         if (cookies && cookies.user?.data && cookies.user?.data.token) {
             dispatch(getLoginUser(cookies.user.data.token));
         }
-
-        loadFunction("client:auth2");
     }, []);
 
     return (

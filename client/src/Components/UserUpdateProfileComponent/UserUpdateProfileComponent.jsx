@@ -47,16 +47,17 @@ function UserUpdateProfileComponent() {
             content: "Loading...",
             key,
         });
-        if (userProfileUpdate && !!userProfileUpdate && userProfileUpdate.message) {
-            setTimeout(() => {
-                message.success({
-                    content: userProfileUpdate.message,
-                    key,
-                    duration: 2,
-                });
-            }, 1000);
-        }
     };
+
+    useEffect(() => {
+        if (userProfileUpdate && !!userProfileUpdate && userProfileUpdate.message) {
+            message.success({
+                content: userProfileUpdate.message,
+                key,
+                duration: 2,
+            });
+        }
+    }, [userProfileUpdate]);
 
     const uploadFile = function () {
         if (cookie?.user && cookie?.user?.data) {

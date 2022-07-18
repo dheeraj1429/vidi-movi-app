@@ -203,6 +203,7 @@ const indexReducer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 movieComments: action.payload,
+                currentMovieComment: [],
             };
 
         case ACTION_TYPE.SEND_MOVIE_COMMENTS:

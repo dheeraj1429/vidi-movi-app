@@ -17,7 +17,7 @@ export const div = styled.div`
 `;
 
 export const mr = styled.div`
-    margin: 1rem 0;
+    margin: 0.3rem 0;
 `;
 
 export const flexDiv = styled.div`
@@ -40,7 +40,7 @@ export const userImage = styled.div`
     justify-content: center;
     p {
         margin: 0;
-        font-size: 23px;
+        font-size: 20px;
         color: var(--main-cl);
     }
 `;
@@ -49,7 +49,7 @@ export const commentDiv = styled.div`
     margin-left: 1rem;
 
     h5 {
-        font-size: 13px;
+        font-size: 12px;
         margin-bottom: 0;
         color: var(--main-cl);
     }
@@ -57,13 +57,14 @@ export const commentDiv = styled.div`
     p {
         color: var(--smooht-gray-cl);
         margin-bottom: 0;
-        font-size: 12px;
+        font-size: 18px;
         font-weight: 200;
+        font-family: "Paralucent-light";
     }
 
     span {
         margin: 0;
         color: var(--smooht-gray-cl);
-        font-size: 10px;
+        font-size: 9px;
     }
 `;
