@@ -30,6 +30,13 @@ const userSchema = new mongoose.Schema({
             likeTime: { type: Date, default: Date.now },
         },
     ],
+    imageUrl: {
+        type: String,
+        default:
+            "https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=d456a2af571d980d8b2985472c262b31",
+    },
+    uploadCustomProfileImage: { type: Boolean, default: false },
+    bio: { type: String },
 });
 
 // genrate the user token

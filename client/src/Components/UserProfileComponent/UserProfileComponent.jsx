@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as profile from "./UserProfileComponentstyle";
 import CustomButtonComponent from "../CustomButtonComponent/CustomButtonComponent";
 import { AiOutlineUser } from "@react-icons/all-files/ai/AiOutlineUser";
@@ -25,7 +25,11 @@ function UserProfileComponent({ optionsShows }) {
                             style={
                                 user.data.imageUrl
                                     ? {
-                                          backgroundImage: `url(${user.data.imageUrl})`,
+                                          backgroundImage: `url(${
+                                              !!user.data.uploadCustomProfileImage
+                                                  ? `/compressUserProfileImages/${user.data.imageUrl}`
+                                                  : user.data.imageUrl
+                                          })`,
                                       }
                                     : null
                             }

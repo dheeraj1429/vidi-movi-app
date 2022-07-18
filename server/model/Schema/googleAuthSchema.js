@@ -34,6 +34,8 @@ const authUserSchema = new Schema({
             likeTime: { type: Date, default: Date.now },
         },
     ],
+    uploadCustomProfileImage: { type: Boolean, default: false },
+    bio: { type: String },
 });
 
 authUserSchema.methods.genrateUserToken = async function () {

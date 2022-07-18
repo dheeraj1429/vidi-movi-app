@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const div = styled.div`
     position: relative;
-    background-color: var(--spec-elevated-background);
+    background-color: var(--smooht-gray-cl);
     width: 100%;
     height: 100vh;
 `;
@@ -22,6 +22,6 @@ export const sidebar = styled.div`
 
 export const options = styled.div`
     width: 80%;
-    padding: 1rem;
+    padding: 2rem;
     overflow-x: hidden;
 `;

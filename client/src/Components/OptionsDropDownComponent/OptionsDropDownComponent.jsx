@@ -12,7 +12,7 @@ import { BiMoon } from "@react-icons/all-files/bi/BiMoon";
 import { removeClientHistory, removerLikeVideoFromClient } from "../../Redux/Action/appAction";
 import { useNavigate } from "react-router";
 
-function OptionsDropDownComponent({ isShow, imageUrl, name, email, optionsShows }) {
+function OptionsDropDownComponent({ isShow, imageUrl, uploadCustomProfileImage, name, email, optionsShows }) {
     const [cookies, setCookie, removeCookie] = useCookies(["user"]);
     const dispatch = useDispatch();
     const themeSelector = useSelector((state) => state.index.changeTheme);
@@ -32,17 +32,10 @@ function OptionsDropDownComponent({ isShow, imageUrl, name, email, optionsShows 
 
     return (
         <options.div id="options_popup" style={!isShow ? { display: "none" } : { display: "block" }}>
-            <options.picDiv
-                style={
-                    imageUrl && imageUrl !== null && imageUrl !== undefined
-                        ? null
-                        : {
-                              backgroundImage:
-                                  "url(https://images.pexels.com/photos/7772538/pexels-photo-7772538.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)",
-                          }
-                }
-            >
-                {imageUrl && imageUrl !== null && imageUrl !== undefined ? <img class="pic" src={imageUrl} alt="Profile Picture" /> : null}
+            <options.picDiv>
+                {imageUrl && !!imageUrl ? (
+                    <img class="pic" src={!!uploadCustomProfileImage ? `/compressUserProfileImages/${imageUrl}` : imageUrl} alt="Profile Picture" />
+                ) : null}
             </options.picDiv>
             <div class="name">
                 <span>{name}</span>

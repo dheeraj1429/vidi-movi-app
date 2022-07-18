@@ -34,6 +34,15 @@ export const div = styled.div`
             background-color: var(--watch-cl);
         }
     }
+    .Profile_upload_button {
+        background-color: var(--dark-cl);
+        transition: all 0.3s ease;
+    }
+    .Profile_upload_button:hover {
+        border-radius: 30px;
+        background-color: var(--main-cl);
+        color: var(--dark-cl);
+    }
 `;
 
 export const button = styled.button`

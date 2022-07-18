@@ -1,7 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const indexController = require("../controllers/indexControllers");
-const { route } = require("./adminRoute");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        if (file.mimetype === "image/jpeg" || file.mimetype === "image.jpg" || file.mimetype === "image/png") {
+            cb(null, "./uploads/userProfileImages");
+        }
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    },
+});
+
+const upload = multer({ storage: storage }).any();
 
 router.get("/get-all-movies", indexController.getAllMovies);
 router.get("/stream-video/:name", indexController.streamVideo);
@@ -21,6 +34,7 @@ router.post("/insert-new-movie-comment", indexController.inertNewMovieComment);
 router.get("/get-movies-comments/:id", indexController.getMoivesComments);
 router.post("/user-like-movies-comments", indexController.userLikeMovieComments);
 router.post("/user-movies-comments-report", indexController.movieCommentReport);
-// router.post("/store-user-watch-movies", indexController.storeUserWatchLetterMovies);
+router.get("/get-login-user/:id", indexController.getLoginUser);
+router.post("/update-user-profile", upload, indexController.updateUserProfile);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const INITAL_STATE = {
     loading: false,
     user: null,
     forgetPassword: null,
+    userProfileUpdate: null,
 };
 
 const authReduer = function (state = INITAL_STATE, action) {
@@ -32,6 +33,19 @@ const authReduer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 user: action.payload,
+            };
+
+        case ACTION_TYPE.GET_LOGIN_USER:
+            const obj = { data: action.payload };
+            return {
+                ...state,
+                user: obj,
+            };
+
+        case ACTION_TYPE.UPLOAD_USER_PROFILE:
+            return {
+                ...state,
+                userProfileUpdate: action.payload,
             };
 
         default:

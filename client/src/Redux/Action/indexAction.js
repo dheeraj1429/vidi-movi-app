@@ -354,11 +354,33 @@ export const bugReport = function (data) {
     };
 };
 
-export const storeUserWatchLetterMovies = function (data) {
+export const getLoginUser = function (data) {
     return async function (dispatch) {
         try {
-            const storeUserWatchLetterMovies = await axios.post("/index/store-user-watch-movies", data, headers);
-            console.log(storeUserWatchLetterMovies);
+            const loginUser = await axios.get(`/index/get-login-user/${data}`, headers);
+
+            if (loginUser && loginUser?.data && loginUser?.data?.user) {
+                dispatch({
+                    type: ACTION_TYPE.GET_LOGIN_USER,
+                    payload: loginUser.data.user,
+                });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const uploadUserProfile = function (data) {
+    console.log(data);
+    return async function (dispatch) {
+        try {
+            const update = await axios.post("/index/update-user-profile", data, headers);
+
+            dispatch({
+                type: ACTION_TYPE.UPLOAD_USER_PROFILE,
+                payload: update && update.data,
+            });
         } catch (err) {
             console.log(err);
         }

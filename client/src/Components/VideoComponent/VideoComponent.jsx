@@ -6,7 +6,7 @@ import { BiPause } from "@react-icons/all-files/bi/BiPause";
 import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
 import { backendConfigData } from "../../Utils/backendData";
 import { useLocation } from "react-router-dom";
-import { fetchSelectedMovi, movieLike, storeHistoryVideo, videoViewsFunction, storeUserWatchLetterMovies } from "../../Redux/Action/indexAction";
+import { fetchSelectedMovi, movieLike, storeHistoryVideo, videoViewsFunction } from "../../Redux/Action/indexAction";
 import { selectedMovies } from "../../Redux/Action/appAction";
 import { BiLike } from "@react-icons/all-files/bi/BiLike";
 import { CgMiniPlayer } from "@react-icons/all-files/cg/CgMiniPlayer";
@@ -15,7 +15,6 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 import VolumeUp from "@mui/icons-material/VolumeUp";
-// import { CgStopwatch } from "@react-icons/all-files/cg/CgStopwatch";
 
 function VideoComponent() {
     const selectedMovie = useSelector((state) => state.index.selectedMovie);
@@ -331,7 +330,6 @@ function VideoComponent() {
                                         />
                                         <CgMiniPlayer onClick={ChangePipHandler} />
                                         <BiFullscreen onClick={FullScreenHandler} />
-                                        {/* <CgStopwatch onClick={StoreMoviesIntoWatchLetter} /> */}
                                     </div>
                                 </single.timeDiv>
                             </single.controllDiv>

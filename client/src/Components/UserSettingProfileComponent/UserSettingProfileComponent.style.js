@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const div = styled.div`
     padding: 2rem 1rem;
     text-align: center;
-    background-color: var(--overlay-cl);
+    background-color: ${(props) => (props.edit ? null : "var(--overlay-cl)")};
 `;
 
 export const profile = styled.div`
@@ -21,6 +21,14 @@ export const profile = styled.div`
         margin: 0;
         color: var(--main-cl);
     }
+    svg {
+        fill: var(--main-cl);
+        cursor: pointer;
+    }
+
+    input {
+        display: none;
+    }
 `;
 
 export const profileContnet = styled.div`
@@ -31,10 +39,11 @@ export const profileContnet = styled.div`
         letter-spacing: 1px;
         font-weight: 200;
         margin-bottom: 0.3rem;
+        color: ${(props) => (props.edit ? "var(--dark-cl)" : "var(--main-cl)")};
     }
 
     h1 {
-        color: var(--main-cl);
+        color: ${(props) => (props.edit ? "var(--spec-icon-disabled)" : "var(--main-cl)")};
         font-size: 30px;
     }
 `;

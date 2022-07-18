@@ -41,6 +41,8 @@ const signInUser = async function (req, res, next) {
                 email,
                 admin: user.isAdmin,
                 _id: user._id,
+                imageUrl: user.imageUrl,
+                uploadCustomProfileImage: user.uploadCustomProfileImage,
                 token,
                 provider: "login",
             };
@@ -82,6 +84,8 @@ const logInUser = async function (req, res, next) {
                 email: findDbUser.email,
                 admin: findDbUser.isAdmin,
                 _id: findDbUser._id,
+                imageUrl: findDbUser.imageUrl,
+                uploadCustomProfileImage: findDbUser.uploadCustomProfileImage,
                 token: token,
                 provider: "login",
             };
@@ -215,6 +219,7 @@ const googleLogin = async function (req, res, next) {
                 _id: findUserInDb._id,
                 googleId: findUserInDb.googleId,
                 imageUrl: findUserInDb.imageUrl,
+                uploadCustomProfileImage: findUserInDb.uploadCustomProfileImage,
                 email: findUserInDb.email,
                 name: findUserInDb.givenName,
                 token: findUserToken,

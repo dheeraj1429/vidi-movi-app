@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as bar from "./LargeSidebarComponent.style";
 import SideBarOptionComponent from "../SideBarOptionComponent/SideBarOptionComponent";
 import { FiSettings } from "@react-icons/all-files/fi/FiSettings";

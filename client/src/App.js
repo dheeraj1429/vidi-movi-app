@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import { setUserCookieData } from "./Redux/Action/authAction";
 import { useDispatch } from "react-redux";
 import useLoad from "./Hooks/useLoad";
-import { getAllMovies } from "./Redux/Action/indexAction";
+import { getAllMovies, getLoginUser } from "./Redux/Action/indexAction";
 
 // components
 import SignInComponent from "./Components/SignInComponent/SignInComponent";
@@ -40,6 +40,10 @@ function App() {
 
         if (Object.keys(cookies).length) {
             dispatch(setUserCookieData(cookies.user));
+        }
+
+        if (cookies && cookies.user?.data && cookies.user?.data.token) {
+            dispatch(getLoginUser(cookies.user.data.token));
         }
 
         loadFunction("client:auth2");

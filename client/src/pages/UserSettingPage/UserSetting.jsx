@@ -1,6 +1,5 @@
 import React from "react";
 import * as setting from "./UserSetting.style";
-import NavbarComponent from "../../Components/NavbarComponent/NavbarComponent";
 import LargeSidebarComponent from "../../Components/LargeSidebarComponent/LargeSidebarComponent";
 import { Outlet } from "react-router";
 

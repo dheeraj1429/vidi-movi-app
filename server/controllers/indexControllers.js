@@ -6,6 +6,7 @@ const path = require("path");
 const jwt = require("jsonwebtoken");
 const cart = require("../cart");
 const userFindInCookie = require("../helpers/varifyUser");
+const sharp = require("sharp");
 const JWT_TOKEN = cart.TOKEN;
 
 const getAllMovies = async function (req, res, next) {
@@ -824,13 +825,129 @@ const movieCommentReport = async function (req, res, next) {
     }
 };
 
-// const storeUserWatchLetterMovies = async function (req, res, next) {
-//     try {
-//         console.log(req.body);
-//     } catch (err) {
-//         console.log(err);
-//     }
-// };
+const getLoginUser = async function (req, res, next) {
+    try {
+        const { id } = req.params;
+        const varifyUser = await jwt.verify(id, JWT_TOKEN);
+        const { _id, provider } = varifyUser;
+
+        if (provider === "login") {
+            const findUser = await userModel.findOne({ _id }, { password: 0, tokens: 0 });
+            return res.status(200).json({
+                user: findUser,
+            });
+        }
+
+        if (provider === "google") {
+            const findUser = await googleAuthUser.findOne({ _id }, { password: 0, tokens: 0 });
+            return res.status(200).json({
+                user: findUser,
+            });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+/**
+ *
+ * @param { googleAuthUser, userModel } colelctions db user login colelction
+ * @param {*} res
+ * @param { Object } data
+ * @param {*} id
+ * @returns { Object } response profile update or not message
+ */
+const updateUserProfileFunction = async function (colelctions, res, data, id) {
+    const updateUserProfile = await colelctions.updateOne(
+        { _id: id },
+        {
+            $set: data,
+        }
+    );
+
+    if (!!updateUserProfile.modifiedCount) {
+        return res.status(200).json({
+            message: "profile update",
+        });
+    } else {
+        return res.status(200).json({
+            message: "no changes",
+        });
+    }
+};
+
+const updateUserProfileInformation = async function (collection, res, data) {
+    const id = data._id;
+    const updateUserProfileObject = {
+        name: data.name,
+        email: data.email,
+        bio: data.bio,
+    };
+
+    if (data?.profileImageName) {
+        /**
+         * @updateUserProfileObject object if the user update the profile then add the profile image file into the object else update only name bio and the user name fildes..
+         */
+        updateUserProfileObject.imageUrl = data.profileImageName;
+        await updateUserProfileFunction(collection, res, updateUserProfileObject, id);
+    } else {
+        await updateUserProfileFunction(collection, res, updateUserProfileObject, id);
+    }
+};
+
+const updateUserProfile = async function (req, res, next) {
+    try {
+        const { name, email, bio, token } = req.body;
+        const file = req.files;
+
+        const varifyUser = await jwt.verify(token, JWT_TOKEN);
+        const { _id, provider } = varifyUser;
+
+        const data = {
+            _id,
+            name,
+            email,
+            bio,
+        };
+
+        if (!!file.length) {
+            /**
+             * @profileImageName get the user update image name
+             * @userProfileImagePath get the user update image pathname
+             */
+            const profileImageName = file[0].filename;
+            const userProfileImagePath = file[0].path;
+
+            /**
+             * @profileImageName if the user update the profile photo then add the new property into the object.
+             */
+            data.profileImageName = profileImageName;
+
+            const imageSave = await sharp(userProfileImagePath)
+                .resize(200, 200)
+                .jpeg({ quality: 90 })
+                .toFile(path.join(__dirname, "..", "uploads", "compressUserProfileImages", profileImageName));
+
+            if (!!imageSave) {
+                if (provider == "login") {
+                    await updateUserProfileInformation(userModel, res, data);
+                }
+                if (provider === "google") {
+                    await updateUserProfileInformation(googleAuthUser, res, data);
+                }
+            }
+        } else {
+            if (provider == "login") {
+                await updateUserProfileInformation(userModel, res, data);
+            }
+            if (provider === "google") {
+                await updateUserProfileInformation(googleAuthUser, res, data);
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 module.exports = {
     getAllMovies,
@@ -851,5 +968,6 @@ module.exports = {
     getMoivesComments,
     userLikeMovieComments,
     movieCommentReport,
-    // storeUserWatchLetterMovies,
+    getLoginUser,
+    updateUserProfile,
 };
