@@ -29,6 +29,7 @@ import SignInAndLogInPage from "./pages/SignInAndLogInPage/SignInAndLogInPage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import MoviePlaySinglePage from "./pages/MoviePlaySinglePage/MoviePlaySinglePage";
 import UserSetting from "./pages/UserSettingPage/UserSetting";
+import DashboardUserLoginPage from "./pages/DashboardUserLoginPage/DashboardUserLoginPage";
 
 function App() {
     const [cookies] = useCookies(["user"]);
@@ -69,6 +70,7 @@ function App() {
                     <Route path="forget-password" element={<ForgetPasswordComponent />} />
                     <Route path="password-reset-request/:id" element={<UserPasswordChangeRequiestComponent />} />
                 </Route>
+                {/* <Route path="/admin/dashboard" element={<DashboardUserLoginPage />} /> */}
                 <Route path="/admin/dashboard" element={<DashboardPage />}>
                     <Route path="" element={<DashboardLandingComponent />} />
                     <Route path="movies-upload" element={<MoviesUploadComponent />} />

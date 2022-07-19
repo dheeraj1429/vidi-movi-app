@@ -256,6 +256,7 @@ function VideoComponent() {
                                 <img src="/images/wating.svg" />
                             </single.bufferLoadingDiv>
                             <video
+                                crossorigin="anonymous"
                                 className="showVideo"
                                 src={!!selectedMovie ? `${backendConfigData.backendVideoUrl}/${selectedMovie.data.movieVideo}` : null}
                                 ref={videoRefFunction}

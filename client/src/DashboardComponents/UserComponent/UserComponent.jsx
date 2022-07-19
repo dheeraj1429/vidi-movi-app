@@ -19,7 +19,7 @@ function UserComponent() {
     return (
         <user.div>
             <EditUserProfilePopupComponent isShow={userProfilePopUp} />
-            <DashboardBannerComponent imgUrl={"/images/dashboard/top-header.png"} heading={"Hello Admin!"} innerPara={"walcome the dahsboard."} />
+            <DashboardBannerComponent imgUrl={"/images/dashboard/top-header.png"} innerPara={"walcome the dahsboard."} />
             <user.authentication>
                 <div className="container-fluid heading-div">
                     <div className="row">

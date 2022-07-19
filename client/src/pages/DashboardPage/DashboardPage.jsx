@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import * as dashboard from "./DashboardPage.style";
 import { useNavigate } from "react-router";
 import { useCookies } from "react-cookie";
@@ -10,7 +10,7 @@ function DashboardPage() {
     const [cookie] = useCookies(["user"]);
     const navigation = useNavigate();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const user = cookie.user;
         if (user === undefined || user.data.admin !== "admin" || user.data === undefined) {
             navigation("/");
@@ -24,7 +24,9 @@ function DashboardPage() {
                     <DashboardNavbarComponent />
                 </div>
                 <dashboard.div>
-                    <DashboardSiderComponent />
+                    <dashboard.side>
+                        <DashboardSiderComponent />
+                    </dashboard.side>
                     <dashboard.renderDiv id="rander_div">
                         <Outlet />
                     </dashboard.renderDiv>

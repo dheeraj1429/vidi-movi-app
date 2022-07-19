@@ -3,11 +3,12 @@ import styled from "styled-components";
 export const header = styled.div`
     background-color: var(--main-cl);
     padding-right: 1rem;
-    position: fixed;
+    /* position: fixed; */
     width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 100;
+    height: 100%;
+    /* top: 0; */
+    /* left: 0; */
+    /* z-index: 100; */
     .logo {
         display: flex;
         align-items: center;
@@ -22,6 +23,7 @@ export const header = styled.div`
 
 export const logoDiv = styled.div`
     width: 242px;
+    height: 100%;
     background-color: var(--dark-cl);
     padding: 1rem 2rem;
     margin-right: 1rem;
@@ -54,6 +56,7 @@ export const action = styled.div`
 
 export const headerInner = styled.div`
     width: 100%;
+    height: 100%;
     margin-inline: auto;
     align-content: center;
     display: flex;

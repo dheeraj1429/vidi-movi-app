@@ -10,6 +10,18 @@ export const chatBottomConterollDiv = styled.div`
         fill: var(--main-cl);
         cursor: pointer;
     }
+
+    @media (max-width: 1200px) {
+        .emoji-picker-react {
+            left: 0 !important;
+        }
+    }
+    @media (max-width: 500px) {
+        .emoji-picker-react {
+            width: 220px;
+            top: -400px !important;
+        }
+    }
 `;
 
 export const chatInputBox = styled.div`

@@ -70,27 +70,56 @@ function UserCommentComponent({ data, fetch_comments, user, currentMovie, userCo
                             style={
                                 fetch_comments
                                     ? (() => {
-                                          if (data.googleUserId && !data.googleUserId.uploadCustomProfileImage) {
+                                          if (
+                                              data &&
+                                              data?.googleUserId &&
+                                              data?.googleUserId &&
+                                              !data?.googleUserId?.uploadCustomProfileImage
+                                          ) {
                                               return {
                                                   backgroundImage: `url(${data.googleUserId.imageUrl})`,
                                               };
-                                          } else if (data.googleUserId && data.googleUserId.uploadCustomProfileImage) {
+                                          } else if (
+                                              data &&
+                                              data?.googleUserId &&
+                                              data?.googleUserId &&
+                                              data?.googleUserId?.uploadCustomProfileImage
+                                          ) {
                                               return {
                                                   backgroundImage: `url(/compressUserProfileImages/${data.googleUserId.imageUrl})`,
                                               };
-                                          } else if (data.logInUserId && data.logInUserId.uploadCustomProfileImage) {
+                                          } else if (
+                                              data &&
+                                              data?.logInUserId &&
+                                              data?.logInUserId &&
+                                              data?.logInUserId?.uploadCustomProfileImage
+                                          ) {
                                               return {
                                                   backgroundImage: `url(/compressUserProfileImages/${data.logInUserId.imageUrl})`,
                                               };
-                                          } else if (data.logInUserId && data.logInUserId.uploadCustomProfileImage) {
+                                          } else if (
+                                              data &&
+                                              data?.logInUserId &&
+                                              !data?.logInUserId?.uploadCustomProfileImage
+                                          ) {
                                               return {
                                                   backgroundImage: `url(${data.logInUserId.imageUrl})`,
                                               };
-                                          } else if (user.data.imageUrl && !user.data.uploadCustomProfileImage) {
+                                          } else if (
+                                              data &&
+                                              data?.user &&
+                                              user?.data?.imageUrl &&
+                                              !user.data.uploadCustomProfileImage
+                                          ) {
                                               return {
                                                   backgroundImage: `url(${user.data.imageUrl})`,
                                               };
-                                          } else if (data.user.imageUrl && data.user.uploadCustomProfileImage) {
+                                          } else if (
+                                              data &&
+                                              data?.user &&
+                                              data?.user?.imageUrl &&
+                                              data?.user?.uploadCustomProfileImage
+                                          ) {
                                               return {
                                                   backgroundImage: `url(/compressUserProfileImages/${data.user.imageUrl})`,
                                               };
@@ -121,7 +150,10 @@ function UserCommentComponent({ data, fetch_comments, user, currentMovie, userCo
                                 <comment.flexDiv>
                                     <Box sx={{ color: "action.active", marginRight: "1.5rem" }}>
                                         <Badge badgeContent={LikeCount} color="info">
-                                            <AiOutlineLike onClick={UserCommentLikeHandler} className={UserLikedComment ? "active_button" : ""} />
+                                            <AiOutlineLike
+                                                onClick={UserCommentLikeHandler}
+                                                className={UserLikedComment ? "active_button" : ""}
+                                            />
                                         </Badge>
                                     </Box>
                                     <Box sx={{ color: "action.active", marginRight: "1.5rem" }}>

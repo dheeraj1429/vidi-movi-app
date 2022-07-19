@@ -20,7 +20,7 @@ function ChatBoxControllesComponent({ user }) {
     const params = useParams();
     const { id, name } = params;
 
-    const onEmojiClick = (emojiObject) => {
+    const onEmojiClick = (_, emojiObject) => {
         setMessage((PrevState) => [...PrevState, emojiObject.emoji].join(""));
     };
 
@@ -57,6 +57,7 @@ function ChatBoxControllesComponent({ user }) {
                     visibility: `${ShowPicker ? "visible" : "hidden"}`,
                     opacity: `${ShowPicker ? "1" : 0}`,
                     transition: "all .2s ease",
+                    zIndex: "999",
                 }}
             />
             <chat.chatInputBox>

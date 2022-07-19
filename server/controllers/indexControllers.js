@@ -17,7 +17,8 @@ const getAllMovies = async function (req, res, next) {
          */
         const allMoviesDataCollection = await movieModel.find();
 
-        if (!getAllMovies) return res.status(200).json({ success: false, message: "somthing worng" });
+        if (!getAllMovies)
+            return res.status(200).json({ success: false, message: "somthing worng" });
 
         return res.status(200).json({
             success: true,
@@ -84,7 +85,10 @@ const streamVideo = function (req, res, next) {
  * @param  { Object } res
  */
 const checkMovieIsLikedByUser = async function (collection, _id, param, findMoviInDb, res) {
-    const findUserLikeVideo = await collection.findOne({ _id }, { favoriteMovies: { $elemMatch: { moviesId: param } } });
+    const findUserLikeVideo = await collection.findOne(
+        { _id },
+        { favoriteMovies: { $elemMatch: { moviesId: param } } }
+    );
 
     if (!!findUserLikeVideo.favoriteMovies.length) {
         return res.status(200).json({
@@ -150,7 +154,10 @@ const getOneMovi = async function (req, res, next) {
  * @returns check the movie data is present into the database if the movie object is already present into the database collection then we don't want to store the movie data inside any object and array.
  */
 const isMoviesPresent = async function (collection, userId, fildName, movieId) {
-    const finMovieInDb = await collection.findOne({ _id: userId }, { [fildName]: { $elemMatch: { moviesId: movieId } } });
+    const finMovieInDb = await collection.findOne(
+        { _id: userId },
+        { [fildName]: { $elemMatch: { moviesId: movieId } } }
+    );
     return finMovieInDb;
 };
 
@@ -210,10 +217,13 @@ const storeHistoryVideo = async function (req, res, next) {
         const movieId = findMovieInDatabase._id;
 
         if (!findMovieInDatabase) {
-            return res.status(200).json({ success: false, message: "movie is not find in database" });
+            return res
+                .status(200)
+                .json({ success: false, message: "movie is not find in database" });
         }
 
-        if (!userToken) return res.status(200).json({ success: false, message: "user token is null" });
+        if (!userToken)
+            return res.status(200).json({ success: false, message: "user token is null" });
 
         /**
          * @userVarifyvarify the user is vaild or not
@@ -234,7 +244,12 @@ const storeHistoryVideo = async function (req, res, next) {
         };
 
         if (provider === "google") {
-            const goolgeUserMoviePresent = await isMoviesPresent(googleAuthUser, userId, "history", movieId);
+            const goolgeUserMoviePresent = await isMoviesPresent(
+                googleAuthUser,
+                userId,
+                "history",
+                movieId
+            );
 
             if (!!goolgeUserMoviePresent.history.length) {
                 await updateTheUserVideoData(googleAuthUser, data);
@@ -299,7 +314,11 @@ const removerMoviesHistoryOne = async function (collection, _id, movieSelectedId
     /**
      * @removeUserHistoryVideo  grab the user first form the databse and remove the user collection object after that.
      */
-    const removeUserHistoryVideo = await collection.updateOne({ _id }, { $pull: { history: { moviesId: movieSelectedId } } }, { new: true });
+    const removeUserHistoryVideo = await collection.updateOne(
+        { _id },
+        { $pull: { history: { moviesId: movieSelectedId } } },
+        { new: true }
+    );
 
     if (!!removeUserHistoryVideo.modifiedCount) {
         return res.status(200).json({
@@ -312,7 +331,10 @@ const removeMovieFromHistory = async function (req, res, next) {
     try {
         const { movieSelectedId } = req.body;
 
-        if (!movieSelectedId) return res.status(400).json({ success: false, message: "please send the selected movie id" });
+        if (!movieSelectedId)
+            return res
+                .status(400)
+                .json({ success: false, message: "please send the selected movie id" });
         const varifyUser = await userFindInCookie(req, res);
         const { _id, provider } = varifyUser;
 
@@ -333,7 +355,10 @@ const movieCheckFunction = async function (collection, _id, id, findMovieRef, ta
      * @insertDataRef if the movie is not exist in the user document the insert the new object which is contains information about movie
      * @removerDataRef if the movie is exist in the user collection then remove the movie
      */
-    const userLikeVideoIsPresent = await collection.findOne({ _id }, { [`${target}`]: { $elemMatch: { moviesId: id } } });
+    const userLikeVideoIsPresent = await collection.findOne(
+        { _id },
+        { [`${target}`]: { $elemMatch: { moviesId: id } } }
+    );
 
     if (userLikeVideoIsPresent[`${target}`].length <= 0) {
         const insertDataRef = await collection.update(
@@ -353,7 +378,11 @@ const movieCheckFunction = async function (collection, _id, id, findMovieRef, ta
             return { data: "added" };
         }
     } else {
-        const removerDataRef = await collection.update({ _id }, { $pull: { [`${target}`]: { moviesId: findMovieRef._id } } }, { new: true });
+        const removerDataRef = await collection.update(
+            { _id },
+            { $pull: { [`${target}`]: { moviesId: findMovieRef._id } } },
+            { new: true }
+        );
         if (removerDataRef.acknowledged === true) {
             return { data: "remove" };
         }
@@ -390,7 +419,9 @@ const likedMovieArrayFunction = async function (collection, _id, name, findTarge
      * @findAllLikedMoviesInDb get the all user like movies
      * @return send back the array of the object which is cantan all the liked movie objects
      */
-    const findAllLikedMoviesInDb = await collection.findOne({ _id, name }).populate(`${findTarget}.moviesId`);
+    const findAllLikedMoviesInDb = await collection
+        .findOne({ _id, name })
+        .populate(`${findTarget}.moviesId`);
 
     return res.status(200).json({
         success: true,
@@ -430,7 +461,10 @@ const videoViewsFunction = async function (req, res, next) {
             .findOne({ _id: id, name })
             .then((response) => {
                 movieModel
-                    .updateOne({ _id: response._id, name: response.name }, { $set: { views: response.views + 1 } })
+                    .updateOne(
+                        { _id: response._id, name: response.name },
+                        { $set: { views: response.views + 1 } }
+                    )
                     .then((result) => {
                         if (result.modifiedCount === 1) {
                             console.log("video view is inc");
@@ -451,7 +485,10 @@ const videoViewsFunction = async function (req, res, next) {
 const getSearchMovie = async function (req, res, next) {
     try {
         const movieName = req.params.name;
-        const findMoviesData = await movieModel.find({ name: { $regex: movieName, $options: "i" } }, { name: 1 });
+        const findMoviesData = await movieModel.find(
+            { name: { $regex: movieName, $options: "i" } },
+            { name: 1 }
+        );
 
         if (!findMoviesData) {
             return res.status(500).json({
@@ -476,7 +513,9 @@ const getAllSearchMovies = async function (req, res, next) {
 
         if (!searchQuery) return res.status(200).json({ message: "somthing worng" });
 
-        const searchMoviesRef = await movieModel.find({ name: { $regex: searchQuery, $options: "i" } });
+        const searchMoviesRef = await movieModel.find({
+            name: { $regex: searchQuery, $options: "i" },
+        });
 
         if (!!searchMoviesRef.length) {
             return res.status(200).json({ searchMoviesRef });
@@ -491,7 +530,11 @@ const findMovieAndRemoveFn = async function (req, res, data, collection) {
      * @findRef find the movie into the document
      * @return remove the find movie from the document
      */
-    const findRef = await collection.updateOne({ _id: data.userId }, { $pull: { favoriteMovies: { moviesId: data.movieId } } }, { new: true });
+    const findRef = await collection.updateOne(
+        { _id: data.userId },
+        { $pull: { favoriteMovies: { moviesId: data.movieId } } },
+        { new: true }
+    );
 
     if (!!findRef.modifiedCount) {
         await likedMovieArrayFunction(collection, data.userId, data.name, data.target, res);
@@ -527,7 +570,10 @@ const deleteLikeVideoFromDB = async function (req, res, next) {
 };
 
 const removeAllUserHistoryFn = async function (collection, data, res) {
-    const userHistory = await collection.updateOne({ _id: data._id, name: data.name }, { $pull: { history: {} } });
+    const userHistory = await collection.updateOne(
+        { _id: data._id, name: data.name },
+        { $pull: { history: {} } }
+    );
 
     if (userHistory.modifiedCount) {
         return res.status(200).json({
@@ -574,7 +620,10 @@ const removeVideosFromHistory = async function (collection, data) {
      * @return { boolean } success
      */
     for (let i = 0; i < data.moviesId.length; i++) {
-        userHistoryFind = await collection.updateOne({ _id: data._id }, { $pull: { history: { moviesId: data.moviesId[i] } } });
+        userHistoryFind = await collection.updateOne(
+            { _id: data._id },
+            { $pull: { history: { moviesId: data.moviesId[i] } } }
+        );
     }
 
     if (userHistoryFind.modifiedCount) {
@@ -647,7 +696,12 @@ const inertNewMovieComment = async function (req, res, next) {
             { _id: id, name },
             {
                 $push: {
-                    comments: { [`${provider === "google" ? "googleUserId" : "logInUserId"}`]: _id, comment: comment, commentUId: uId, commentTime },
+                    comments: {
+                        [`${provider === "google" ? "googleUserId" : "logInUserId"}`]: _id,
+                        comment: comment,
+                        commentUId: uId,
+                        commentTime,
+                    },
                 },
             }
         );
@@ -672,8 +726,18 @@ const getMoivesComments = async function (req, res, next) {
          */
         const userComments = await movieModel
             .findOne({ _id: movieId })
-            .populate("comments.googleUserId", { name: 1, email: 1, imageUrl: 1, uploadCustomProfileImage: 1 })
-            .populate("comments.logInUserId", { name: 1, email: 1, imageUrl: 1, uploadCustomProfileImage: 1 });
+            .populate("comments.googleUserId", {
+                name: 1,
+                email: 1,
+                imageUrl: 1,
+                uploadCustomProfileImage: 1,
+            })
+            .populate("comments.logInUserId", {
+                name: 1,
+                email: 1,
+                imageUrl: 1,
+                uploadCustomProfileImage: 1,
+            });
 
         res.status(200).json({
             userComments,
@@ -695,7 +759,13 @@ const getMoivesComments = async function (req, res, next) {
 const updateMovieCollectionComment = async function (data, event) {
     await movieModel.updateOne(
         { _id: data.movieId, "comments._id": data.commentId },
-        { [`$${event}`]: { "comments.$.likedUsers": { [data.userIdentity === "google" ? "googleUserId" : "logInUserId"]: data._id } } }
+        {
+            [`$${event}`]: {
+                "comments.$.likedUsers": {
+                    [data.userIdentity === "google" ? "googleUserId" : "logInUserId"]: data._id,
+                },
+            },
+        }
     );
 };
 
@@ -705,7 +775,8 @@ const updateUserCollectionCommnet = async function (data, collection, event) {
         {
             [`$${event}`]: {
                 likeComments: {
-                    [data.userIdentity === "google" ? "googleUserCommnetId" : "loginUserCommnetId"]: data.commentId,
+                    [data.userIdentity === "google" ? "googleUserCommnetId" : "loginUserCommnetId"]:
+                        data.commentId,
                 },
             },
         }
@@ -723,7 +794,15 @@ const likeAndUnlikeUserCommnets = async function (collection, res, data) {
          */
         const insertCommentIntoTheUserCollection = await collection.findOne(
             { _id: data._id },
-            { likeComments: { $elemMatch: { [data.userIdentity === "google" ? "googleUserCommnetId" : "loginUserCommnetId"]: data.commentId } } }
+            {
+                likeComments: {
+                    $elemMatch: {
+                        [data.userIdentity === "google"
+                            ? "googleUserCommnetId"
+                            : "loginUserCommnetId"]: data.commentId,
+                    },
+                },
+            }
         );
 
         if (!!insertCommentIntoTheUserCollection.likeComments.length) {
@@ -793,7 +872,15 @@ const movieCommentReport = async function (req, res, next) {
          */
         const findeMovieCommentReportDocument = await movieModel.findOne(
             { _id: selectedData.currentMovieId, name: selectedData.movieName },
-            { commentReports: { $elemMatch: { [userReportProvider === "google" ? "googleUserReportId" : "loginUserReportId"]: userReportId } } }
+            {
+                commentReports: {
+                    $elemMatch: {
+                        [userReportProvider === "google"
+                            ? "googleUserReportId"
+                            : "loginUserReportId"]: userReportId,
+                    },
+                },
+            }
         );
 
         if (findeMovieCommentReportDocument.commentReports.length === 0) {
@@ -802,7 +889,9 @@ const movieCommentReport = async function (req, res, next) {
                 {
                     $push: {
                         commentReports: {
-                            [userReportProvider === "google" ? "googleUserReportId" : "loginUserReportId"]: userReportId,
+                            [userReportProvider === "google"
+                                ? "googleUserReportId"
+                                : "loginUserReportId"]: userReportId,
                             report: report,
                             reportCommentId: selectedData.commentId,
                         },
@@ -927,7 +1016,15 @@ const updateUserProfile = async function (req, res, next) {
             const imageSave = await sharp(userProfileImagePath)
                 .resize(200, 200)
                 .jpeg({ quality: 90 })
-                .toFile(path.join(__dirname, "..", "uploads", "compressUserProfileImages", profileImageName));
+                .toFile(
+                    path.join(
+                        __dirname,
+                        "..",
+                        "uploads",
+                        "compressUserProfileImages",
+                        profileImageName
+                    )
+                );
 
             if (!!imageSave) {
                 if (provider == "login") {

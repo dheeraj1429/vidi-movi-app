@@ -48,23 +48,24 @@ app.use(
 );
 app.engine("ejs", ejs.renderFile);
 app.set("view engine", "ejs");
-app.use(
-    helmet({
-        crossOriginResourcePolicy: false,
-    })
-);
-
 // app.use(
 //     helmet({
-//         contentSecurityPolicy: {
-//             useDefaults: true,
-//             directives: {
-//                 "script-src": ["'self'", "https://apis.google.com/js/api.js", "apis.google.com", "accounts.google.com"],
-//                 "frame-src": ["'self'", "https://apis.google.com/js/api.js", "apis.google.com", "accounts.google.com"],
-//             },
-//         },
+//         crossOriginResourcePolicy: false,
 //     })
 // );
+
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            useDefaults: true,
+            directives: {
+                "script-src": ["'self'", "cdn.jsdelivr.net", "apis.google.com", "accounts.google.com", "accounts.google.com"],
+                "frame-src": ["'self'", "cdn.jsdelivr.net", "apis.google.com", "accounts.google.com", "accounts.google.com"],
+                "img-src": ["'self'", "https: data:"],
+            },
+        },
+    })
+);
 
 // app.use(express.static(path.join(path.resolve(__dirname), "public")));
 app.use(express.static(path.join(path.resolve(__dirname), "build")));

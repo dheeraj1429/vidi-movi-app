@@ -22,6 +22,7 @@ function MoviePlaySinglePage() {
                 </single.moviDiv>
                 <single.contentDiv>
                     {!!user && user.data ? <ChatBoxControllesComponent user={user} /> : null}
+                    <h4 className="comments_heding">Comments</h4>
                     <UserCommentsComponent />
                 </single.contentDiv>
             </single.flexDiv>

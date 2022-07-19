@@ -29,19 +29,34 @@ function UserCommentsComponent() {
 
     return (
         <comment.div>
-            <comment.commentScreen>
-                <h4 className="comments_heding">Comments</h4>
-                {currentMovieComment && !!currentMovieComment.length
-                    ? currentMovieComment.map((el) => (
-                          <UserCommentComponent fetch_comments={true} key={el.id} currentMovie={id} data={el} userCookie={cookie} user={user} />
-                      ))
-                    : null}
-                {movieComments && !!movieComments.length
-                    ? movieComments.map((el) => (
-                          <UserCommentComponent fetch_comments={true} key={el._id} currentMovie={id} userCookie={cookie} data={el} user={user} />
-                      ))
-                    : null}
-            </comment.commentScreen>
+            {user && user?.data ? (
+                <comment.commentScreen>
+                    {currentMovieComment && !!currentMovieComment.length
+                        ? currentMovieComment.map((el) => (
+                              <UserCommentComponent
+                                  fetch_comments={true}
+                                  key={el.id}
+                                  currentMovie={id}
+                                  data={el}
+                                  userCookie={cookie}
+                                  user={user}
+                              />
+                          ))
+                        : null}
+                    {movieComments && !!movieComments.length
+                        ? movieComments.map((el) => (
+                              <UserCommentComponent
+                                  fetch_comments={true}
+                                  key={el._id}
+                                  currentMovie={id}
+                                  userCookie={cookie}
+                                  data={el}
+                                  user={user}
+                              />
+                          ))
+                        : null}
+                </comment.commentScreen>
+            ) : null}
         </comment.div>
     );
 }

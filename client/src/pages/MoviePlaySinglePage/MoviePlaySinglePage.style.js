@@ -3,6 +3,12 @@ import styled from "styled-components";
 export const div = styled.div`
     width: 100%;
     height: auto;
+
+    .comments_heding {
+        color: var(--main-cl);
+        margin-bottom: 1rem;
+        font-weight: 400;
+    }
 `;
 
 export const flexDiv = styled.div`
