@@ -3,7 +3,15 @@ import * as input from "./UserProfileInputComponent.style";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-function UserProfileInputComponent({ heading, subHeading, placeHolder, textAria, value, onChange, name }) {
+function UserProfileInputComponent({
+    heading,
+    subHeading,
+    placeHolder,
+    textAria,
+    value,
+    onChange,
+    name,
+}) {
     return (
         <input.div>
             <h5>{heading}</h5>
@@ -18,9 +26,23 @@ function UserProfileInputComponent({ heading, subHeading, placeHolder, textAria,
                 autoComplete="off"
             >
                 {textAria ? (
-                    <TextField id="outlined-multiline-static" name={name} label={placeHolder} multiline rows={10} value={value} onChange={onChange} />
+                    <TextField
+                        id="outlined-multiline-static"
+                        name={name}
+                        label={placeHolder}
+                        multiline
+                        rows={10}
+                        value={value}
+                        onChange={onChange}
+                    />
                 ) : (
-                    <TextField id="outlined-basic" label={placeHolder} name={name} variant="standard" onChange={onChange} />
+                    <TextField
+                        id="outlined-basic"
+                        label={placeHolder}
+                        name={name}
+                        variant="outlined"
+                        onChange={onChange}
+                    />
                 )}
             </Box>
         </input.div>

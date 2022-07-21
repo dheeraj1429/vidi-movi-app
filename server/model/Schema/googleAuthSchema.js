@@ -16,7 +16,12 @@ const authUserSchema = new Schema({
     tokens: [{ token: { type: String, required: [true, "please genrate the user token"] } }],
     provider: { type: String },
     createdAt: { type: Date, default: Date.now },
-    favoriteMovies: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie" }, likeTime: { type: Date, default: Date.now } }],
+    favoriteMovies: [
+        {
+            moviesId: { type: mongoose.Types.ObjectId, ref: "movie" },
+            likeTime: { type: Date, default: Date.now },
+        },
+    ],
     history: [
         {
             moviesId: { type: mongoose.Types.ObjectId, ref: "movie" },
@@ -25,7 +30,9 @@ const authUserSchema = new Schema({
         },
     ],
     watchLater: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie" } }],
-    moviesPlayList: [{ moviesId: { type: String, ref: "movie" }, storeDate: { type: Date, default: Date.now } }],
+    moviesPlayList: [
+        { moviesId: { type: String, ref: "movie" }, storeDate: { type: Date, default: Date.now } },
+    ],
     likeComments: [
         {
             movie: { type: mongoose.Types.ObjectId, ref: "movie" },
@@ -34,6 +41,10 @@ const authUserSchema = new Schema({
             likeTime: { type: Date, default: Date.now },
         },
     ],
+    userProfileBannerImage: {
+        type: String,
+        default: "vimal-s-MV37Sp4gdxo-unsplash.jpg",
+    },
     uploadCustomProfileImage: { type: Boolean, default: false },
     bio: { type: String },
 });
@@ -41,7 +52,13 @@ const authUserSchema = new Schema({
 authUserSchema.methods.genrateUserToken = async function () {
     try {
         const token = await jwt.sign(
-            { _id: this._id.toString(), name: this.name, email: this.email, imageUrl: this.imageUrl, provider: this.provider },
+            {
+                _id: this._id.toString(),
+                name: this.name,
+                email: this.email,
+                imageUrl: this.imageUrl,
+                provider: this.provider,
+            },
             JWT_TOKEN,
             {
                 expiresIn: "30d",

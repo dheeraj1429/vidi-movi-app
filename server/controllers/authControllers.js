@@ -33,8 +33,12 @@ const signInUser = async function (req, res, next) {
             // Genrate the user token
             const token = await user.genrateUserToken();
 
-            if (!token) return res.status(400).json({ success: false, massage: "user token is not created" });
-            if (!userRef) return res.status(400).json({ success: false, massage: "somthing worng" });
+            if (!token)
+                return res
+                    .status(400)
+                    .json({ success: false, massage: "user token is not created" });
+            if (!userRef)
+                return res.status(400).json({ success: false, massage: "somthing worng" });
 
             const dataObject = {
                 name,
@@ -43,6 +47,7 @@ const signInUser = async function (req, res, next) {
                 _id: user._id,
                 imageUrl: user.imageUrl,
                 uploadCustomProfileImage: user.uploadCustomProfileImage,
+                userProfileBannerImage: user.userProfileBannerImage,
                 token,
                 provider: "login",
             };
@@ -71,7 +76,8 @@ const logInUser = async function (req, res, next) {
 
         const findDbUser = await userModel.findOne({ email: email });
 
-        if (!findDbUser) return res.status(200).json({ success: false, messages: "user is not exists" });
+        if (!findDbUser)
+            return res.status(200).json({ success: false, messages: "user is not exists" });
 
         const varifyUser = await bcryptjs.compare(password, findDbUser.password);
 
@@ -86,6 +92,7 @@ const logInUser = async function (req, res, next) {
                 _id: findDbUser._id,
                 imageUrl: findDbUser.imageUrl,
                 uploadCustomProfileImage: findDbUser.uploadCustomProfileImage,
+                userProfileBannerImage: findDbUser.userProfileBannerImage,
                 token: token,
                 provider: "login",
             };
@@ -110,7 +117,8 @@ const forgetPassword = async function (req, res, next) {
     try {
         const { email } = req.body;
         const findUserInDb = await userModel.findOne({ email: email });
-        if (!findUserInDb) return res.status(200).json({ success: false, messages: "no user find" });
+        if (!findUserInDb)
+            return res.status(200).json({ success: false, messages: "no user find" });
 
         console.log(email);
 
@@ -122,50 +130,56 @@ const forgetPassword = async function (req, res, next) {
         const token = await jwt.sign({ _id: userID, name: userName, email: userEmail }, KEY);
 
         if (token) {
-            fs.readFile(path.join(path.dirname(__dirname), "views", "templates", "forget-password.ejs"), "utf-8", function (err, data) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    const outputData = data.replace(
-                        '<button class="large expend" href="#">RESET PASSWORD</button>',
-                        `<a href='${cart.WEBSITE_URL}/auth/password-reset-request/${token}'>
+            fs.readFile(
+                path.join(path.dirname(__dirname), "views", "templates", "forget-password.ejs"),
+                "utf-8",
+                function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        const outputData = data.replace(
+                            '<button class="large expend" href="#">RESET PASSWORD</button>',
+                            `<a href='${cart.WEBSITE_URL}/auth/password-reset-request/${token}'>
                         <button class="large expend" >RESET PASSWORD</button>
                         </a>`
-                    );
+                        );
 
-                    let transporter = nodemailer.createTransport({
-                        service: "gmail",
-                        auth: {
-                            user: cart.user,
-                            pass: cart.password,
-                        },
-                    });
-
-                    const mailOptions = {
-                        from: cart.user,
-                        to: findUserInDb.email,
-                        subject: "forget password request",
-                        text: "reset your password",
-                        html: ejs.render(outputData),
-                    };
-
-                    transporter.sendMail(mailOptions, function (err, data) {
-                        if (err) {
-                            console.log(err);
-
-                            return res.status(400).json({ success: false, messages: "some thing worng!!" });
-                        }
-
-                        console.log(data);
-                        console.log("mail successfully sent");
-
-                        return res.status(200).json({
-                            success: true,
-                            messages: "mail successfully sent",
+                        let transporter = nodemailer.createTransport({
+                            service: "gmail",
+                            auth: {
+                                user: cart.user,
+                                pass: cart.password,
+                            },
                         });
-                    });
+
+                        const mailOptions = {
+                            from: cart.user,
+                            to: findUserInDb.email,
+                            subject: "forget password request",
+                            text: "reset your password",
+                            html: ejs.render(outputData),
+                        };
+
+                        transporter.sendMail(mailOptions, function (err, data) {
+                            if (err) {
+                                console.log(err);
+
+                                return res
+                                    .status(400)
+                                    .json({ success: false, messages: "some thing worng!!" });
+                            }
+
+                            console.log(data);
+                            console.log("mail successfully sent");
+
+                            return res.status(200).json({
+                                success: true,
+                                messages: "mail successfully sent",
+                            });
+                        });
+                    }
                 }
-            });
+            );
         }
     } catch (err) {
         console.log(err);
@@ -224,6 +238,7 @@ const googleLogin = async function (req, res, next) {
                 name: findUserInDb.givenName,
                 token: findUserToken,
                 admin: findUserInDb.isAdmin,
+                userProfileBannerImage: findUserInDb.userProfileBannerImage,
                 provider: "google",
             };
 
@@ -258,6 +273,7 @@ const googleLogin = async function (req, res, next) {
                     name: googleUserRef.givenName,
                     token: userToken,
                     admin: googleUserRef.isAdmin,
+                    userProfileBannerImage: googleUserRef.userProfileBannerImage,
                     provider: "google",
                 };
 

@@ -29,6 +29,7 @@ function UserSettingProfileComponent({ edit, fn }) {
             {user && user.data ? (
                 <profile.div edit={edit}>
                     <profile.profile
+                        edit={edit}
                         style={
                             user.data.imageUrl
                                 ? {
@@ -41,14 +42,21 @@ function UserSettingProfileComponent({ edit, fn }) {
                                       })`,
                                   }
                                 : {
-                                      backgroundColor: `${!!Image ? "transparent" : "var(--watch-cl)"}`,
+                                      backgroundColor: `${
+                                          !!Image ? "transparent" : "var(--watch-cl)"
+                                      }`,
                                       backgroundImage: `url(${!!Image ? Image : null})`,
                                   }
                         }
                     >
                         {edit ? <BsUpload onClick={ProfileHandler} /> : null}
                         {edit ? (
-                            <input type="file" id="imgupload" onChange={UploadImageFileHandler} ref={(el) => (uploadProfileRef.current = el)} />
+                            <input
+                                type="file"
+                                id="imgupload"
+                                onChange={UploadImageFileHandler}
+                                ref={(el) => (uploadProfileRef.current = el)}
+                            />
                         ) : null}
 
                         {user.data.imageUrl ? null : edit ? null : <p>{user.data.name}</p>}

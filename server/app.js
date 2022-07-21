@@ -16,17 +16,7 @@ const express = require("express"),
     process = require("node:process"),
     app = express(),
     port = process.env.PORT || 9005,
-    http = require("http").createServer(app),
-    socket = require("socket.io"),
-    movieModel = require("./model/Schema/MoviesSchema"),
-    jwt = require("jsonwebtoken"),
-    JWT_TOKEN = cart.TOKEN,
-    io = socket(http, {
-        cors: {
-            origin: "http://localhost/3000",
-            credentials: true,
-        },
-    });
+    http = require("http").createServer(app);
 
 /* -- route files---*/
 const adminRouter = require("./routes/adminRoute"),
@@ -59,8 +49,20 @@ app.use(
         contentSecurityPolicy: {
             useDefaults: true,
             directives: {
-                "script-src": ["'self'", "cdn.jsdelivr.net", "apis.google.com", "accounts.google.com", "accounts.google.com"],
-                "frame-src": ["'self'", "cdn.jsdelivr.net", "apis.google.com", "accounts.google.com", "accounts.google.com"],
+                "script-src": [
+                    "'self'",
+                    "cdn.jsdelivr.net",
+                    "apis.google.com",
+                    "accounts.google.com",
+                    "accounts.google.com",
+                ],
+                "frame-src": [
+                    "'self'",
+                    "cdn.jsdelivr.net",
+                    "apis.google.com",
+                    "accounts.google.com",
+                    "accounts.google.com",
+                ],
                 "img-src": ["'self'", "https: data:"],
             },
         },

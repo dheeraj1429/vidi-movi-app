@@ -1,19 +1,23 @@
 import styled from "styled-components";
 
 export const div = styled.div`
-    padding: 2rem 1rem;
-    text-align: center;
+    padding: ${(props) => (props.edit ? null : "2rem 1rem;")};
+    text-align: ${(props) => (props.edit ? "start" : "center")};
     background-color: ${(props) => (props.edit ? null : "var(--overlay-cl)")};
+    display: ${(props) => (props.edit ? "flex" : "block")};
+    margin-top: ${(props) => (props.edit ? "-116px" : null)};
+    position: relative;
 `;
 
 export const profile = styled.div`
-    width: 100px;
-    height: 100px;
+    width: ${(props) => (props.edit ? "130px" : "100px")};
+    height: ${(props) => (props.edit ? "130px" : "100px")};
     background-position: center;
     background-size: cover;
     border-radius: 50%;
     /* border: 1px solid red; */
-    margin: auto;
+    margin: ${(props) => (props.edit ? null : "auto")};
+    margin-right: ${(props) => (props.edit ? "2rem" : null)};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,15 +39,16 @@ export const profileContnet = styled.div`
     padding-top: 1.4rem;
     p {
         color: var(--spec-elevated-background-inverse);
-        font-size: 12px;
         letter-spacing: 1px;
         font-weight: 200;
         margin-bottom: 0.3rem;
-        color: ${(props) => (props.edit ? "var(--dark-cl)" : "var(--main-cl)")};
+        color: var(--main-cl);
+        font-size: ${(props) => (props.edit ? "20px" : "12px")};
     }
 
     h1 {
         color: ${(props) => (props.edit ? "var(--spec-icon-disabled)" : "var(--main-cl)")};
-        font-size: 30px;
+        font-size: ${(props) => (props.edit ? "60px" : "30px")};
+        font-family: "Paralucent-meduim";
     }
 `;

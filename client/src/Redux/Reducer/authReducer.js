@@ -5,6 +5,7 @@ const INITAL_STATE = {
     user: null,
     forgetPassword: null,
     userProfileUpdate: null,
+    userProfileBanner: null,
 };
 
 const authReduer = function (state = INITAL_STATE, action) {
@@ -46,6 +47,12 @@ const authReduer = function (state = INITAL_STATE, action) {
             return {
                 ...state,
                 userProfileUpdate: action.payload,
+            };
+
+        case ACTION_TYPE.UPDATE_USER_PROFILE_BANNER:
+            return {
+                ...state,
+                userProfileBanner: action.payload,
             };
 
         default:

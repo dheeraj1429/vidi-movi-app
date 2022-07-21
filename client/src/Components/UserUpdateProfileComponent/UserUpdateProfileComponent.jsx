@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { uploadUserProfile } from "../../Redux/Action/indexAction";
 import { useCookies } from "react-cookie";
 import { message } from "antd";
+import UserProfileBannerComponent from "../UserProfileBannerComponent/UserProfileBannerComponent";
 
 function UserUpdateProfileComponent() {
     const user = useSelector((state) => state.auth.user);
@@ -18,6 +19,7 @@ function UserUpdateProfileComponent() {
         email: "",
         bio: "",
     });
+    const [Track, setTrack] = useState(false);
     const [cookie] = useCookies(["user"]);
     const [UserProfile, setUserProfile] = useState("");
     const dispatch = useDispatch();
@@ -26,6 +28,7 @@ function UserUpdateProfileComponent() {
         const name = e.target.name;
         const value = e.target.value;
         setUserData({ ...UserData, [name]: value });
+        setTrack(true);
     };
 
     useEffect(() => {
@@ -59,8 +62,17 @@ function UserUpdateProfileComponent() {
         }
     }, [userProfileUpdate]);
 
+    const info = () => {
+        message.info("older information and new information are the same!!");
+    };
+
     const uploadFile = function () {
-        if (cookie?.user && cookie?.user?.data) {
+        if (
+            (cookie?.user && cookie?.user?.data && Track && user?.data?.name !== UserData.name) ||
+            user?.data?.email !== UserData.email ||
+            user?.data?.bio !== UserData.bio ||
+            UserProfile !== ""
+        ) {
             const token = cookie.user.data.token;
             openMessage();
 
@@ -73,7 +85,7 @@ function UserUpdateProfileComponent() {
 
             dispatch(uploadUserProfile(formData));
         } else {
-            console.log("plase login in first");
+            info();
         }
     };
 
@@ -81,7 +93,8 @@ function UserUpdateProfileComponent() {
         <profile.div>
             {!!user && user.data ? (
                 <>
-                    <CartHeadingComponent text={"Profile"} />
+                    <UserProfileBannerComponent />
+                    {/* <CartHeadingComponent text={"Profile"} /> */}
                     <profile.container>
                         <UserSettingProfileComponent edit={true} fn={GetUserImageHandler} />
                         <UserProfileInputComponent
@@ -91,7 +104,12 @@ function UserUpdateProfileComponent() {
                             onChange={ChangeHandler}
                             name={"name"}
                         />
-                        <UserProfileInputComponent name={"email"} heading={"Email"} placeHolder={UserData.email} onChange={ChangeHandler} />
+                        <UserProfileInputComponent
+                            name={"email"}
+                            heading={"Email"}
+                            placeHolder={UserData.email}
+                            onChange={ChangeHandler}
+                        />
                         <UserProfileInputComponent
                             heading={"Bio"}
                             subHeading={`Maximun 200 charechters`}
@@ -103,7 +121,11 @@ function UserUpdateProfileComponent() {
                         />
 
                         <profile.uploadButtonDiv>
-                            <CustomButtonComponent innteText={"Update Profile"} buttonCl={"Profile_upload_button"} onClick={uploadFile} />
+                            <CustomButtonComponent
+                                innteText={"Update Profile"}
+                                buttonCl={"Profile_upload_button"}
+                                onClick={uploadFile}
+                            />
                         </profile.uploadButtonDiv>
                     </profile.container>
                 </>

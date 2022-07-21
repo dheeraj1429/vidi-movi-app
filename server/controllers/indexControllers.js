@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const cart = require("../cart");
 const userFindInCookie = require("../helpers/varifyUser");
 const sharp = require("sharp");
+const compressImage = require("../helpers/compressImages");
 const JWT_TOKEN = cart.TOKEN;
 
 const getAllMovies = async function (req, res, next) {
@@ -929,6 +930,7 @@ const getLoginUser = async function (req, res, next) {
 
         if (provider === "google") {
             const findUser = await googleAuthUser.findOne({ _id }, { password: 0, tokens: 0 });
+
             return res.status(200).json({
                 user: findUser,
             });
@@ -960,7 +962,7 @@ const updateUserProfileFunction = async function (colelctions, res, data, id) {
         });
     } else {
         return res.status(200).json({
-            message: "no changes",
+            message: "already updated",
         });
     }
 };
@@ -972,6 +974,7 @@ const updateUserProfileInformation = async function (collection, res, data) {
         email: data.email,
         bio: data.bio,
     };
+    k;
 
     if (data?.profileImageName) {
         /**
@@ -1005,6 +1008,7 @@ const updateUserProfile = async function (req, res, next) {
              * @profileImageName get the user update image name
              * @userProfileImagePath get the user update image pathname
              */
+
             const profileImageName = file[0].filename;
             const userProfileImagePath = file[0].path;
 
@@ -1013,26 +1017,18 @@ const updateUserProfile = async function (req, res, next) {
              */
             data.profileImageName = profileImageName;
 
-            const imageSave = await sharp(userProfileImagePath)
-                .resize(200, 200)
-                .jpeg({ quality: 90 })
-                .toFile(
-                    path.join(
-                        __dirname,
-                        "..",
-                        "uploads",
-                        "compressUserProfileImages",
-                        profileImageName
-                    )
-                );
+            // store the user branner image and the user profile image into the server folder files.
+            await compressImage(
+                userProfileImagePath,
+                "compressUserProfileImages",
+                profileImageName
+            );
 
-            if (!!imageSave) {
-                if (provider == "login") {
-                    await updateUserProfileInformation(userModel, res, data);
-                }
-                if (provider === "google") {
-                    await updateUserProfileInformation(googleAuthUser, res, data);
-                }
+            if (provider == "login") {
+                await updateUserProfileInformation(userModel, res, data);
+            }
+            if (provider === "google") {
+                await updateUserProfileInformation(googleAuthUser, res, data);
             }
         } else {
             if (provider == "login") {
@@ -1041,6 +1037,58 @@ const updateUserProfile = async function (req, res, next) {
             if (provider === "google") {
                 await updateUserProfileInformation(googleAuthUser, res, data);
             }
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+/**
+ *
+ * @param { googleAuthSchema, userModel } collection  database user collection to find the which user is login..
+ * @param { Object } res
+ * @param { Object } data
+ * @returns
+ */
+const updateUserBannerProfile = async function (collection, res, data) {
+    /**
+     * @updateUserProfileBanner find the user and then update the user data.
+     */
+    const updateUserProfileBanner = await collection.updateOne(
+        { _id: data._id },
+        { $set: { userProfileBannerImage: data.fileName } }
+    );
+
+    if (!!updateUserProfileBanner.modifiedCount) {
+        return res.status(200).json({
+            message: "update profile",
+        });
+    } else {
+        return res.status(200).json({
+            message: "already updated",
+        });
+    }
+};
+
+const updateUserProfileBanner = async function (req, res, next) {
+    try {
+        const { token } = req.body;
+        const file = req.files;
+        const varifyUser = await jwt.verify(token, JWT_TOKEN);
+        const { _id, provider } = varifyUser;
+        const fileName = file[0].filename;
+
+        const data = {
+            _id,
+            fileName,
+        };
+
+        if (provider === "google") {
+            await updateUserBannerProfile(googleAuthUser, res, data);
+        }
+
+        if (provider === "login") {
+            await updateUserBannerProfile(userModel, res, data);
         }
     } catch (err) {
         console.log(err);
@@ -1068,4 +1116,5 @@ module.exports = {
     movieCommentReport,
     getLoginUser,
     updateUserProfile,
+    updateUserProfileBanner,
 };

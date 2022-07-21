@@ -12,7 +12,12 @@ const userSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     tokens: [{ token: { type: String, required: [true, "please genrate the user token"] } }],
     provider: { type: String },
-    favoriteMovies: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie" }, likeTime: { type: Date, default: Date.now } }],
+    favoriteMovies: [
+        {
+            moviesId: { type: mongoose.Types.ObjectId, ref: "movie" },
+            likeTime: { type: Date, default: Date.now },
+        },
+    ],
     history: [
         {
             moviesId: { type: mongoose.Types.ObjectId, ref: "movie" },
@@ -21,7 +26,9 @@ const userSchema = new mongoose.Schema({
         },
     ],
     watchLater: [{ moviesId: { type: mongoose.Types.ObjectId, ref: "movie" } }],
-    moviesPlayList: [{ moviesId: { type: String, ref: "movie" }, storeDate: { type: Date, default: Date.now } }],
+    moviesPlayList: [
+        { moviesId: { type: String, ref: "movie" }, storeDate: { type: Date, default: Date.now } },
+    ],
     likeComments: [
         {
             movieComment: { type: mongoose.Types.ObjectId, ref: "movie" },
@@ -35,6 +42,10 @@ const userSchema = new mongoose.Schema({
         default:
             "https://i.guim.co.uk/img/media/ef8492feb3715ed4de705727d9f513c168a8b196/37_0_1125_675/master/1125.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=d456a2af571d980d8b2985472c262b31",
     },
+    userProfileBannerImage: {
+        type: String,
+        default: "/UserProfileBannerImage/vimal-s-MV37Sp4gdxo-unsplash.jpg",
+    },
     uploadCustomProfileImage: { type: Boolean, default: false },
     bio: { type: String },
 });
@@ -42,9 +53,18 @@ const userSchema = new mongoose.Schema({
 // genrate the user token
 userSchema.methods.genrateUserToken = async function () {
     try {
-        const token = await jwt.sign({ _id: this._id.toString(), name: this.name, isAdmin: this.isAdmin, provider: this.provider }, JWT_TOKEN, {
-            expiresIn: "30d",
-        });
+        const token = await jwt.sign(
+            {
+                _id: this._id.toString(),
+                name: this.name,
+                isAdmin: this.isAdmin,
+                provider: this.provider,
+            },
+            JWT_TOKEN,
+            {
+                expiresIn: "30d",
+            }
+        );
         this.tokens = this.tokens.concat({ token });
         this.save();
         return token;
