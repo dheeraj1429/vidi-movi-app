@@ -6,7 +6,7 @@ const sharp = require("sharp");
 
 const moviesUpload = async function (req, res, next) {
     try {
-        const { name, category, genra, artist, Album, description, licensed } = req.body;
+        const { name, category, genra, artist, Album, description, licensed, type } = req.body;
         const file = req.files;
 
         const videoFileName = file[0].filename;
@@ -42,6 +42,7 @@ const moviesUpload = async function (req, res, next) {
                 movieVideoPath: videoPath,
                 thumbnailName: thumbnailFileName,
                 thumbnailPath: thumbnailpath,
+                type,
             });
 
             const movieRef = await movieUpload.save();
@@ -60,8 +61,14 @@ const moviesUpload = async function (req, res, next) {
 
 const getAllUser = async function (req, res, next) {
     try {
-        const authUserRef = await googleAuthUser.find({}, { password: 0, tokens: 0, history: 0, watchLater: 0, favoriteMovies: 0 });
-        const logInUsers = await userModel.find({}, { password: 0, tokens: 0, history: 0, watchLater: 0, favoriteMovies: 0 });
+        const authUserRef = await googleAuthUser.find(
+            {},
+            { password: 0, tokens: 0, history: 0, watchLater: 0, favoriteMovies: 0 }
+        );
+        const logInUsers = await userModel.find(
+            {},
+            { password: 0, tokens: 0, history: 0, watchLater: 0, favoriteMovies: 0 }
+        );
         const allUserArray = [];
 
         authUserRef.map((el) => allUserArray.push(el));
@@ -76,8 +83,20 @@ const getAllUser = async function (req, res, next) {
     }
 };
 
-const updateUserInfoFunction = async function (collection, req, res, next, _id, name, email, AdminDataInfo) {
-    const updateUserRef = await collection.updateOne({ _id, name, email }, { $set: { name: name, email: email, isAdmin: AdminDataInfo } });
+const updateUserInfoFunction = async function (
+    collection,
+    req,
+    res,
+    next,
+    _id,
+    name,
+    email,
+    AdminDataInfo
+) {
+    const updateUserRef = await collection.updateOne(
+        { _id, name, email },
+        { $set: { name: name, email: email, isAdmin: AdminDataInfo } }
+    );
 
     if (updateUserRef.modifiedCount === 1) {
         getAllUser(req, res, next);
@@ -89,11 +108,29 @@ const updateUserProfile = async function (req, res, next) {
         const { name, email, AdminDataInfo, provider, _id } = req.body;
 
         if (provider === "google") {
-            await updateUserInfoFunction(googleAuthUser, req, res, next, _id, name, email, AdminDataInfo);
+            await updateUserInfoFunction(
+                googleAuthUser,
+                req,
+                res,
+                next,
+                _id,
+                name,
+                email,
+                AdminDataInfo
+            );
         }
 
         if (provider === "login") {
-            await updateUserInfoFunction(userModel, req, res, next, _id, name, email, AdminDataInfo);
+            await updateUserInfoFunction(
+                userModel,
+                req,
+                res,
+                next,
+                _id,
+                name,
+                email,
+                AdminDataInfo
+            );
         }
     } catch (err) {
         console.log(err);

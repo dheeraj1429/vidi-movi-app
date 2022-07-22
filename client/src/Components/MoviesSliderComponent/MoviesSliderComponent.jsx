@@ -1,19 +1,25 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import * as moviesSlider from "./MoviesSliderComponent.style";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import MoviesCardsComponent from "../MoviesCardsComponent/MoviesCardsComponent";
+import { GrFormNext } from "@react-icons/all-files/gr/GrFormNext";
+import { GrFormPrevious } from "@react-icons/all-files/gr/GrFormPrevious";
+import MovieLazyCardComponent from "../MovieLazyCardComponent/MovieLazyCardComponent";
 
-function MoviesSliderComponent({ filterByViews }) {
+function MoviesSliderComponent({ filterByViews, filterBy }) {
     const all_movies = useSelector((state) => state.index.all_movies);
 
     var settings = {
         dots: false,
         infinite: true,
         speed: 200,
-        slidesToShow: 7,
+        slidesToShow: 6,
         slidesToScroll: 3,
         arrows: false,
+        arrows: true,
+        nextArrow: <GrFormNext />,
+        prevArrow: <GrFormPrevious />,
         responsive: [
             {
                 breakpoint: 1600,
@@ -51,22 +57,32 @@ function MoviesSliderComponent({ filterByViews }) {
 
     return (
         <moviesSlider.div>
-            {/* <Slider {...settings}> */}
-            {(() => {
-                if (all_movies && all_movies.allMoviesDataCollection.length && all_movies.success) {
-                    if (!filterByViews) {
-                        return all_movies.allMoviesDataCollection.map((el) => <MoviesCardsComponent key={el._id} data={el} />);
-                    } else if (filterByViews) {
-                        return all_movies.allMoviesDataCollection
-                            .filter((el) => el.views >= 5)
-                            .sort((a, b) => b.views - a.views)
-                            .map((el) => <MoviesCardsComponent key={el._id} data={el} />);
+            <Slider {...settings}>
+                {(() => {
+                    if (
+                        all_movies &&
+                        all_movies.allMoviesDataCollection.length &&
+                        all_movies.success
+                    ) {
+                        if (!filterByViews && filterBy === undefined) {
+                            return all_movies.allMoviesDataCollection.map((el) => (
+                                <MovieLazyCardComponent key={el._id} data={el} />
+                            ));
+                        } else if (filterByViews) {
+                            return all_movies.allMoviesDataCollection
+                                .filter((el) => el.views >= 5)
+                                .sort((a, b) => b.views - a.views)
+                                .map((el) => <MovieLazyCardComponent key={el._id} data={el} />);
+                        } else if (filterBy) {
+                            return all_movies.allMoviesDataCollection
+                                .filter((el) => el.type === filterBy)
+                                .map((el) => <MovieLazyCardComponent key={el._id} data={el} />);
+                        }
+                    } else {
+                        return null;
                     }
-                } else {
-                    return null;
-                }
-            })()}
-            {/* </Slider> */}
+                })()}
+            </Slider>
         </moviesSlider.div>
     );
 }

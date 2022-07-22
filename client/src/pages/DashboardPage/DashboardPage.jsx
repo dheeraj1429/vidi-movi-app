@@ -20,9 +20,9 @@ function DashboardPage() {
     return (
         <>
             <dashboard.mainDiv>
-                <div className="navbar-div">
+                {/* <div className="navbar-div">
                     <DashboardNavbarComponent />
-                </div>
+                </div> */}
                 <dashboard.div>
                     <dashboard.side>
                         <DashboardSiderComponent />

@@ -415,13 +415,13 @@ const likeMovies = async function (req, res, next) {
     }
 };
 
-const likedMovieArrayFunction = async function (collection, _id, name, findTarget, res) {
+const likedMovieArrayFunction = async function (collection, _id, findTarget, res) {
     /**
      * @findAllLikedMoviesInDb get the all user like movies
      * @return send back the array of the object which is cantan all the liked movie objects
      */
     const findAllLikedMoviesInDb = await collection
-        .findOne({ _id, name })
+        .findOne({ _id })
         .populate(`${findTarget}.moviesId`);
 
     return res.status(200).json({
@@ -433,17 +433,16 @@ const likedMovieArrayFunction = async function (collection, _id, name, findTarge
 const getAllLikeMovies = async function (req, res, next) {
     try {
         const varifyUser = await userFindInCookie(req, res);
-
-        const { _id, name, provider } = varifyUser;
+        const { _id, provider } = varifyUser;
 
         let findTarget = "favoriteMovies";
 
         if (provider === "login") {
-            await likedMovieArrayFunction(userModel, _id, name, findTarget, res);
+            await likedMovieArrayFunction(userModel, _id, findTarget, res);
         }
 
         if (provider === "google") {
-            await likedMovieArrayFunction(googleAuthUser, _id, name, findTarget, res);
+            await likedMovieArrayFunction(googleAuthUser, _id, findTarget, res);
         }
     } catch (err) {
         console.log(err);
@@ -974,7 +973,6 @@ const updateUserProfileInformation = async function (collection, res, data) {
         email: data.email,
         bio: data.bio,
     };
-    k;
 
     if (data?.profileImageName) {
         /**

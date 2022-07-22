@@ -7,6 +7,26 @@ export const div = styled.div`
     display: ${(props) => (props.edit ? "flex" : "block")};
     margin-top: ${(props) => (props.edit ? "-116px" : null)};
     position: relative;
+
+    .dashboard_user_profile {
+        width: 120px;
+        height: 120px;
+        border: 2px solid var(--smooht-gray-cl);
+        z-index: 100;
+        position: relative;
+    }
+
+    .userProfile_banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 38%;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        z-index: 1;
+    }
 `;
 
 export const profile = styled.div`
@@ -47,7 +67,7 @@ export const profileContnet = styled.div`
     }
 
     h1 {
-        color: ${(props) => (props.edit ? "var(--spec-icon-disabled)" : "var(--main-cl)")};
+        color: var(--main-cl);
         font-size: ${(props) => (props.edit ? "60px" : "30px")};
         font-family: "Paralucent-meduim";
     }

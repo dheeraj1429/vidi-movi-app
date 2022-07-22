@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const header = styled.div`
-    background-color: var(--main-cl);
+    background-color: var(--spec-menu-background);
     padding-right: 1rem;
     /* position: fixed; */
     width: 100%;
@@ -16,7 +16,7 @@ export const header = styled.div`
     }
 
     svg {
-        /* color: var(--main-cl); */
+        color: var(--main-cl);
         cursor: pointer;
     }
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const div = styled.div`
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(7, 1fr);
 
     @media (max-width: 1600px) {
@@ -22,5 +22,5 @@ export const div = styled.div`
 
     @media (max-width: 700px) {
         grid-template-columns: repeat(1, 1fr);
-    }
+    } */
 `;

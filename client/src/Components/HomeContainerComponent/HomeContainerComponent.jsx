@@ -1,15 +1,12 @@
 import React from "react";
 import * as Home from "./HomeContainerComponent.style";
 import BannerComponent from "../BannerComponent/BannerComponent";
-// import { useSelector } from "react-redux";
 import HeadingComponent from "../HeadingComponent/HeadingComponent";
 import NavbarComponent from "../NavbarComponent/NavbarComponent";
 import ContinueWatchingComponent from "../ContinueWatchingComponent/ContinueWatchingComponent";
 import MoviesSliderComponent from "../MoviesSliderComponent/MoviesSliderComponent";
 
 function HomeContainerComponent() {
-    // const user = useSelector((state) => state.auth.user);
-
     return (
         <Home.div>
             <NavbarComponent />
@@ -28,12 +25,19 @@ function HomeContainerComponent() {
                 </Home.spaceDiv>
             ) : null} */}
 
-            <Home.spaceDiv>
-                <HeadingComponent heading={"New"} />
-                <Home.moviesShowDiv>
-                    <MoviesSliderComponent />
-                </Home.moviesShowDiv>
-            </Home.spaceDiv>
+            {/* <Home.spaceDiv> */}
+            <HeadingComponent heading={"Movies"} />
+            <Home.moviesShowDiv>
+                <MoviesSliderComponent filterBy={"Movie"} />
+            </Home.moviesShowDiv>
+            {/* </Home.spaceDiv> */}
+
+            {/* <Home.spaceDiv> */}
+            <HeadingComponent heading={"Songs"} />
+            <Home.moviesShowDiv>
+                <MoviesSliderComponent filterBy={"Song"} />
+            </Home.moviesShowDiv>
+            {/* </Home.spaceDiv> */}
         </Home.div>
     );
 }

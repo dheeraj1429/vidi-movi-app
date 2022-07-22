@@ -15,6 +15,11 @@ export const div = styled.div`
     h1 {
         font-size: 20px;
         margin-bottom: 2rem;
+        color: var(--main-cl);
+    }
+
+    svg {
+        fill: var(--main-cl);
     }
 `;
 
@@ -22,7 +27,7 @@ export const innerDiv = styled.div`
     width: 500px;
     height: auto;
     padding: 1rem 2rem;
-    background-color: var(--heading-cl);
+    background-color: var(--spec-menu-background);
     border-radius: 10px;
     position: relative;
 

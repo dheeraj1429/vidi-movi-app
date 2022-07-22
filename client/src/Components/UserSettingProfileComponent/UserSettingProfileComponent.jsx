@@ -3,7 +3,7 @@ import * as profile from "./UserSettingProfileComponent.style";
 import { useSelector } from "react-redux";
 import { BsUpload } from "@react-icons/all-files/bs/BsUpload";
 
-function UserSettingProfileComponent({ edit, fn }) {
+function UserSettingProfileComponent({ edit, fn, designDashboard }) {
     const user = useSelector((state) => state.auth.user);
     const uploadProfileRef = useRef(null);
     const [Image, setImage] = useState(null);
@@ -14,22 +14,34 @@ function UserSettingProfileComponent({ edit, fn }) {
 
     const UploadImageFileHandler = function (e) {
         const image = e.target.files[0];
-        if (image) {
+        if (image && image.size < 2097152) {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(image);
             fileReader.addEventListener("load", function () {
                 setImage(this.result);
             });
+            fn(image);
+        } else {
+            alert("File is too big!");
         }
-        fn(image);
     };
 
     return (
         <>
             {user && user.data ? (
                 <profile.div edit={edit}>
+                    {designDashboard ? (
+                        <div
+                            className="userProfile_banner"
+                            style={{
+                                backgroundImage: `url(${`/UserProfileBannerImage/${user.data.userProfileBannerImage}`})`,
+                            }}
+                        ></div>
+                    ) : null}
+
                     <profile.profile
                         edit={edit}
+                        className={designDashboard ? "dashboard_user_profile" : null}
                         style={
                             user.data.imageUrl
                                 ? {

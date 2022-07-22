@@ -24,4 +24,5 @@ export const options = styled.div`
     width: 80%;
     padding: 2rem;
     overflow-x: hidden;
+    background-color: var(--extra-dark-cl);
 `;

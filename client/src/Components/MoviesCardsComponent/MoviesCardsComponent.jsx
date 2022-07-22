@@ -55,7 +55,11 @@ function MoviesCardsComponent({ data, closeIcon, componentStyle, optionsIcon, ch
                             backgroundImage: `url(${backendConfigData.imageUrl}/${data.thumbnailName})`,
                         }}
                     >
-                        <CardsPlayOptionComponent classCl={"icons_holder"} id={data._id} name={data.name} />
+                        <CardsPlayOptionComponent
+                            classCl={"icons_holder"}
+                            id={data._id}
+                            name={data.name}
+                        />
                         <card.progressPosDiv>
                             <card.progress>
                                 <card.progressInner />
@@ -119,10 +123,16 @@ function MoviesCardsComponent({ data, closeIcon, componentStyle, optionsIcon, ch
                         ) : null}
                         <h5>{data.name}</h5>
                         <span>
-                            {data.views} views <BsDot />{" "}
-                            {checkBox && showSelectedOptions ? <Checkbox onClick={CheckBoxHandler} id={data._id} /> : null}
+                            {data.views} views <BsDot />
+                            {checkBox && showSelectedOptions ? (
+                                <Checkbox onClick={CheckBoxHandler} id={data._id} />
+                            ) : null}
                         </span>
-                        <p>{data.description.length > 200 ? `${data.description.slice(0, 200)}..` : data.description}</p>
+                        <p>
+                            {data.description.length > 200
+                                ? `${data.description.slice(0, 200)}..`
+                                : data.description}
+                        </p>
                     </card.contentDiv>
                 ) : null}
             </card.div>

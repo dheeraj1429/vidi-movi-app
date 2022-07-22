@@ -25,14 +25,16 @@ function UserProfileBannerComponent() {
 
     const UploadFile = (e) => {
         const file = e.target.files[0];
-        if (file) {
+        if (file && file.size < 2097152) {
             const rendrer = new FileReader();
             rendrer.readAsDataURL(file);
             rendrer.addEventListener("load", function () {
                 setImage(this.result);
             });
+            setBannerImage(file);
+        } else {
+            alert("file size is to big!!");
         }
-        setBannerImage(file);
     };
 
     const openMessage = () => {

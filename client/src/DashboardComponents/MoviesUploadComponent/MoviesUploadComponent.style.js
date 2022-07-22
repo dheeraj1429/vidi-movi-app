@@ -44,5 +44,6 @@ export const endDiv = styled.div`
     p {
         margin-right: 1rem;
         font-size: 13px;
+        color: var(--main-cl);
     }
 `;

@@ -28,7 +28,7 @@ export const profileBanner = styled.div`
             0deg,
             rgba(2, 0, 36, 1) 0%,
             rgba(0, 0, 0, 0.7483368347338936) 0%,
-            rgba(255, 255, 255, 0) 100%
+            rgba(255, 255, 255, 0) 50%
         );
     }
 

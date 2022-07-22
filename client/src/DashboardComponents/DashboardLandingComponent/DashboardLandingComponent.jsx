@@ -6,7 +6,10 @@ import LoginUserChartComponent from "../LoginUserChartComponent/LoginUserChartCo
 function DashboardLandingComponent() {
     return (
         <dasboard.div>
-            <DashboardBannerComponent imgUrl={"/images/dashboard/top-header.png"} innerPara={"walcome the dahsboard."} />
+            <DashboardBannerComponent
+                imgUrl={"/images/dashboard/top-header.png"}
+                innerPara={"walcome the dahsboard."}
+            />
             <dasboard.contentDiv>
                 <LoginUserChartComponent />
             </dasboard.contentDiv>

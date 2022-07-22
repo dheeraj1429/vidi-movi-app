@@ -37,6 +37,7 @@ export const div = styled.div`
     .Profile_upload_button {
         background-color: var(--dark-cl);
         transition: all 0.3s ease;
+        box-shadow: 0 0 2px var(--spec-text-disabled);
     }
     .Profile_upload_button:hover {
         border-radius: 30px;

@@ -10,6 +10,21 @@ export const parentDiv = styled.div`
     .active-bar svg {
         fill: var(--light-active-spec-cl);
     }
+    .dashboard_active_bar {
+        background-color: var(--google-button-cl);
+        border-radius: 10px;
+    }
+
+    .dashboard_active_bar p {
+        color: var(--main-cl);
+    }
+    .dashboard_active_bar svg {
+        fill: var(--main-cl);
+    }
+
+    .inner_section {
+        background-color: transparent !important;
+    }
 `;
 
 export const div = styled.div`

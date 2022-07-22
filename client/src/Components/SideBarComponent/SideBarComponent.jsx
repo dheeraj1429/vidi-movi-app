@@ -9,6 +9,7 @@ import { useLocation } from "react-router";
 // import { MdLibraryBooks } from "@react-icons/all-files/md/MdLibraryBooks";
 import { DiHackernews } from "@react-icons/all-files/di/DiHackernews";
 import { AiOutlineBars } from "@react-icons/all-files/ai/AiOutlineBars";
+import { BsMusicNote } from "@react-icons/all-files/bs/BsMusicNote";
 
 function SideBarComponent() {
     const [ActiveBar, setActiveBar] = useState("Home");
@@ -41,10 +42,36 @@ function SideBarComponent() {
                     <AiOutlineBars onClick={SideBarHandler} />
                 </sideBar.barsDiv>
                 <sideBar.innerDiv>
-                    <SideBarOptionComponent icon={<VscHome />} innerText={"Home"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                    <SideBarOptionComponent icon={<VscHeart />} innerText={"Like"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                    <SideBarOptionComponent icon={<BsClockHistory />} innerText={"History"} event={ActiveBarHandler} activeBar={ActiveBar} />
-                    <SideBarOptionComponent icon={<DiHackernews />} innerText={"Tranding"} event={ActiveBarHandler} activeBar={ActiveBar} />
+                    <SideBarOptionComponent
+                        icon={<VscHome />}
+                        innerText={"Home"}
+                        event={ActiveBarHandler}
+                        activeBar={ActiveBar}
+                    />
+                    <SideBarOptionComponent
+                        icon={<VscHeart />}
+                        innerText={"Like"}
+                        event={ActiveBarHandler}
+                        activeBar={ActiveBar}
+                    />
+                    <SideBarOptionComponent
+                        icon={<BsClockHistory />}
+                        innerText={"History"}
+                        event={ActiveBarHandler}
+                        activeBar={ActiveBar}
+                    />
+                    <SideBarOptionComponent
+                        icon={<DiHackernews />}
+                        innerText={"Tranding"}
+                        event={ActiveBarHandler}
+                        activeBar={ActiveBar}
+                    />
+                    <SideBarOptionComponent
+                        icon={<BsMusicNote />}
+                        innerText={"Music"}
+                        event={ActiveBarHandler}
+                        activeBar={ActiveBar}
+                    />
                     {/* <SideBarOptionComponent icon={<MdLibraryBooks />} innerText={"Library"} event={ActiveBarHandler} activeBar={ActiveBar} /> */}
                 </sideBar.innerDiv>
             </sideBar.mainDiv>

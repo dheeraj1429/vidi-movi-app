@@ -8,3 +8,7 @@ export const div = styled.div`
 `;
 
 export const innerDiv = styled.div``;
+
+export const side = styled.div`
+    padding: 0 1rem;
+`;

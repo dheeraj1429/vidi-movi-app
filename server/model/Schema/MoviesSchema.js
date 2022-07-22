@@ -14,6 +14,7 @@ const moviesSchema = new mongoose.Schema({
     thumbnailPath: { type: String, required: [true, "please enter the mmovie url paht"] },
     activity: [{ like: { type: String }, dislike: { type: String } }],
     views: { type: Number, default: 0 },
+    type: { type: String, default: "video" },
     createdAt: { type: Date, default: Date.now },
     comments: [
         {
@@ -24,7 +25,10 @@ const moviesSchema = new mongoose.Schema({
             commentTime: { type: String },
             likeCount: { type: Number, default: 0 },
             likedUsers: [
-                { googleUserId: { type: mongoose.Types.ObjectId, ref: "authUser" }, logInUserId: { type: mongoose.Types.ObjectId, ref: "user" } },
+                {
+                    googleUserId: { type: mongoose.Types.ObjectId, ref: "authUser" },
+                    logInUserId: { type: mongoose.Types.ObjectId, ref: "user" },
+                },
             ],
         },
     ],

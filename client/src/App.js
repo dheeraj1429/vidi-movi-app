@@ -22,6 +22,7 @@ import MoviesPlayListComponent from "./Components/MoviesPlayListComponent/Movies
 import SearchMoviesComponent from "./Components/SearchMoviesComponent/SearchMoviesComponent";
 import TrandingMoviesComponent from "./Components/TrandingMoviesComponent/TrandingMoviesComponent";
 import UserUpdateProfileComponent from "./Components/UserUpdateProfileComponent/UserUpdateProfileComponent";
+import AllMusicComponent from "./Components/AllMusicComponent/AllMusicComponent";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage";
@@ -29,7 +30,7 @@ import SignInAndLogInPage from "./pages/SignInAndLogInPage/SignInAndLogInPage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import MoviePlaySinglePage from "./pages/MoviePlaySinglePage/MoviePlaySinglePage";
 import UserSetting from "./pages/UserSettingPage/UserSetting";
-import DashboardUserLoginPage from "./pages/DashboardUserLoginPage/DashboardUserLoginPage";
+// import DashboardUserLoginPage from "./pages/DashboardUserLoginPage/DashboardUserLoginPage";
 
 function App() {
     const [cookies] = useCookies(["user"]);
@@ -63,12 +64,16 @@ function App() {
                     <Route path="/playlist" element={<MoviesPlayListComponent />} />
                     <Route path="/movies-search/:name" element={<SearchMoviesComponent />} />
                     <Route path="/tranding" element={<TrandingMoviesComponent />} />
+                    <Route path="/music" element={<AllMusicComponent />} />
                 </Route>
                 <Route path="/auth" element={<SignInAndLogInPage />}>
                     <Route path="user-signIn" element={<SignInComponent />} />
                     <Route path="user-logIn" element={<LogInComponent />} />
                     <Route path="forget-password" element={<ForgetPasswordComponent />} />
-                    <Route path="password-reset-request/:id" element={<UserPasswordChangeRequiestComponent />} />
+                    <Route
+                        path="password-reset-request/:id"
+                        element={<UserPasswordChangeRequiestComponent />}
+                    />
                 </Route>
                 {/* <Route path="/admin/dashboard" element={<DashboardUserLoginPage />} /> */}
                 <Route path="/admin/dashboard" element={<DashboardPage />}>

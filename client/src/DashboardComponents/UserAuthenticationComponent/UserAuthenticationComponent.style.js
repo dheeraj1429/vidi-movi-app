@@ -9,6 +9,7 @@ export const div = styled.div`
     svg {
         font-size: 24px;
         cursor: pointer;
+        color: var(--dark-cl);
     }
 
     .userEdit_button {

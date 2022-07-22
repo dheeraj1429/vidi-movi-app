@@ -8,7 +8,16 @@ import { BiSun } from "@react-icons/all-files/bi/BiSun";
 import { useDispatch } from "react-redux";
 import { themChange, showOptionPopup } from "../../Redux/Action/appAction";
 
-function SideBarOptionComponent({ icon, innerText, event, activeBar, onClick, width, innerOptions }) {
+function SideBarOptionComponent({
+    icon,
+    innerText,
+    event,
+    activeBar,
+    onClick,
+    width,
+    innerOptions,
+    dashboardBar,
+}) {
     const [ShowInnerOptions, setShowInnerOptions] = useState(false);
     const location = useLocation();
     const dispatch = useDispatch();
@@ -33,7 +42,10 @@ function SideBarOptionComponent({ icon, innerText, event, activeBar, onClick, wi
                     to={
                         innerText === "Home"
                             ? "/"
-                            : innerText === "Log Out" || innerText === "Change Theme" || innerText === "Dark" || innerText === "Light"
+                            : innerText === "Log Out" ||
+                              innerText === "Change Theme" ||
+                              innerText === "Dark" ||
+                              innerText === "Light"
                             ? `${location.pathname}`
                             : innerText === "Dashboard"
                             ? "/admin/dashboard"
@@ -45,24 +57,40 @@ function SideBarOptionComponent({ icon, innerText, event, activeBar, onClick, wi
                     <sidebar.div
                         onClick={event ? event : null}
                         data-target={innerText}
-                        className={activeBar === innerText ? "active-bar" : null}
+                        className={
+                            activeBar === innerText && dashboardBar == undefined
+                                ? "active-bar"
+                                : activeBar === innerText && dashboardBar
+                                ? "active-bar dashboard_active_bar"
+                                : null
+                        }
                         onMouseEnter={innerOptions ? InnerOptionsHandler : null}
                         onMouseLeave={innerOptions ? InnerOptionMouserLeaveHandler : null}
                     >
                         {innerOptions ? (
-                            <sidebar.sideBarInnerOptionsDiv className={ShowInnerOptions ? "showInenrOptions" : null}>
+                            <sidebar.sideBarInnerOptionsDiv
+                                className={ShowInnerOptions ? "showInenrOptions" : null}
+                            >
                                 <ul>
                                     <li onClick={() => changeThemeHandler("Dark")}>
-                                        <ProfileInnerOptionComponent icon={<BiMoon />} innerText={"Dark"} width={"20"} />
+                                        <ProfileInnerOptionComponent
+                                            icon={<BiMoon />}
+                                            innerText={"Dark"}
+                                            width={"20"}
+                                        />
                                     </li>
                                     <li onClick={() => changeThemeHandler("Light")}>
-                                        <ProfileInnerOptionComponent icon={<BiSun />} innerText={"Light"} width={"20"} />
+                                        <ProfileInnerOptionComponent
+                                            icon={<BiSun />}
+                                            innerText={"Light"}
+                                            width={"20"}
+                                        />
                                     </li>
                                 </ul>
                             </sidebar.sideBarInnerOptionsDiv>
                         ) : null}
 
-                        <sidebar.innerDiv>
+                        <sidebar.innerDiv className={dashboardBar ? "inner_section" : null}>
                             <sidebar.svgDiv
                                 style={
                                     width

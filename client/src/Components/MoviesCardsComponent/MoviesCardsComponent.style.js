@@ -174,7 +174,7 @@ export const info = styled.div`
 
 export const moviDiv = styled.div`
     width: 100%;
-    height: 280px;
+    height: 200px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

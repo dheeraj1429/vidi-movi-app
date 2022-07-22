@@ -4,7 +4,7 @@ export const div = styled.div`
     padding: 1rem;
     h5 {
         font-size: 26px;
-        color: var(--extra-dark-cl);
+        color: var(--smooht-gray-cl);
         font-weight: 300;
     }
     p {

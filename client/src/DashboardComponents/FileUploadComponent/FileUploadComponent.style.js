@@ -11,6 +11,14 @@ export const div = styled.div`
     padding: 1rem;
     p {
         font-size: 12px;
+        color: var(--main-cl);
+    }
+
+    .uploadFile_data {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 `;
 
@@ -22,6 +30,10 @@ export const flexDiv = styled.div`
     height: 100%;
     p {
         font-size: 10px;
+    }
+
+    i {
+        color: var(--main-cl);
     }
 `;
 
@@ -42,7 +54,6 @@ export const uploadDiv = styled.div`
     }
     i {
         font-size: 15px;
-        color: var(--sm_gray);
     }
     p {
         position: absolute;

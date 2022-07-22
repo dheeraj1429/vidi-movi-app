@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { movieUpload, loadingAction } from "../../Redux/Action/adminAction";
 import CustomButtonComponent from "../../Components/CustomButtonComponent/CustomButtonComponent";
 import MovieUploadProgressComponent from "../MovieUploadProgressComponent/MovieUploadProgressComponent";
+import { message } from "antd";
 
 const genresData = [
     { value: "Action", label: "Action" },
@@ -20,6 +21,12 @@ const genresData = [
     { value: "Thriller", label: "Thriller" },
 ];
 
+const videoType = [
+    { value: "Movie", label: "Movie" },
+    { value: "Short video", label: "Short video" },
+    { value: "Song", label: "Song" },
+];
+
 function MoviesUploadComponent() {
     const [MovieData, setMovieData] = useState({
         name: "",
@@ -30,6 +37,7 @@ function MoviesUploadComponent() {
         licensed: "",
         description: "",
         thumbnail: "",
+        type: "",
         file: "",
     });
     const dispatch = useDispatch();
@@ -52,8 +60,13 @@ function MoviesUploadComponent() {
         setMovieData({ ...MovieData, [name]: data });
     };
 
+    const info = () => {
+        message.info("Please fill all fildes!");
+    };
+
     const SendData = function () {
-        const { name, category, genra, artist, Album, licensed, description, thumbnail } = MovieData;
+        const { name, category, genra, artist, Album, licensed, description, thumbnail, type } =
+            MovieData;
 
         if (name && category && genra && artist && Album && licensed && description && thumbnail) {
             const file = MovieData.file;
@@ -68,10 +81,13 @@ function MoviesUploadComponent() {
             formData.append("Album", Album);
             formData.append("description", description);
             formData.append("licensed", licensed);
+            formData.append("type", type);
             formData.append("thumbnail", thumbnail);
 
             dispatch(movieUpload(formData));
             dispatch(loadingAction(true));
+        } else {
+            info();
         }
     };
 
@@ -82,7 +98,14 @@ function MoviesUploadComponent() {
             <Movies.formGroup>
                 <DashBoardHeadingComponent title={"Form Elements"} elmCl={"extra-sm"} />
                 <Movies.innerDiv className="flex-div-inner">
-                    <TextField id="outlined-basic" label="Movie name" variant="outlined" value={MovieData.name} name="name" onChange={CahngeHander} />
+                    <TextField
+                        id="outlined-basic"
+                        label="Movie name"
+                        variant="outlined"
+                        value={MovieData.name}
+                        name="name"
+                        onChange={CahngeHander}
+                    />
                     <TextField
                         id="outlined-basic"
                         label="Movie category"
@@ -116,7 +139,14 @@ function MoviesUploadComponent() {
                         name="artist"
                         onChange={CahngeHander}
                     />
-                    <TextField id="outlined-basic" label="Album" variant="outlined" value={MovieData.Album} name="Album" onChange={CahngeHander} />
+                    <TextField
+                        id="outlined-basic"
+                        label="Album"
+                        variant="outlined"
+                        value={MovieData.Album}
+                        name="Album"
+                        onChange={CahngeHander}
+                    />
                     <TextField
                         id="outlined-basic"
                         label="Licensed to"
@@ -125,6 +155,21 @@ function MoviesUploadComponent() {
                         name="licensed"
                         onChange={CahngeHander}
                     />
+                    <TextField
+                        id="outlined-select-currency"
+                        select
+                        label="Select"
+                        helperText="Please select movie genra"
+                        name="type"
+                        value={MovieData.type}
+                        onChange={CahngeHander}
+                    >
+                        {videoType.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                 </Movies.innerDiv>
                 <TextField
                     id="outlined-multiline-static"
@@ -157,7 +202,9 @@ function MoviesUploadComponent() {
                 </Movies.innerDiv>
 
                 <Movies.endDiv>
-                    {movieStatus !== null && movieStatus.success ? <p>{movieStatus.message}</p> : null}
+                    {movieStatus !== null && movieStatus.success ? (
+                        <p>{movieStatus.message}</p>
+                    ) : null}
                     <CustomButtonComponent
                         onClick={SendData}
                         buttonCl="upload-button"

@@ -14,13 +14,13 @@ export const div = styled.div`
 
 export const side = styled.div`
     width: 13%;
-    height: 93vh;
+    height: 100vh;
 `;
 
 export const renderDiv = styled.div`
-    padding: 0 2rem;
+    padding: 1rem 2rem;
     width: 100%;
-    height: 93vh;
+    height: 100vh;
     overflow-x: hidden;
-    background-color: var(--spec-snackbar-background-updated);
+    background-color: var(--body-background-cl);
 `;
