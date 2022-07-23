@@ -1,0 +1,341 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,700;1,800;1,900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+@font-face {
+    font-family: "Paralucent-bold";
+    src: url("../public/fonts/Paralucent/Paralucent-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-demi-bold";
+    src: url("../public/fonts/Paralucent/Paralucent-DemiBold.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-extra-light";
+    src: url("../public/fonts/Paralucent/Paralucent-ExtraLight.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-heavy";
+    src: url("../public/fonts/Paralucent/Paralucent-Heavy.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-light";
+    src: url("../public/fonts/Paralucent/Paralucent-Light.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-meduim";
+    src: url("../public/fonts/Paralucent/Paralucent-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Paralucent-thin";
+    src: url("../public/fonts/Paralucent/Paralucent-Thin.ttf");
+}
+
+code {
+    font-family: CustomFont;
+}
+
+:root {
+    --progress-cl: rgba(235, 235, 235, 0.562);
+    --light-active-spec-cl: #20B5DE;
+    --main-cl: #ffffff;
+    --overlay-cl: rgba(0, 0, 0, 0.594);
+    --button-cl: #e50914;
+    --user-profile-spec-cl: #757575;
+    --watch-cl: #9c0e15;
+    --dark-cl: #000000;
+    --extra-dark-cl: #121212;
+    --light-gray: #313131;
+    --gray-cl: #1e1e21;
+    --body-background-cl: #161616;
+    --smooht-gray-cl: #dadada;
+    --google-button-cl: #4c8cf1;
+    --google-button-ove-cl: #4c8bf1a4;
+    --spec-base-background: #0f0f0f;
+    --spec-elevated-background: #212121;
+    --spec-menu-background: #2f2f2f;
+    --spec-elevated-background-inverse: #f1f1f1;
+    --spec-filled-container: rgba(255, 255, 255, 0.1);
+    --spec-outlined-container: rgba(255, 255, 255, 0.2);
+    --spec-brand-background-solid: #212121;
+    --spec-brand-background-primary: rgba(33, 33, 33, 0.98);
+    --spec-brand-background-secondary: rgba(33, 33, 33, 0.95);
+    --spec-general-background-a: #181818;
+    --spec-general-background-b: #0f0f0f;
+    --spec-general-background-c: #030303;
+    --spec-error-background: #f9f9f9;
+    --spec-text-primary: #fff;
+    --spec-text-secondary: #aaa;
+    --spec-text-disabled: #717171;
+    --spec-text-primary-inverse: #030303;
+    --spec-call-to-action: #3ea6ff;
+    --spec-call-to-action-inverse: #065fd4;
+    --spec-suggested-action: #263850;
+    --spec-icon-active-other: #fff;
+    --spec-icon-inactive: #909090;
+    --spec-icon-disabled: #606060;
+    --spec-badge-chip-background: rgba(255, 255, 255, 0.1);
+    --spec-verified-badge-background: rgba(255, 255, 255, 0.25);
+    --spec-button-chip-background-hover: rgba(255, 255, 255, 0.2);
+    --spec-touch-response: #fff;
+    --spec-touch-response-inverse: #000;
+    --spec-brand-icon-active: #fff;
+    --spec-brand-icon-inactive: #909090;
+    --spec-brand-link-text: #ff4e45;
+    --spec-wordmark-text: #fff;
+    --spec-10-percent-layer: rgba(255, 255, 255, 0.1);
+    --spec-snackbar-background: #030303;
+    --spec-snackbar-background-updated: #f9f9f9;
+    --spec-error-indicator: #ff8983;
+    --spec-themed-blue: #3ea6ff;
+    --spec-themed-green: #2ba640;
+    --spec-ad-indicator: #00aaa7;
+    --spec-themed-overlay-background: rgba(0, 0, 0, 0.8);
+    --spec-commerce-badge-background: #002d08;
+    --spec-static-brand-red: #f00;
+    --spec-static-brand-white: #fff;
+    --spec-static-brand-black: #212121;
+    --spec-static-clear-color: rgba(255, 255, 255, 0);
+    --spec-static-clear-black: rgba(0, 0, 0, 0);
+    --spec-static-ad-yellow: #fbc02d;
+    --spec-static-grey: #606060;
+    --spec-static-overlay-background-solid: #000;
+    --spec-static-overlay-background-heavy: rgba(0, 0, 0, 0.8);
+    --edit-popup-onerlay-color: rgba(0, 0, 0, 0.452);
+    --color-bg-primary: #d0d6df;
+    --color-bg-primary-offset: #f1f3f7;
+    --color-bg-secondary: #fff;
+    --color-text-primary: #3a3c42;
+    --color-text-primary-offset: #898c94;
+    --color-orange: #dc9960;
+    --color-green: #1eb8b1;
+    --color-purple: #657cc4;
+    --color-black: var(--color-text-primary);
+    --color-red: #d92027;
+    --heading-cl: #fff;
+    --smooht-gray-spec-cl: #dadada;
+}
+
+[data-theme='Light'] {
+    --main-cl: #2e2e2e;
+    --overlay-cl: rgba(0, 0, 0, 0.411);
+    --button-cl: #e50914;
+    --user-profile-spec-cl: #757575,
+    --watch-cl: #9c0e15;
+    --dark-cl: #ffffff;
+    --extra-dark-cl: #e2e2e2;
+    --light-gray: #bdbdbd;
+    --gray-cl: #c6c6db;
+    --body-background-cl: #e7e7e7;
+    --smooht-gray-cl: #292929;
+    --google-button-cl: #2ae8f5;
+    --spec-base-background: #0f0f0f;
+    --spec-elevated-background: #212121;
+    --spec-menu-background: #dfdfdf;
+    --spec-elevated-background-inverse: #f1f1f1;
+    --spec-filled-container: rgba(255, 255, 255, 0.1);
+    --spec-outlined-container: rgba(255, 255, 255, 0.2);
+    --spec-brand-background-solid: #212121;
+    --spec-brand-background-primary: rgba(33, 33, 33, 0.98);
+    --spec-brand-background-secondary: rgba(33, 33, 33, 0.95);
+    --spec-general-background-a: #181818;
+    --spec-general-background-b: #0f0f0f;
+    --spec-general-background-c: #030303;
+    --spec-error-background: #f9f9f9;
+    --spec-text-primary: #fff;
+    --spec-text-secondary: #aaa;
+    --spec-text-disabled: #717171;
+    --spec-text-primary-inverse: #030303;
+    --spec-call-to-action: #3ea6ff;
+    --spec-call-to-action-inverse: #065fd4;
+    --spec-suggested-action: #263850;
+    --spec-icon-active-other: #fff;
+    --spec-icon-inactive: #909090;
+    --spec-icon-disabled: #606060;
+    --spec-badge-chip-background: rgba(255, 255, 255, 0.1);
+    --spec-verified-badge-background: rgba(255, 255, 255, 0.25);
+    --spec-button-chip-background-hover: rgba(255, 255, 255, 0.2);
+    --spec-touch-response: #fff;
+    --spec-touch-response-inverse: #000;
+    --spec-brand-icon-active: #fff;
+    --spec-brand-icon-inactive: #909090;
+    --spec-brand-link-text: #ff4e45;
+    --spec-wordmark-text: #fff;
+    --spec-10-percent-layer: rgba(255, 255, 255, 0.1);
+    --spec-snackbar-background: #030303;
+    --spec-snackbar-background-updated: #f9f9f9;
+    --spec-error-indicator: #ff8983;
+    --spec-themed-blue: #3ea6ff;
+    --spec-themed-green: #2ba640;
+    --spec-ad-indicator: #00aaa7;
+    --spec-themed-overlay-background: rgba(0, 0, 0, 0.8);
+    --spec-commerce-badge-background: #002d08;
+    --spec-static-brand-red: #f00;
+    --spec-static-brand-white: #fff;
+    --spec-static-brand-black: #212121;
+    --spec-static-clear-color: rgba(255, 255, 255, 0);
+    --spec-static-clear-black: rgba(0, 0, 0, 0);
+    --spec-static-ad-yellow: #fbc02d;
+    --spec-static-grey: #606060;
+    --spec-static-overlay-background-solid: #000;
+    --spec-static-overlay-background-heavy: rgba(0, 0, 0, 0.8);
+    --edit-popup-onerlay-color: rgba(0, 0, 0, 0.452);
+    --color-bg-primary: #d0d6df;
+    --color-bg-primary-offset: #f1f3f7;
+    --color-bg-secondary: #fff;
+    --color-text-primary: #3a3c42;
+    --color-text-primary-offset: #898c94;
+    --color-orange: #dc9960;
+    --color-green: #1eb8b1;
+    --color-purple: #657cc4;
+    --color-black: var(--color-text-primary);
+    --color-red: #d92027;
+    --heading-cl: #fff;
+    --smooht-gray-spec-cl: #dadada;
+}
+
+[data-theme='Dark']  {
+    --light-active-spec-cl: #20B5DE;
+    --main-cl: #ffffff;
+    --overlay-cl: rgba(0, 0, 0, 0.411);
+    --button-cl: #e50914;
+    --user-profile-spec-cl: #757575,
+    --watch-cl: #9c0e15;
+    --dark-cl: #000000;
+    --extra-dark-cl: #121212;
+    --light-gray: #313131;
+    --gray-cl: #1e1e21;
+    --body-background-cl: #000000;
+    --smooht-gray-cl: #dadada;
+    --google-button-cl: #4c8cf1;
+    --spec-base-background: #0f0f0f;
+    --spec-elevated-background: #212121;
+    --spec-menu-background: #2f2f2f;
+    --spec-elevated-background-inverse: #f1f1f1;
+    --spec-filled-container: rgba(255, 255, 255, 0.1);
+    --spec-outlined-container: rgba(255, 255, 255, 0.2);
+    --spec-brand-background-solid: #212121;
+    --spec-brand-background-primary: rgba(33, 33, 33, 0.98);
+    --spec-brand-background-secondary: rgba(33, 33, 33, 0.95);
+    --spec-general-background-a: #181818;
+    --spec-general-background-b: #0f0f0f;
+    --spec-general-background-c: #030303;
+    --spec-error-background: #f9f9f9;
+    --spec-text-primary: #fff;
+    --spec-text-secondary: #aaa;
+    --spec-text-disabled: #717171;
+    --spec-text-primary-inverse: #030303;
+    --spec-call-to-action: #3ea6ff;
+    --spec-call-to-action-inverse: #065fd4;
+    --spec-suggested-action: #263850;
+    --spec-icon-active-other: #fff;
+    --spec-icon-inactive: #909090;
+    --spec-icon-disabled: #606060;
+    --spec-badge-chip-background: rgba(255, 255, 255, 0.1);
+    --spec-verified-badge-background: rgba(255, 255, 255, 0.25);
+    --spec-button-chip-background-hover: rgba(255, 255, 255, 0.2);
+    --spec-touch-response: #fff;
+    --spec-touch-response-inverse: #000;
+    --spec-brand-icon-active: #fff;
+    --spec-brand-icon-inactive: #909090;
+    --spec-brand-link-text: #ff4e45;
+    --spec-wordmark-text: #fff;
+    --spec-10-percent-layer: rgba(255, 255, 255, 0.1);
+    --spec-snackbar-background: #030303;
+    --spec-snackbar-background-updated: #f9f9f9;
+    --spec-error-indicator: #ff8983;
+    --spec-themed-blue: #3ea6ff;
+    --spec-themed-green: #2ba640;
+    --spec-ad-indicator: #00aaa7;
+    --spec-themed-overlay-background: rgba(0, 0, 0, 0.8);
+    --spec-commerce-badge-background: #002d08;
+    --spec-static-brand-red: #f00;
+    --spec-static-brand-white: #fff;
+    --spec-static-brand-black: #212121;
+    --spec-static-clear-color: rgba(255, 255, 255, 0);
+    --spec-static-clear-black: rgba(0, 0, 0, 0);
+    --spec-static-ad-yellow: #fbc02d;
+    --spec-static-grey: #606060;
+    --spec-static-overlay-background-solid: #000;
+    --spec-static-overlay-background-heavy: rgba(0, 0, 0, 0.8);
+    --edit-popup-onerlay-color: rgba(0, 0, 0, 0.452);
+    --color-bg-primary: #d0d6df;
+    --color-bg-primary-offset: #f1f3f7;
+    --color-bg-secondary: #fff;
+    --color-text-primary: #3a3c42;
+    --color-text-primary-offset: #898c94;
+    --color-orange: #dc9960;
+    --color-green: #1eb8b1;
+    --color-purple: #657cc4;
+    --color-black: var(--color-text-primary);
+    --color-red: #d92027;
+    --heading-cl: #fff;
+    --smooht-gray-spec-cl: #dadada;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.side_padding {
+    padding: 0 150px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.showEditPopup {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.hideEditPupup {
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease;
+    transform: scale(.7);
+}
+
+.slick-prev, .slick-next {
+    filter: invert() !important;
+}
